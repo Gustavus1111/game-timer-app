@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Tempo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&family=Spectral:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0b09;--surface:#111009;--border:#1e1c18;--border-light:#2a2720;
+  --amber:#c8a96e;--amber-dim:rgba(200,169,110,0.12);--amber-faint:rgba(200,169,110,0.05);
+  --text:#e4dcd0;--text-mid:#7a7068;--text-dim:#3a3730;
+  --cream:#f0ebe2;--cream-text:#18140e;--cream-mid:#9a8870;
+  --dur:0.45s;--ease:cubic-bezier(0.4,0,0.2,1);
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;}
+
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity var(--dur) var(--ease);overflow:hidden;}
+.screen.active{opacity:1;pointer-events:auto;}
+
+.top-nav{display:flex;align-items:center;justify-content:space-between;padding:52px 28px 20px;flex-shrink:0;}
+.back-btn{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-mid);background:none;border:none;cursor:pointer;padding:8px 0;font-family:'DM Mono',monospace;transition:color 0.2s;}
+.back-btn:hover{color:var(--amber);}
+.nav-title{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);}
+.screen-body{flex:1;display:flex;flex-direction:column;padding:0 28px;overflow-y:auto;}
+.screen-footer{padding:20px 28px 48px;flex-shrink:0;}
+
+.btn-primary{width:100%;padding:18px;background:var(--amber);border:none;border-radius:4px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#0c0b09;cursor:pointer;transition:opacity 0.2s;}
+.btn-primary:active{opacity:0.85;}
+.btn-primary:disabled{opacity:0.3;cursor:default;}
+.btn-secondary{width:100%;padding:16px;background:transparent;border:1px solid var(--border-light);border-radius:4px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-mid);cursor:pointer;transition:border-color 0.2s,color 0.2s;margin-top:10px;}
+.btn-secondary:hover{border-color:var(--amber-dim);color:var(--amber);}
+
+.field{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.field-label{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);}
+.field-input{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px 16px;font-family:'DM Mono',monospace;font-size:14px;color:var(--text);outline:none;transition:border-color 0.2s;letter-spacing:0.05em;-webkit-appearance:none;}
+.field-input:focus{border-color:var(--amber-dim);}
+.field-input::placeholder{color:var(--text-dim);}
+
+.section-heading{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:32px;letter-spacing:0.04em;color:var(--text);margin-bottom:32px;line-height:1.2;}
+
+.toggle-group{display:flex;gap:2px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:3px;margin-bottom:28px;}
+.toggle-opt{flex:1;padding:10px;text-align:center;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);border-radius:3px;cursor:pointer;transition:all 0.2s;}
+.toggle-opt.on{background:var(--amber-dim);color:var(--amber);}
+
+.time-picker{display:flex;align-items:center;justify-content:center;gap:16px;padding:24px 0;margin-bottom:28px;}
+.time-unit{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.time-unit-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);}
+.time-display{font-family:'Spectral',serif;font-size:52px;font-weight:300;color:var(--text);line-height:1;font-variant-numeric:tabular-nums;min-width:80px;text-align:center;}
+.time-colon{font-family:'Spectral',serif;font-size:40px;font-weight:300;color:var(--text-dim);margin-bottom:24px;}
+.stepper{display:flex;gap:8px;}
+.step-btn{width:36px;height:36px;background:var(--surface);border:1px solid var(--border-light);border-radius:3px;color:var(--text-mid);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;font-family:'DM Mono',monospace;}
+.step-btn:active{border-color:var(--amber);color:var(--amber);}
+
+.color-picker{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px;}
+.color-swatch{width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s,transform 0.15s;flex-shrink:0;}
+.color-swatch.selected{border-color:var(--text);transform:scale(1.15);}
+.color-swatch.taken{opacity:0.25;cursor:default;pointer-events:none;}
+
+.room-code-big{font-family:'Spectral',serif;font-size:56px;font-weight:300;letter-spacing:0.3em;color:var(--amber);line-height:1;text-align:center;}
+.room-code-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-bottom:12px;}
+
+.lobby-player{display:flex;align-items:center;gap:14px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:6px;}
+.lobby-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.lobby-name{flex:1;font-size:14px;letter-spacing:0.05em;color:var(--text);}
+.lobby-badge{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:3px 8px;border-radius:2px;background:var(--amber-faint);border:1px solid var(--amber-dim);color:var(--amber);}
+.lobby-waiting{display:flex;align-items:center;gap:14px;padding:16px;border:1px dashed var(--border);border-radius:4px;margin-bottom:6px;}
+.lobby-waiting-text{font-size:12px;color:var(--text-dim);letter-spacing:0.05em;}
+
+.error-msg{font-size:11px;color:#c06040;letter-spacing:0.08em;text-align:center;margin-top:8px;min-height:18px;}
+
+@keyframes breathe{0%,100%{opacity:0.2;transform:scale(1)}50%{opacity:0.55;transform:scale(1.5)}}
+.pulse{animation:breathe 2s ease-in-out infinite;}
+
+/* summary */
+.summary-row{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:4px;}
+.summary-bar-wrap{width:70px;height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
+.summary-bar-fill{height:100%;border-radius:2px;}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div class="screen active" id="screen-home">
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:32px;">
+    <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:64px;letter-spacing:0.12em;color:var(--text);margin-bottom:8px;">T<span style="color:var(--amber);">·</span>empo</div>
+    <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);margin-bottom:80px;">Your time at the table</div>
+    <div style="width:100%;display:flex;flex-direction:column;gap:12px;">
+      <button class="btn-primary" onclick="go('host')">Create Game</button>
+      <button class="btn-secondary" style="margin-top:0;" onclick="go('join')">Join Game</button>
+    </div>
+  </div>
+</div>
+
+<!-- HOST SETUP -->
+<div class="screen" id="screen-host">
+  <div class="top-nav">
+    <button class="back-btn" onclick="go('home')">← Back</button>
+    <div class="nav-title">New Game</div>
+    <div style="width:48px;"></div>
+  </div>
+  <div class="screen-body">
+    <div class="section-heading">Set the<br>time bank</div>
+    <div class="field">
+      <div class="field-label">Bank type</div>
+      <div class="toggle-group">
+        <div class="toggle-opt on" id="tog-same" onclick="setToggle('same')">Same for all</div>
+        <div class="toggle-opt" id="tog-custom" onclick="setToggle('custom')">Per player</div>
+      </div>
+    </div>
+    <div class="field-label" style="margin-bottom:16px;">Time per player</div>
+    <div class="time-picker">
+      <div class="time-unit">
+        <div class="time-display" id="min-display">20</div>
+        <div class="time-unit-label">min</div>
+        <div class="stepper">
+          <button class="step-btn" onclick="adjustTime('min',-5)">−</button>
+          <button class="step-btn" onclick="adjustTime('min',5)">+</button>
+        </div>
+      </div>
+      <div class="time-colon">:</div>
+      <div class="time-unit">
+        <div class="time-display" id="sec-display">00</div>
+        <div class="time-unit-label">sec</div>
+        <div class="stepper">
+          <button class="step-btn" onclick="adjustTime('sec',-15)">−</button>
+          <button class="step-btn" onclick="adjustTime('sec',15)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="field-label">Your name</div>
+      <input class="field-input" type="text" id="host-name" placeholder="Enter your name" maxlength="16">
+    </div>
+    <div class="field">
+      <div class="field-label">Your color</div>
+      <div class="color-picker" id="host-colors">
+        <div class="color-swatch selected" style="background:#c8a96e;" data-color="#c8a96e" onclick="pickColor(this,'host-colors')"></div>
+        <div class="color-swatch" style="background:#c06040;" data-color="#c06040" onclick="pickColor(this,'host-colors')"></div>
+        <div class="color-swatch" style="background:#6a9060;" data-color="#6a9060" onclick="pickColor(this,'host-colors')"></div>
+        <div class="color-swatch" style="background:#5580a0;" data-color="#5580a0" onclick="pickColor(this,'host-colors')"></div>
+        <div class="color-swatch" style="background:#806080;" data-color="#806080" onclick="pickColor(this,'host-colors')"></div>
+        <div class="color-swatch" style="background:#a07050;" data-color="#a07050" onclick="pickColor(this,'host-colors')"></div>
+        <div class="color-swatch" style="background:#507080;" data-color="#507080" onclick="pickColor(this,'host-colors')"></div>
+      </div>
+    </div>
+    <div style="height:24px;"></div>
+  </div>
+  <div class="screen-footer">
+    <div class="error-msg" id="host-error"></div>
+    <button class="btn-primary" onclick="createGame()">Create Game →</button>
+  </div>
+</div>
+
+<!-- JOIN -->
+<div class="screen" id="screen-join">
+  <div class="top-nav">
+    <button class="back-btn" onclick="go('home')">← Back</button>
+    <div class="nav-title">Join Game</div>
+    <div style="width:48px;"></div>
+  </div>
+  <div class="screen-body">
+    <div class="section-heading">Enter<br>room code</div>
+    <div class="field">
+      <input class="field-input" type="text" id="room-code-input" maxlength="4" placeholder="····" style="font-family:'Spectral',serif;font-size:40px;font-weight:300;letter-spacing:0.3em;text-align:center;padding:20px;" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z]/g,'')">
+      <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);text-align:center;">4-letter code from the host</div>
+    </div>
+    <div class="field">
+      <div class="field-label">Your name</div>
+      <input class="field-input" type="text" id="join-name" placeholder="Enter your name" maxlength="16">
+    </div>
+    <div class="field">
+      <div class="field-label">Pick your color</div>
+      <div class="color-picker" id="join-colors">
+        <div class="color-swatch selected" style="background:#c8a96e;" data-color="#c8a96e" onclick="pickColor(this,'join-colors')"></div>
+        <div class="color-swatch" style="background:#c06040;" data-color="#c06040" onclick="pickColor(this,'join-colors')"></div>
+        <div class="color-swatch" style="background:#6a9060;" data-color="#6a9060" onclick="pickColor(this,'join-colors')"></div>
+        <div class="color-swatch" style="background:#5580a0;" data-color="#5580a0" onclick="pickColor(this,'join-colors')"></div>
+        <div class="color-swatch" style="background:#806080;" data-color="#806080" onclick="pickColor(this,'join-colors')"></div>
+        <div class="color-swatch" style="background:#a07050;" data-color="#a07050" onclick="pickColor(this,'join-colors')"></div>
+        <div class="color-swatch" style="background:#507080;" data-color="#507080" onclick="pickColor(this,'join-colors')"></div>
+      </div>
+    </div>
+  </div>
+  <div class="screen-footer">
+    <div class="error-msg" id="join-error"></div>
+    <button class="btn-primary" onclick="joinGame()">Join →</button>
+  </div>
+</div>
+
+<!-- LOBBY -->
+<div class="screen" id="screen-lobby">
+  <div class="top-nav">
+    <button class="back-btn" onclick="leaveGame()">← Leave</button>
+    <div class="nav-title">Lobby</div>
+    <div style="width:48px;"></div>
+  </div>
+  <div class="screen-body">
+    <div style="text-align:center;margin-bottom:36px;">
+      <div class="room-code-label">Room code — share this</div>
+      <div class="room-code-big" id="lobby-code">····</div>
+    </div>
+    <div class="field-label" style="margin-bottom:12px;">Players</div>
+    <div id="lobby-players"></div>
+    <div class="lobby-waiting" id="lobby-waiting">
+      <div style="width:7px;height:7px;border-radius:50%;background:var(--text-dim);flex-shrink:0;" class="pulse"></div>
+      <div class="lobby-waiting-text">Waiting for players to join…</div>
+    </div>
+    <div style="margin-top:20px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;">
+      <div class="field-label" style="margin-bottom:8px;">Settings</div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-mid);padding:6px 0;border-top:1px solid var(--border);">
+        <span>Time bank</span><span style="color:var(--text);" id="lobby-time-display">—</span>
+      </div>
+    </div>
+  </div>
+  <div class="screen-footer">
+    <div class="error-msg" id="lobby-error"></div>
+    <button class="btn-primary" id="start-btn" onclick="startGame()" disabled>Waiting for players…</button>
+  </div>
+</div>
+
+<!-- CLOCK -->
+<div class="screen" id="screen-clock">
+  <div id="clock-bg" style="position:fixed;inset:0;z-index:-1;background:#0c0b09;transition:background 0.75s cubic-bezier(0.4,0,0.2,1);"></div>
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;">
+    <div id="clock-name" style="font-family:'Cormorant Garamond',serif;font-weight:300;letter-spacing:0.08em;text-align:center;transition:font-size 0.75s cubic-bezier(0.4,0,0.2,1),color 0.75s cubic-bezier(0.4,0,0.2,1),margin-bottom 0.75s cubic-bezier(0.4,0,0.2,1),opacity 0.75s cubic-bezier(0.4,0,0.2,1);"></div>
+    <div id="clock-time" style="font-family:'Spectral',serif;font-weight:300;font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-0.01em;text-align:center;transition:font-size 0.75s cubic-bezier(0.4,0,0.2,1),color 0.75s cubic-bezier(0.4,0,0.2,1);"></div>
+  </div>
+  <div id="end-turn-zone" style="position:fixed;bottom:0;left:0;right:0;height:80px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-top:1px solid transparent;transition:opacity 0.75s,border-color 0.75s;opacity:0;pointer-events:none;" onclick="endTurn()">
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#8a6d3e;">End Turn →</div>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="screen" id="screen-summary">
+  <div style="text-align:center;padding:60px 28px 28px;flex-shrink:0;">
+    <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:40px;color:var(--text);margin-bottom:8px;">Game over</div>
+    <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);" id="summary-subtitle"></div>
+  </div>
+  <div id="summary-rows" style="padding:0 28px;flex:1;overflow-y:auto;"></div>
+  <div style="padding:20px 28px 48px;flex-shrink:0;">
+    <button class="btn-primary" onclick="go('home');resetGame();">New Game</button>
+  </div>
+</div>
+
+<!-- Firebase SDKs -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getDatabase, ref, set, get, onValue, update, remove, push } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDnKddaR2sSKWhFxWFFp10arZvQIgZyjag",
+  authDomain: "game-timer-app.firebaseapp.com",
+  databaseURL: "https://game-timer-app-default-rtdb.firebaseio.com",
+  projectId: "game-timer-app",
+  storageBucket: "game-timer-app.firebasestorage.app",
+  messagingSenderId: "760255618633",
+  appId: "1:760255618633:web:cf4d446673fb473cd02998"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// ── STATE ──
+let myId = null;
+let myName = null;
+let myColor = '#c8a96e';
+let roomCode = null;
+let isHost = false;
+let gameRef = null;
+let playersRef = null;
+let gameListener = null;
+let ticker = null;
+let myTurnSec = 0;
+let currentTurnId = null;
+let players = {};
+let gameStarted = false;
+let mins = 20, secs = 0;
+let idleTicker = null;
+
+// ── SESSION PERSISTENCE ──
+function saveSession() {
+  localStorage.setItem('tempo_session', JSON.stringify({ myId, myName, myColor, roomCode, isHost }));
+}
+function clearSession() {
+  localStorage.removeItem('tempo_session');
+}
+async function restoreSession() {
+  const raw = localStorage.getItem('tempo_session');
+  if (!raw) return;
+  try {
+    const s = JSON.parse(raw);
+    if (!s.myId || !s.roomCode) return;
+    const snap = await get(ref(db, 'games/' + s.roomCode));
+    if (!snap.exists()) { clearSession(); return; }
+    const game = snap.val();
+    if (!game.players?.[s.myId]) { clearSession(); return; }
+    myId=s.myId; myName=s.myName; myColor=s.myColor; roomCode=s.roomCode; isHost=s.isHost;
+    gameRef=ref(db,'games/'+roomCode);
+    playersRef=ref(db,'games/'+roomCode+'/players');
+    const bm=Math.floor(game.bankSeconds/60), bs=game.bankSeconds%60;
+    document.getElementById('lobby-code').textContent=roomCode;
+    document.getElementById('lobby-time-display').textContent=String(bm).padStart(2,'0')+':'+String(bs).padStart(2,'0');
+    document.getElementById('start-btn').textContent=isHost?'Start Game →':'Waiting for host…';
+    document.getElementById('start-btn').disabled=!isHost;
+    listenToGame();
+    if(game.status==='lobby') go('lobby');
+    else if(game.status==='playing'){gameStarted=true;go('clock');}
+    else if(game.status==='finished') renderSummary(game);
+  } catch(e){ clearSession(); }
+}
+
+// ── HELPERS ──
+function generateCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+  return Array.from({length:4}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
+}
+
+function generateId() {
+  return Math.random().toString(36).substr(2,9);
+}
+
+function formatTime(s) {
+  const m = Math.floor(Math.abs(s)/60).toString().padStart(2,'0');
+  const sc = (Math.abs(s)%60).toString().padStart(2,'0');
+  return `${m}:${sc}`;
+}
+
+function getSelectedColor(pickerId) {
+  const sel = document.querySelector(`#${pickerId} .color-swatch.selected`);
+  return sel ? sel.dataset.color : '#c8a96e';
+}
+
+// ── NAVIGATION ──
+window.go = function(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+}
+
+// ── TIME PICKER ──
+window.adjustTime = function(unit, delta) {
+  if(unit==='min') mins = Math.max(1, Math.min(99, mins+delta));
+  else secs = ((secs+delta)+60)%60;
+  document.getElementById('min-display').textContent = String(mins).padStart(2,'0');
+  document.getElementById('sec-display').textContent = String(secs).padStart(2,'0');
+}
+
+window.setToggle = function(mode) {
+  document.getElementById('tog-same').classList.toggle('on', mode==='same');
+  document.getElementById('tog-custom').classList.toggle('on', mode==='custom');
+}
+
+window.pickColor = function(el, pickerId) {
+  document.querySelectorAll(`#${pickerId} .color-swatch`).forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ── CREATE GAME ──
+window.createGame = async function() {
+  const name = document.getElementById('host-name').value.trim();
+  if (!name) { document.getElementById('host-error').textContent = 'Enter your name'; return; }
+  document.getElementById('host-error').textContent = '';
+
+  myId = generateId();
+  myName = name;
+  myColor = getSelectedColor('host-colors');
+  isHost = true;
+  roomCode = generateCode();
+
+  const bankSeconds = mins * 60 + secs;
+  const playerData = { id: myId, name, color: myColor, bank: bankSeconds, totalUsed: 0, isHost: true };
+
+  gameRef = ref(db, `games/${roomCode}`);
+  playersRef = ref(db, `games/${roomCode}/players`);
+
+  await set(gameRef, {
+    code: roomCode,
+    status: 'lobby',
+    bankSeconds,
+    currentTurn: null,
+    turnOrder: [myId],
+    turnIndex: 0,
+    players: { [myId]: playerData }
+  });
+
+  document.getElementById('lobby-code').textContent = roomCode;
+  document.getElementById('lobby-time-display').textContent = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+  document.getElementById('start-btn').textContent = 'Start Game →';
+  document.getElementById('start-btn').disabled = false;
+
+  saveSession();
+  listenToGame();
+  go('lobby');
+}
+
+// ── JOIN GAME ──
+window.joinGame = async function() {
+  const code = document.getElementById('room-code-input').value.trim().toUpperCase();
+  const name = document.getElementById('join-name').value.trim();
+  const errEl = document.getElementById('join-error');
+
+  if (code.length !== 4) { errEl.textContent = 'Enter a 4-letter code'; return; }
+  if (!name) { errEl.textContent = 'Enter your name'; return; }
+  errEl.textContent = 'Connecting…';
+
+  try {
+    const snap = await get(ref(db, `games/${code}`));
+    if (!snap.exists()) { errEl.textContent = 'Room not found'; return; }
+    const game = snap.val();
+    if (game.status === 'playing') { errEl.textContent = 'Game already started'; return; }
+
+    // Check color taken
+    const takenColors = Object.values(game.players||{}).map(p => p.color);
+    myColor = getSelectedColor('join-colors');
+    if (takenColors.includes(myColor)) { errEl.textContent = 'Color taken — pick another'; return; }
+
+    myId = generateId();
+    myName = name;
+    isHost = false;
+    roomCode = code;
+
+    const bankSeconds = game.bankSeconds;
+    const playerData = { id: myId, name, color: myColor, bank: bankSeconds, totalUsed: 0, isHost: false };
+
+    gameRef = ref(db, `games/${roomCode}`);
+    playersRef = ref(db, `games/${roomCode}/players`);
+
+    // Add player and update turn order
+    const newOrder = [...(game.turnOrder||[]), myId];
+    await update(gameRef, {
+      [`players/${myId}`]: playerData,
+      turnOrder: newOrder
+    });
+
+    const bm = Math.floor(bankSeconds/60), bs = bankSeconds%60;
+    document.getElementById('lobby-code').textContent = roomCode;
+    document.getElementById('lobby-time-display').textContent = `${String(bm).padStart(2,'0')}:${String(bs).padStart(2,'0')}`;
+    document.getElementById('start-btn').textContent = 'Waiting for host…';
+    document.getElementById('start-btn').disabled = true;
+
+    errEl.textContent = '';
+    saveSession();
+    listenToGame();
+    go('lobby');
+  } catch(e) {
+    errEl.textContent = 'Connection error';
+    console.error(e);
+  }
+}
+
+// ── LISTEN TO GAME ──
+function listenToGame() {
+  if (gameListener) gameListener();
+  gameListener = onValue(gameRef, snap => {
+    if (!snap.exists()) return;
+    const game = snap.val();
+    players = game.players || {};
+
+    if (game.status === 'lobby') renderLobby(game);
+    if (game.status === 'playing') renderClock(game);
+    if (game.status === 'finished') renderSummary(game);
+  });
+}
+
+// ── LOBBY RENDER ──
+function renderLobby(game) {
+  const playerList = Object.values(game.players||{});
+  const container = document.getElementById('lobby-players');
+  container.innerHTML = playerList.map(p => `
+    <div class="lobby-player">
+      <div class="lobby-dot" style="background:${p.color};"></div>
+      <div class="lobby-name">${p.name}${p.id===myId?' (you)':''}</div>
+      ${p.isHost ? '<div class="lobby-badge">Host</div>' : ''}
+    </div>
+  `).join('');
+
+  // Show/hide waiting indicator
+  document.getElementById('lobby-waiting').style.display = playerList.length < 8 ? 'flex' : 'none';
+
+  // Enable start only for host with 2+ players
+  if (isHost) {
+    const btn = document.getElementById('start-btn');
+    if (playerList.length >= 2) {
+      btn.disabled = false;
+      btn.textContent = 'Start Game →';
+    } else {
+      btn.disabled = true;
+      btn.textContent = 'Waiting for players…';
+    }
+  }
+}
+
+// ── START GAME ──
+window.startGame = async function() {
+  if (!isHost) return;
+  const snap = await get(gameRef);
+  const game = snap.val();
+  const order = game.turnOrder;
+  const firstId = order[0];
+
+  await update(gameRef, {
+    status: 'playing',
+    currentTurn: firstId,
+    turnIndex: 0,
+    turnStartedAt: Date.now()
+  });
+}
+
+// ── CLOCK RENDER ──
+function renderClock(game) {
+  if (!gameStarted) { gameStarted = true; go('clock'); }
+
+  const turnId = game.currentTurn;
+  const myTurn = turnId === myId;
+  const bg = document.getElementById('clock-bg');
+  const nameEl = document.getElementById('clock-name');
+  const timeEl = document.getElementById('clock-time');
+  const endZone = document.getElementById('end-turn-zone');
+
+  // If turn changed, stop local tick
+  if (turnId !== currentTurnId) {
+    stopTick();
+    currentTurnId = turnId;
+    myTurnSec = 0;
+
+    // Animate transition
+    nameEl.style.opacity = '0';
+    setTimeout(() => {
+      const p = players[turnId];
+      if (!p) return;
+
+      if (myTurn) {
+        bg.style.background = '#f0ebe2';
+        setTimeout(() => {
+          nameEl.style.fontSize = '13px';
+          nameEl.style.color = '#9a8870';
+          nameEl.style.letterSpacing = '0.22em';
+          nameEl.style.marginBottom = '12px';
+          nameEl.style.fontFamily = "'DM Mono', monospace";
+          nameEl.textContent = 'Your turn';
+          nameEl.style.opacity = '0';
+
+          timeEl.style.fontSize = 'clamp(88px,22vw,112px)';
+          timeEl.style.color = '#18140e';
+          timeEl.innerHTML = formatTime(p.bank);
+
+          endZone.style.opacity = '1';
+          endZone.style.pointerEvents = 'auto';
+          endZone.style.borderColor = 'rgba(90,70,40,0.1)';
+
+          stopIdleTick();
+          startTick(p.bank);
+        }, 120);
+      } else {
+        bg.style.background = '#0c0b09';
+        setTimeout(() => {
+          nameEl.style.fontSize = 'clamp(50px,13vw,68px)';
+          nameEl.style.color = '#e4dcd0';
+          nameEl.style.letterSpacing = '0.07em';
+          nameEl.style.marginBottom = '24px';
+          nameEl.style.fontFamily = "'Cormorant Garamond', serif";
+          nameEl.textContent = p.name;
+          nameEl.style.opacity = '1';
+
+          timeEl.style.fontSize = 'clamp(22px,5vw,26px)';
+          timeEl.style.color = '#5a5248';
+          timeEl.innerHTML = formatTime(p.bank);
+
+          endZone.style.opacity = '0';
+          endZone.style.pointerEvents = 'none';
+          endZone.style.borderColor = 'transparent';
+
+          // Local idle countdown so screen shows live time
+          stopIdleTick();
+          let idleBank = p.bank;
+          idleTicker = setInterval(() => {
+            idleBank = Math.max(0, idleBank - 1);
+            timeEl.innerHTML = formatTime(idleBank);
+            if (idleBank <= 0) stopIdleTick();
+          }, 1000);
+        }, 120);
+      }
+    }, 260);
+  }
+}
+
+// ── TICK ──
+function startTick(initialBank) {
+  stopTick();
+  let bank = initialBank;
+  myTurnSec = 0;
+  const timeEl = document.getElementById('clock-time');
+
+  ticker = setInterval(async () => {
+    bank--;
+    myTurnSec++;
+    timeEl.innerHTML = formatTime(bank);
+    if (bank <= 120) timeEl.style.color = '#b05030';
+    else timeEl.style.color = '#18140e';
+
+    // Write bank back to Firebase every 5 seconds to keep it in sync
+    if (myTurnSec % 5 === 0) {
+      await update(ref(db, `games/${roomCode}/players/${myId}`), {
+        bank: bank,
+        totalUsed: (players[myId]?.totalUsed||0) + myTurnSec
+      });
+    }
+
+    if (bank <= 0) {
+      stopTick();
+      await update(ref(db, `games/${roomCode}/players/${myId}`), { bank: 0 });
+      endTurn();
+    }
+  }, 1000);
+}
+
+function stopTick() {
+  if (ticker) { clearInterval(ticker); ticker = null; }
+}
+function stopIdleTick() {
+  if (idleTicker) { clearInterval(idleTicker); idleTicker = null; }
+}
+
+// ── END TURN ──
+window.endTurn = async function() {
+  if (!ticker && currentTurnId !== myId) return;
+  stopTick();
+
+  // Save final bank state
+  const timeEl = document.getElementById('clock-time');
+  const currentBank = players[myId]?.bank || 0;
+  const actualBank = Math.max(0, currentBank - myTurnSec);
+
+  await update(ref(db, `games/${roomCode}/players/${myId}`), {
+    bank: actualBank,
+    totalUsed: (players[myId]?.totalUsed||0) + myTurnSec
+  });
+
+  // Advance turn
+  const snap = await get(gameRef);
+  const game = snap.val();
+  const order = game.turnOrder;
+  const nextIndex = (game.turnIndex + 1) % order.length;
+  const nextId = order[nextIndex];
+
+  await update(gameRef, {
+    currentTurn: nextId,
+    turnIndex: nextIndex,
+    turnStartedAt: Date.now()
+  });
+}
+
+// ── LEAVE / RESET ──
+window.leaveGame = async function() {
+  stopTick();
+  if (gameListener) { gameListener(); gameListener = null; }
+  if (roomCode && myId) {
+    if (isHost) {
+      await remove(ref(db, `games/${roomCode}`));
+    } else {
+      await remove(ref(db, `games/${roomCode}/players/${myId}`));
+    }
+  }
+  resetGame();
+  go('home');
+}
+
+window.resetGame = function() {
+  stopTick();
+  stopIdleTick();
+  clearSession();
+  myId = null; myName = null; myColor = '#c8a96e';
+  roomCode = null; isHost = false; gameRef = null; playersRef = null;
+  gameStarted = false; currentTurnId = null; players = {};
+  document.getElementById('room-code-input').value = '';
+  document.getElementById('host-name').value = '';
+  document.getElementById('join-name').value = '';
+}
+
+// ── END GAME (host only) ──
+window.endGame = async function() {
+  if (!isHost) return;
+  stopTick();
+  await update(gameRef, { status: 'finished' });
+}
+
+// ── SUMMARY ──
+function renderSummary(game) {
+  stopTick();
+  go('summary');
+  const playerList = Object.values(game.players||{});
+  const maxUsed = Math.max(...playerList.map(p => p.totalUsed||0));
+
+  document.getElementById('summary-subtitle').textContent =
+    `${playerList.length} players`;
+
+  document.getElementById('summary-rows').innerHTML = playerList
+    .sort((a,b) => (b.totalUsed||0)-(a.totalUsed||0))
+    .map(p => {
+      const pct = maxUsed > 0 ? Math.round((p.totalUsed||0)/maxUsed*100) : 0;
+      return `
+        <div class="summary-row">
+          <div class="lobby-dot" style="background:${p.color};flex-shrink:0;"></div>
+          <div style="flex:1;font-size:14px;letter-spacing:0.05em;">${p.name}${p.id===myId?' (you)':''}</div>
+          <div style="font-size:13px;color:var(--text-mid);margin-right:12px;font-variant-numeric:tabular-nums;">${formatTime(p.totalUsed||0)}</div>
+          <div class="summary-bar-wrap">
+            <div class="summary-bar-fill" style="width:${pct}%;background:${p.color};"></div>
+          </div>
+          <div style="font-size:11px;color:var(--text-dim);min-width:32px;text-align:right;">${pct}%</div>
+        </div>`;
+    }).join('');
+}
+
+// ── RESTORE SESSION ON LOAD ──
+restoreSession();
+</script>
+</body>
+</html>

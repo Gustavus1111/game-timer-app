@@ -280,6 +280,39 @@ let currentTurnId = null;
 let players = {};
 let gameStarted = false;
 let mins = 20, secs = 0;
+let idleTicker = null;
+
+// ── SESSION PERSISTENCE ──
+function saveSession() {
+  localStorage.setItem('tempo_session', JSON.stringify({ myId, myName, myColor, roomCode, isHost }));
+}
+function clearSession() {
+  localStorage.removeItem('tempo_session');
+}
+async function restoreSession() {
+  const raw = localStorage.getItem('tempo_session');
+  if (!raw) return;
+  try {
+    const s = JSON.parse(raw);
+    if (!s.myId || !s.roomCode) return;
+    const snap = await get(ref(db, 'games/' + s.roomCode));
+    if (!snap.exists()) { clearSession(); return; }
+    const game = snap.val();
+    if (!game.players?.[s.myId]) { clearSession(); return; }
+    myId=s.myId; myName=s.myName; myColor=s.myColor; roomCode=s.roomCode; isHost=s.isHost;
+    gameRef=ref(db,'games/'+roomCode);
+    playersRef=ref(db,'games/'+roomCode+'/players');
+    const bm=Math.floor(game.bankSeconds/60), bs=game.bankSeconds%60;
+    document.getElementById('lobby-code').textContent=roomCode;
+    document.getElementById('lobby-time-display').textContent=String(bm).padStart(2,'0')+':'+String(bs).padStart(2,'0');
+    document.getElementById('start-btn').textContent=isHost?'Start Game →':'Waiting for host…';
+    document.getElementById('start-btn').disabled=!isHost;
+    listenToGame();
+    if(game.status==='lobby') go('lobby');
+    else if(game.status==='playing'){gameStarted=true;go('clock');}
+    else if(game.status==='finished') renderSummary(game);
+  } catch(e){ clearSession(); }
+}
 
 // ── HELPERS ──
 function generateCode() {
@@ -359,6 +392,7 @@ window.createGame = async function() {
   document.getElementById('start-btn').textContent = 'Start Game →';
   document.getElementById('start-btn').disabled = false;
 
+  saveSession();
   listenToGame();
   go('lobby');
 }
@@ -409,6 +443,7 @@ window.joinGame = async function() {
     document.getElementById('start-btn').disabled = true;
 
     errEl.textContent = '';
+    saveSession();
     listenToGame();
     go('lobby');
   } catch(e) {
@@ -517,6 +552,7 @@ function renderClock(game) {
           endZone.style.pointerEvents = 'auto';
           endZone.style.borderColor = 'rgba(90,70,40,0.1)';
 
+          stopIdleTick();
           startTick(p.bank);
         }, 120);
       } else {
@@ -537,6 +573,15 @@ function renderClock(game) {
           endZone.style.opacity = '0';
           endZone.style.pointerEvents = 'none';
           endZone.style.borderColor = 'transparent';
+
+          // Local idle countdown so screen shows live time
+          stopIdleTick();
+          let idleBank = p.bank;
+          idleTicker = setInterval(() => {
+            idleBank = Math.max(0, idleBank - 1);
+            timeEl.innerHTML = formatTime(idleBank);
+            if (idleBank <= 0) stopIdleTick();
+          }, 1000);
         }, 120);
       }
     }, 260);
@@ -575,6 +620,9 @@ function startTick(initialBank) {
 
 function stopTick() {
   if (ticker) { clearInterval(ticker); ticker = null; }
+}
+function stopIdleTick() {
+  if (idleTicker) { clearInterval(idleTicker); idleTicker = null; }
 }
 
 // ── END TURN ──
@@ -623,6 +671,8 @@ window.leaveGame = async function() {
 
 window.resetGame = function() {
   stopTick();
+  stopIdleTick();
+  clearSession();
   myId = null; myName = null; myColor = '#c8a96e';
   roomCode = null; isHost = false; gameRef = null; playersRef = null;
   gameStarted = false; currentTurnId = null; players = {};
@@ -664,6 +714,9 @@ function renderSummary(game) {
         </div>`;
     }).join('');
 }
+
+// ── RESTORE SESSION ON LOAD ──
+restoreSession();
 </script>
 </body>
 </html>

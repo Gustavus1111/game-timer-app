@@ -21,29 +21,23 @@
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;}
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;}
 
-/* ── SCREENS ── */
 .screen{position:fixed;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity var(--dur) var(--ease);overflow:hidden;}
 .screen.active{opacity:1;pointer-events:auto;}
-
-/* ── LAYOUT ── */
 .top-nav{display:flex;align-items:center;justify-content:space-between;padding:52px 28px 20px;flex-shrink:0;}
 .nav-spacer{width:48px;}
 .nav-title{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);}
 .screen-body{flex:1;display:flex;flex-direction:column;padding:0 28px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .screen-footer{padding:16px 28px 48px;flex-shrink:0;}
 
-/* ── BUTTONS ── */
 .btn{width:100%;border:none;border-radius:4px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;transition:opacity 0.2s;padding:18px;}
 .btn:active{opacity:0.8;}
 .btn:disabled{opacity:0.3;cursor:default;}
 .btn-primary{background:var(--amber);color:#0c0b09;}
 .btn-secondary{background:transparent;border:1px solid var(--border-light);color:var(--text-mid);padding:16px;margin-top:10px;}
 .btn-secondary:hover{border-color:var(--amber-dim);color:var(--amber);}
-.btn-danger{background:transparent;border:1px solid rgba(192,96,64,0.25);color:#c06040;padding:14px;margin-top:10px;}
 .back-btn{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-mid);background:none;border:none;cursor:pointer;padding:8px 0;font-family:'DM Mono',monospace;transition:color 0.2s;}
 .back-btn:hover{color:var(--amber);}
 
-/* ── FORM ── */
 .field{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
 .field-label{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);}
 .field-input{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px 16px;font-family:'DM Mono',monospace;font-size:14px;color:var(--text);outline:none;transition:border-color 0.2s;letter-spacing:0.05em;-webkit-appearance:none;width:100%;}
@@ -51,31 +45,39 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .field-input::placeholder{color:var(--text-dim);}
 .error-msg{font-size:11px;color:#c06040;letter-spacing:0.06em;text-align:center;min-height:18px;margin-bottom:8px;}
 
-/* ── TYPOGRAPHY ── */
 .section-heading{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:32px;letter-spacing:0.04em;color:var(--text);margin-bottom:32px;line-height:1.2;}
 
-/* ── TOGGLE ── */
-.toggle-group{display:flex;gap:2px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:3px;margin-bottom:28px;}
-.toggle-opt{flex:1;padding:10px;text-align:center;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);border-radius:3px;cursor:pointer;transition:all 0.2s;}
-.toggle-opt.on{background:var(--amber-dim);color:var(--amber);}
+/* MODE CARDS */
+.mode-cards{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.mode-card{padding:18px 20px;background:var(--surface);border:1.5px solid var(--border);border-radius:6px;cursor:pointer;transition:border-color 0.2s,background 0.2s;}
+.mode-card.selected{border-color:var(--amber);background:rgba(200,169,110,0.04);}
+.mode-card-title{font-size:13px;letter-spacing:0.06em;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:10px;}
+.mode-card-desc{font-size:11px;color:var(--text-mid);letter-spacing:0.04em;line-height:1.6;}
+.mode-dot{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--border-light);flex-shrink:0;transition:all 0.2s;}
+.mode-card.selected .mode-dot{background:var(--amber);border-color:var(--amber);}
 
-/* ── TIME PICKER ── */
-.time-picker{display:flex;align-items:center;justify-content:center;gap:16px;padding:24px 0;margin-bottom:28px;}
-.time-unit{display:flex;flex-direction:column;align-items:center;gap:12px;}
+/* TIME PICKER */
+.time-picker{display:flex;align-items:center;justify-content:center;gap:16px;padding:20px 0;margin-bottom:24px;}
+.time-unit{display:flex;flex-direction:column;align-items:center;gap:10px;}
 .time-unit-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);}
-.time-display{font-family:'Spectral',serif;font-size:52px;font-weight:300;color:var(--text);line-height:1;font-variant-numeric:tabular-nums;min-width:80px;text-align:center;}
-.time-colon{font-family:'Spectral',serif;font-size:40px;font-weight:300;color:var(--text-dim);margin-bottom:24px;}
+.time-display{font-family:'Spectral',serif;font-size:48px;font-weight:300;color:var(--text);line-height:1;font-variant-numeric:tabular-nums;min-width:76px;text-align:center;}
+.time-display.sm{font-size:36px;min-width:56px;}
+.time-colon{font-family:'Spectral',serif;font-size:36px;font-weight:300;color:var(--text-dim);margin-bottom:20px;}
 .stepper{display:flex;gap:8px;}
 .step-btn{width:36px;height:36px;background:var(--surface);border:1px solid var(--border-light);border-radius:3px;color:var(--text-mid);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;font-family:'DM Mono',monospace;}
 .step-btn:active{border-color:var(--amber);color:var(--amber);}
 
-/* ── COLOR SWATCHES ── */
+/* BONUS SECTION */
+.bonus-section{background:rgba(200,169,110,0.04);border:1px solid var(--amber-dim);border-radius:6px;padding:18px 20px;margin-bottom:24px;}
+.bonus-section-title{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber);margin-bottom:16px;}
+
+/* COLOR SWATCHES */
 .color-picker{display:flex;gap:10px;flex-wrap:wrap;}
 .color-swatch{width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s,transform 0.15s,opacity 0.15s;flex-shrink:0;}
 .color-swatch.selected{border-color:var(--text);transform:scale(1.15);}
 .color-swatch.taken{opacity:0.2;cursor:default;pointer-events:none;}
 
-/* ── LOBBY ── */
+/* LOBBY */
 .room-code-big{font-family:'Spectral',serif;font-size:56px;font-weight:300;letter-spacing:0.3em;color:var(--amber);line-height:1;text-align:center;}
 .room-code-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-bottom:12px;}
 .lobby-player{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:6px;}
@@ -87,12 +89,31 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .settings-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text-mid);padding:8px 0;border-top:1px solid var(--border);}
 .settings-row span:last-child{color:var(--text);}
 
-/* ── SUMMARY ── */
+/* SUMMARY */
 .summary-row{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:4px;}
 .summary-bar-wrap{width:64px;height:2px;background:var(--border);border-radius:1px;overflow:hidden;}
 .summary-bar-fill{height:100%;border-radius:1px;transition:width 1s ease;}
 
-/* ── ANIMATIONS ── */
+/* BONUS ANIMATION */
+@keyframes bonusRise{
+  0%{opacity:0;transform:translateY(0) scale(0.8);}
+  20%{opacity:1;transform:translateY(-8px) scale(1);}
+  70%{opacity:1;transform:translateY(-28px) scale(1);}
+  100%{opacity:0;transform:translateY(-44px) scale(0.95);}
+}
+.bonus-toast{
+  position:fixed;
+  left:50%;transform:translateX(-50%);
+  bottom:100px;
+  font-family:'Spectral',serif;
+  font-size:28px;font-weight:300;
+  color:#6a9060;
+  pointer-events:none;
+  z-index:1000;
+  animation:bonusRise 1.4s cubic-bezier(0.22,1,0.36,1) forwards;
+  white-space:nowrap;
+  letter-spacing:0.04em;
+}
 @keyframes breathe{0%,100%{opacity:0.2;transform:scale(1)}50%{opacity:0.5;transform:scale(1.6)}}
 .pulse{animation:breathe 2.5s ease-in-out infinite;}
 </style>
@@ -119,16 +140,33 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="nav-spacer"></div>
   </div>
   <div class="screen-body">
-    <div class="section-heading">Set the<br>time bank</div>
+    <div class="section-heading">Set up<br>the game</div>
+
+    <!-- MODE SELECT -->
     <div class="field">
-      <div class="field-label">Time per player</div>
+      <div class="field-label">Mode</div>
+      <div class="mode-cards">
+        <div class="mode-card selected" id="mode-classic" onclick="selectMode('classic')">
+          <div class="mode-card-title"><div class="mode-dot"></div>Classic</div>
+          <div class="mode-card-desc">Each player has a fixed time bank. When it runs out, time's up.</div>
+        </div>
+        <div class="mode-card" id="mode-bonus" onclick="selectMode('bonus')">
+          <div class="mode-card-title"><div class="mode-dot"></div>Bonus</div>
+          <div class="mode-card-desc">Same as classic, but you earn bonus seconds back every time you end your turn.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIME BANK -->
+    <div class="field">
+      <div class="field-label">Time bank per player</div>
       <div class="time-picker">
         <div class="time-unit">
           <div class="time-display" id="min-display">20</div>
           <div class="time-unit-label">min</div>
           <div class="stepper">
-            <button class="step-btn" onclick="adjustTime('min',-5)">−</button>
-            <button class="step-btn" onclick="adjustTime('min',5)">+</button>
+            <button class="step-btn" onclick="adjustTime('bank','min',-1)">−</button>
+            <button class="step-btn" onclick="adjustTime('bank','min',1)">+</button>
           </div>
         </div>
         <div class="time-colon">:</div>
@@ -136,12 +174,32 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           <div class="time-display" id="sec-display">00</div>
           <div class="time-unit-label">sec</div>
           <div class="stepper">
-            <button class="step-btn" onclick="adjustTime('sec',-15)">−</button>
-            <button class="step-btn" onclick="adjustTime('sec',15)">+</button>
+            <button class="step-btn" onclick="adjustTime('bank','sec',-5)">−</button>
+            <button class="step-btn" onclick="adjustTime('bank','sec',5)">+</button>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- BONUS SETTINGS (shown only in bonus mode) -->
+    <div id="bonus-settings" style="display:none;">
+      <div class="bonus-section">
+        <div class="bonus-section-title">Bonus settings</div>
+        <div class="field-label" style="margin-bottom:12px;">Seconds awarded per completed turn</div>
+        <div class="time-picker" style="padding:8px 0;margin-bottom:0;">
+          <div class="time-unit">
+            <div class="time-display sm" id="bonus-display">30</div>
+            <div class="time-unit-label">seconds</div>
+            <div class="stepper">
+              <button class="step-btn" onclick="adjustTime('bonus','sec',-5)">−</button>
+              <button class="step-btn" onclick="adjustTime('bonus','sec',5)">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAME + COLOR -->
     <div class="field">
       <div class="field-label">Your name</div>
       <input class="field-input" type="text" id="host-name" placeholder="Enter your name" maxlength="16" autocomplete="off">
@@ -224,7 +282,9 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     </div>
     <div style="margin-top:20px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;">
       <div class="field-label" style="margin-bottom:4px;">Settings</div>
+      <div class="settings-row"><span>Mode</span><span id="lobby-mode">—</span></div>
       <div class="settings-row"><span>Time bank</span><span id="lobby-time-display">—</span></div>
+      <div class="settings-row" id="lobby-bonus-row" style="display:none;"><span>Bonus per turn</span><span id="lobby-bonus-display">—</span></div>
       <div class="settings-row"><span>Players</span><span id="lobby-player-count">—</span></div>
     </div>
   </div>
@@ -241,11 +301,9 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div id="clock-name" style="font-family:'Cormorant Garamond',serif;font-weight:300;letter-spacing:0.08em;text-align:center;will-change:font-size,color,opacity;transition:font-size 0.75s cubic-bezier(0.4,0,0.2,1),color 0.75s cubic-bezier(0.4,0,0.2,1),margin-bottom 0.75s cubic-bezier(0.4,0,0.2,1),opacity 0.75s cubic-bezier(0.4,0,0.2,1),letter-spacing 0.75s cubic-bezier(0.4,0,0.2,1);"></div>
     <div id="clock-time" style="font-family:'Spectral',serif;font-weight:300;font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-0.01em;text-align:center;will-change:font-size,color;transition:font-size 0.75s cubic-bezier(0.4,0,0.2,1),color 0.75s cubic-bezier(0.4,0,0.2,1);"></div>
   </div>
-  <!-- End turn zone — full bottom tap area -->
   <div id="end-zone" style="position:fixed;bottom:0;left:0;right:0;height:80px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-top:1px solid transparent;opacity:0;pointer-events:none;transition:opacity 0.75s,border-color 0.75s;" onclick="endTurn()">
-    <span style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#8a6d3e;">End Turn →</span>
+    <span id="end-zone-label" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#8a6d3e;">End Turn →</span>
   </div>
-  <!-- Host end game button -->
   <div id="host-end-btn" style="position:fixed;top:52px;right:24px;display:none;">
     <button class="back-btn" style="color:var(--text-dim);font-size:10px;" onclick="confirmEndGame()">End Game</button>
   </div>
@@ -269,9 +327,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getDatabase, ref, set, get, onValue, update, remove, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+import { getDatabase, ref, set, get, onValue, update, remove } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 
-// ── FIREBASE ──
 const app = initializeApp({
   apiKey: "AIzaSyDnKddaR2sSKWhFxWFFp10arZvQIgZyjag",
   authDomain: "game-timer-app.firebaseapp.com",
@@ -284,74 +341,64 @@ const app = initializeApp({
 const db = getDatabase(app);
 
 // ── STATE ──
-let myId        = null;
-let myName      = null;
-let myColor     = '#c8a96e';
-let roomCode    = null;
-let isHost      = false;
-let gameRef     = null;
-let unsub       = null;   // Firebase listener unsubscribe
-let tickerRaf   = null;   // requestAnimationFrame handle for active tick
-let idleRaf     = null;   // requestAnimationFrame handle for idle tick
-let lastTurnId  = null;
-let bankAtTurnStart = 0;  // bank value when my turn started
-let turnStartTs = 0;      // ms timestamp when current turn started
-let gameStarted = false;
-let mins = 20, secs = 0;
-const MAX_PLAYERS = 8;
-const COLORS = ['#c8a96e','#c06040','#6a9060','#5580a0','#806080','#a07050','#507080'];
+let myId=null, myName=null, myColor='#c8a96e';
+let roomCode=null, isHost=false, gameRef=null, unsub=null;
+let tickerRaf=null, idleRaf=null;
+let lastTurnId=null, bankAtTurnStart=0, turnStartTs=0;
+let gameStarted=false;
+let gameMode='classic'; // 'classic' | 'bonus'
+let bonusSecs=30;       // seconds awarded per turn in bonus mode
+
+// Setup pickers
+let bankMins=20, bankSecs=0;
+
+const MAX_PLAYERS=8;
 
 // ── HELPERS ──
-function uid()  { return Math.random().toString(36).slice(2,11); }
-function code() {
+function uid(){ return Math.random().toString(36).slice(2,11); }
+function code(){
   const c='ABCDEFGHJKLMNPQRSTUVWXYZ';
   return Array.from({length:4},()=>c[Math.floor(Math.random()*c.length)]).join('');
 }
-function fmt(s) {
-  s = Math.max(0, Math.round(s));
+function fmt(s){
+  s=Math.max(0,Math.round(s));
   return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
 }
-function fmtTotal(s) {
-  s = Math.round(s);
-  const h = Math.floor(s/3600);
-  const m = Math.floor((s%3600)/60);
-  const sc = s%60;
-  return h > 0
-    ? `${h}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`
-    : `${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
+function fmtTotal(s){
+  s=Math.round(s);
+  const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sc=s%60;
+  return h>0?`${h}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`:`${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
 }
-function selectedColor(id) {
-  return document.querySelector(`#${id} .color-swatch.selected`)?.dataset.color || '#c8a96e';
-}
-function stopRaf(handle) { if(handle) cancelAnimationFrame(handle); return null; }
+function selectedColor(id){ return document.querySelector(`#${id} .color-swatch.selected`)?.dataset.color||'#c8a96e'; }
+function stopRaf(h){ if(h) cancelAnimationFrame(h); return null; }
 
 // ── NAVIGATION ──
-window.go = function(name) {
+window.go=function(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+name).classList.add('active');
 };
 
 // ── SESSION ──
-function saveSession() {
-  try { localStorage.setItem('tempo', JSON.stringify({myId,myName,myColor,roomCode,isHost})); } catch(e){}
-}
-function clearSession() {
-  try { localStorage.removeItem('tempo'); } catch(e){}
-}
-async function restoreSession() {
-  let s;
-  try { s = JSON.parse(localStorage.getItem('tempo')||'null'); } catch(e){ return; }
-  if (!s?.myId || !s?.roomCode) return;
-  const snap = await get(ref(db,`games/${s.roomCode}`)).catch(()=>null);
-  if (!snap?.exists()) { clearSession(); return; }
-  const game = snap.val();
-  if (!game.players?.[s.myId]) { clearSession(); return; }
+function saveSession(){ try{ localStorage.setItem('tempo',JSON.stringify({myId,myName,myColor,roomCode,isHost})); }catch(e){} }
+function clearSession(){ try{ localStorage.removeItem('tempo'); }catch(e){} }
+async function restoreSession(){
+  let s; try{ s=JSON.parse(localStorage.getItem('tempo')||'null'); }catch(e){ return; }
+  if(!s?.myId||!s?.roomCode) return;
+  const snap=await get(ref(db,`games/${s.roomCode}`)).catch(()=>null);
+  if(!snap?.exists()){ clearSession(); return; }
+  const game=snap.val();
+  if(!game.players?.[s.myId]){ clearSession(); return; }
   myId=s.myId; myName=s.myName; myColor=s.myColor; roomCode=s.roomCode; isHost=s.isHost;
   gameRef=ref(db,`games/${roomCode}`);
   attachListener();
-  const bm=Math.floor(game.bankSeconds/60), bs=game.bankSeconds%60;
+  const bm=Math.floor(game.bankSeconds/60),bs=game.bankSeconds%60;
   document.getElementById('lobby-code').textContent=roomCode;
-  document.getElementById('lobby-time-display').textContent=`${String(bm).padStart(2,'0')}:${String(bs).padStart(2,'0')}`;
+  document.getElementById('lobby-time-display').textContent=fmt(game.bankSeconds);
+  document.getElementById('lobby-mode').textContent=game.mode==='bonus'?'Bonus':'Classic';
+  if(game.mode==='bonus'){
+    document.getElementById('lobby-bonus-row').style.display='flex';
+    document.getElementById('lobby-bonus-display').textContent=`+${game.bonusSeconds}s`;
+  }
   document.getElementById('start-btn').textContent=isHost?'Start Game →':'Waiting for host…';
   document.getElementById('start-btn').disabled=!isHost;
   if(game.status==='lobby') go('lobby');
@@ -359,83 +406,106 @@ async function restoreSession() {
   else if(game.status==='finished') renderSummary(game);
 }
 
-// ── UI HELPERS ──
-window.adjustTime = function(unit,delta){
-  if(unit==='min') mins=Math.max(1,Math.min(99,mins+delta));
-  else secs=((secs+delta)+60)%60;
-  document.getElementById('min-display').textContent=String(mins).padStart(2,'0');
-  document.getElementById('sec-display').textContent=String(secs).padStart(2,'0');
+// ── UI ──
+window.selectMode=function(mode){
+  gameMode=mode;
+  document.getElementById('mode-classic').classList.toggle('selected',mode==='classic');
+  document.getElementById('mode-bonus').classList.toggle('selected',mode==='bonus');
+  document.getElementById('bonus-settings').style.display=mode==='bonus'?'block':'none';
 };
-window.pickColor = function(el,pickerId){
-  document.querySelectorAll(`#${pickerId} .color-swatch`).forEach(s=>s.classList.remove('selected'));
+
+window.adjustTime=function(target,unit,delta){
+  if(target==='bank'){
+    if(unit==='min') bankMins=Math.max(0,Math.min(99,bankMins+delta));
+    else bankSecs=Math.max(0,Math.min(55,((bankSecs+delta)+60)%60-(((bankSecs+delta)+60)%60%5)));
+    // snap to 5-sec boundary
+    bankSecs=Math.round(bankSecs/5)*5; if(bankSecs>=60){bankSecs=0;bankMins=Math.min(99,bankMins+1);}
+    if(bankMins===0&&bankSecs<5) bankSecs=5;
+    document.getElementById('min-display').textContent=String(bankMins).padStart(2,'0');
+    document.getElementById('sec-display').textContent=String(bankSecs).padStart(2,'0');
+  } else {
+    bonusSecs=Math.max(5,Math.min(300,bonusSecs+delta));
+    bonusSecs=Math.round(bonusSecs/5)*5;
+    document.getElementById('bonus-display').textContent=bonusSecs;
+  }
+};
+
+window.pickColor=function(el,pid){
+  document.querySelectorAll(`#${pid} .color-swatch`).forEach(s=>s.classList.remove('selected'));
   el.classList.add('selected');
 };
 
 // ── CREATE GAME ──
-window.createGame = async function(){
+window.createGame=async function(){
   const name=document.getElementById('host-name').value.trim();
   const errEl=document.getElementById('host-error');
   if(!name){ errEl.textContent='Enter your name'; return; }
   errEl.textContent='Creating…';
-  myId=uid(); myName=name; myColor=selectedColor('host-colors'); isHost=true; roomCode=code();
-  const bank=mins*60+secs;
+  myId=uid(); myName=name; myColor=selectedColor('host-colors');
+  isHost=true; roomCode=code();
+  const bank=bankMins*60+bankSecs;
   gameRef=ref(db,`games/${roomCode}`);
-  try {
+  try{
     await set(gameRef,{
-      code:roomCode, status:'lobby', bankSeconds:bank,
+      code:roomCode, status:'lobby',
+      mode:gameMode, bankSeconds:bank,
+      bonusSeconds:gameMode==='bonus'?bonusSecs:0,
       currentTurn:null, turnIndex:0,
       turnOrder:[myId], turnStartedAt:0,
-      players:{ [myId]:{ id:myId,name,color:myColor,bank,totalUsed:0,isHost:true } }
+      players:{ [myId]:{id:myId,name,color:myColor,bank,totalUsed:0,isHost:true} }
     });
     errEl.textContent='';
     saveSession();
-    setLobbyHeader(bank);
+    setLobbyUI(bank,gameMode,bonusSecs);
     attachListener();
     go('lobby');
-  } catch(e){ errEl.textContent='Connection error'; console.error(e); }
+  }catch(e){ errEl.textContent='Connection error'; console.error(e); }
 };
 
 // ── JOIN GAME ──
-window.joinGame = async function(){
+window.joinGame=async function(){
   const codeVal=document.getElementById('code-input').value.trim().toUpperCase();
   const name=document.getElementById('join-name').value.trim();
   const errEl=document.getElementById('join-error');
   if(codeVal.length!==4){ errEl.textContent='Enter a 4-letter code'; return; }
   if(!name){ errEl.textContent='Enter your name'; return; }
   errEl.textContent='Connecting…';
-  try {
+  try{
     const snap=await get(ref(db,`games/${codeVal}`));
     if(!snap.exists()){ errEl.textContent='Room not found'; return; }
     const game=snap.val();
     if(game.status!=='lobby'){ errEl.textContent='Game already started'; return; }
-    const playerList=Object.values(game.players||{});
-    if(playerList.length>=MAX_PLAYERS){ errEl.textContent='Game is full'; return; }
-    const takenColors=playerList.map(p=>p.color);
+    const list=Object.values(game.players||{});
+    if(list.length>=MAX_PLAYERS){ errEl.textContent='Game is full'; return; }
+    const taken=list.map(p=>p.color);
     const color=selectedColor('join-colors');
-    if(takenColors.includes(color)){ errEl.textContent='Color taken — pick another'; return; }
+    if(taken.includes(color)){ errEl.textContent='Color taken — pick another'; return; }
     myId=uid(); myName=name; myColor=color; isHost=false; roomCode=codeVal;
     gameRef=ref(db,`games/${roomCode}`);
-    const newOrder=[...(game.turnOrder||[]),myId];
     await update(gameRef,{
-      [`players/${myId}`]:{ id:myId,name,color,bank:game.bankSeconds,totalUsed:0,isHost:false },
-      turnOrder:newOrder
+      [`players/${myId}`]:{id:myId,name,color,bank:game.bankSeconds,totalUsed:0,isHost:false},
+      turnOrder:[...(game.turnOrder||[]),myId]
     });
     errEl.textContent='';
     saveSession();
-    setLobbyHeader(game.bankSeconds);
+    setLobbyUI(game.bankSeconds,game.mode,game.bonusSeconds);
     attachListener();
     go('lobby');
-  } catch(e){ errEl.textContent='Connection error'; console.error(e); }
+  }catch(e){ errEl.textContent='Connection error'; console.error(e); }
 };
 
-function setLobbyHeader(bank){
+function setLobbyUI(bank,mode,bonus){
   document.getElementById('lobby-code').textContent=roomCode;
   document.getElementById('lobby-time-display').textContent=fmt(bank);
+  document.getElementById('lobby-mode').textContent=mode==='bonus'?'Bonus':'Classic';
+  const bonusRow=document.getElementById('lobby-bonus-row');
+  if(mode==='bonus'){ bonusRow.style.display='flex'; document.getElementById('lobby-bonus-display').textContent=`+${bonus}s`; }
+  else bonusRow.style.display='none';
   document.getElementById('start-btn').textContent=isHost?'Start Game →':'Waiting for host…';
   document.getElementById('start-btn').disabled=!isHost;
 }
 
-// ── FIREBASE LISTENER ──
+// ── LISTENER ──
 function attachListener(){
   if(unsub) unsub();
   unsub=onValue(gameRef,snap=>{
@@ -466,34 +536,26 @@ function renderLobby(game){
 }
 
 // ── START GAME ──
-window.startGame = async function(){
+window.startGame=async function(){
   if(!isHost) return;
   const snap=await get(gameRef);
   const game=snap.val();
-  const firstId=game.turnOrder[0];
-  await update(gameRef,{ status:'playing', currentTurn:firstId, turnIndex:0, turnStartedAt:Date.now() });
+  await update(gameRef,{status:'playing',currentTurn:game.turnOrder[0],turnIndex:0,turnStartedAt:Date.now()});
 };
 
 // ── CLOCK RENDER ──
-// Called every time Firebase fires — only acts if turn has changed
 function renderClock(game){
   if(!gameStarted){ gameStarted=true; go('clock'); }
-  // Show host end-game button
   if(isHost) document.getElementById('host-end-btn').style.display='block';
-
   const turnId=game.currentTurn;
-  if(turnId===lastTurnId) return; // Turn unchanged — nothing to do
+  if(turnId===lastTurnId) return;
   lastTurnId=turnId;
   turnStartTs=game.turnStartedAt||Date.now();
-
-  // Stop all running animations
   tickerRaf=stopRaf(tickerRaf);
   idleRaf=stopRaf(idleRaf);
-
   const myTurn=turnId===myId;
   const p=game.players?.[turnId];
   if(!p) return;
-
   bankAtTurnStart=p.bank;
 
   const nameEl=document.getElementById('clock-name');
@@ -501,30 +563,40 @@ function renderClock(game){
   const endZone=document.getElementById('end-zone');
   const bg=document.getElementById('clock-bg');
 
-  // Step 1: fade name out
+  // Step 1 — fade name
   nameEl.style.transition='opacity 0.25s ease';
   nameEl.style.opacity='0';
 
   setTimeout(()=>{
-    // Step 2: flip background
     bg.style.background=myTurn?'#f0ebe2':'#0c0b09';
-
     setTimeout(()=>{
-      // Step 3: set content and styles, restore transitions
       nameEl.style.transition='font-size 0.75s cubic-bezier(0.4,0,0.2,1),color 0.75s cubic-bezier(0.4,0,0.2,1),margin-bottom 0.75s cubic-bezier(0.4,0,0.2,1),opacity 0.75s cubic-bezier(0.4,0,0.2,1),letter-spacing 0.75s cubic-bezier(0.4,0,0.2,1)';
-
       if(myTurn){
-        nameEl.style.cssText+=';font-size:13px;color:#9a8870;letter-spacing:0.22em;margin-bottom:12px;font-family:\'DM Mono\',monospace;opacity:0;';
+        nameEl.style.fontSize='13px';
+        nameEl.style.color='#9a8870';
+        nameEl.style.letterSpacing='0.22em';
+        nameEl.style.marginBottom='12px';
+        nameEl.style.fontFamily="'DM Mono',monospace";
+        nameEl.textContent='Your turn';
+        nameEl.style.opacity='0';
         timeEl.style.fontSize='clamp(88px,22vw,112px)';
         timeEl.style.color='#18140e';
         timeEl.textContent=fmt(bankAtTurnStart);
         endZone.style.opacity='1';
         endZone.style.pointerEvents='auto';
         endZone.style.borderColor='rgba(90,70,40,0.1)';
-        startActiveTick();
+        // Show bonus label if applicable
+        const bonusLabel=game.mode==='bonus'?` +${game.bonusSeconds}s`:'';
+        document.getElementById('end-zone-label').textContent=`End Turn${bonusLabel} →`;
+        startActiveTick(game.mode==='bonus'?'#f0ebe2':'#f0ebe2');
       } else {
         nameEl.textContent=p.name;
-        nameEl.style.cssText+=';font-size:clamp(48px,12vw,66px);color:#e4dcd0;letter-spacing:0.07em;margin-bottom:22px;font-family:\'Cormorant Garamond\',serif;opacity:1;';
+        nameEl.style.fontSize='clamp(48px,12vw,66px)';
+        nameEl.style.color='#e4dcd0';
+        nameEl.style.letterSpacing='0.07em';
+        nameEl.style.marginBottom='22px';
+        nameEl.style.fontFamily="'Cormorant Garamond',serif";
+        nameEl.style.opacity='1';
         timeEl.style.fontSize='clamp(20px,5vw,26px)';
         timeEl.style.color='#5a5248';
         timeEl.textContent=fmt(bankAtTurnStart);
@@ -537,12 +609,12 @@ function renderClock(game){
   },260);
 }
 
-// ── ACTIVE TICK (timestamp-based, drift-proof) ──
+// ── ACTIVE TICK ──
 function startActiveTick(){
   const timeEl=document.getElementById('clock-time');
   function tick(){
     const elapsed=(Date.now()-turnStartTs)/1000;
-    const remaining=Math.max(0, bankAtTurnStart-elapsed);
+    const remaining=Math.max(0,bankAtTurnStart-elapsed);
     timeEl.textContent=fmt(remaining);
     timeEl.style.color=remaining<120?'#b05030':'#18140e';
     if(remaining<=0){ endTurn(); return; }
@@ -551,12 +623,12 @@ function startActiveTick(){
   tickerRaf=requestAnimationFrame(tick);
 }
 
-// ── IDLE TICK (shows other player's bank draining) ──
+// ── IDLE TICK ──
 function startIdleTick(initialBank){
   const timeEl=document.getElementById('clock-time');
   function tick(){
     const elapsed=(Date.now()-turnStartTs)/1000;
-    const remaining=Math.max(0, initialBank-elapsed);
+    const remaining=Math.max(0,initialBank-elapsed);
     timeEl.textContent=fmt(remaining);
     if(remaining<=0){ idleRaf=stopRaf(idleRaf); return; }
     idleRaf=requestAnimationFrame(tick);
@@ -564,24 +636,48 @@ function startIdleTick(initialBank){
   idleRaf=requestAnimationFrame(tick);
 }
 
+// ── BONUS ANIMATION ──
+function showBonusToast(seconds, newBank){
+  // Show the +Xs floating toast
+  const toast=document.createElement('div');
+  toast.className='bonus-toast';
+  toast.textContent=`+${seconds}s`;
+  document.body.appendChild(toast);
+  setTimeout(()=>toast.remove(),1500);
+
+  // Also briefly flash the clock green then back
+  const timeEl=document.getElementById('clock-time');
+  timeEl.style.transition='color 0.15s ease';
+  timeEl.style.color='#6a9060';
+  timeEl.textContent=fmt(newBank);
+  setTimeout(()=>{
+    timeEl.style.color='#18140e';
+    timeEl.style.transition='';
+  },600);
+}
+
 // ── END TURN ──
-window.endTurn = async function(){
+window.endTurn=async function(){
   tickerRaf=stopRaf(tickerRaf);
   const elapsed=(Date.now()-turnStartTs)/1000;
-  const remaining=Math.max(0, bankAtTurnStart-elapsed);
+  const remaining=Math.max(0,bankAtTurnStart-elapsed);
   const used=bankAtTurnStart-remaining;
-
-  // Write final state
   const snap=await get(gameRef);
   if(!snap.exists()) return;
   const game=snap.val();
+  const isBonus=game.mode==='bonus';
+  const bonus=isBonus?(game.bonusSeconds||0):0;
+  const newBank=Math.min(Math.round(remaining)+bonus, game.bankSeconds*2); // cap at 2x starting bank
   const order=game.turnOrder;
   const nextIndex=(game.turnIndex+1)%order.length;
   const nextId=order[nextIndex];
   const prevTotal=game.players[myId]?.totalUsed||0;
 
+  // Show bonus animation before writing (feels instant)
+  if(isBonus&&bonus>0) showBonusToast(bonus,newBank);
+
   await update(gameRef,{
-    [`players/${myId}/bank`]: Math.round(remaining),
+    [`players/${myId}/bank`]: newBank,
     [`players/${myId}/totalUsed`]: Math.round(prevTotal+used),
     currentTurn: nextId,
     turnIndex: nextIndex,
@@ -590,12 +686,11 @@ window.endTurn = async function(){
 };
 
 // ── HOST END GAME ──
-window.confirmEndGame = async function(){
+window.confirmEndGame=async function(){
   if(!isHost) return;
   if(!confirm('End the game and show results?')) return;
   tickerRaf=stopRaf(tickerRaf);
   idleRaf=stopRaf(idleRaf);
-  // Finalize current player's time before ending
   const snap=await get(gameRef);
   if(!snap.exists()) return;
   const game=snap.val();
@@ -611,17 +706,16 @@ window.confirmEndGame = async function(){
   });
 };
 
-// ── LEAVE GAME ──
-window.leaveGame = async function(){
+// ── LEAVE ──
+window.leaveGame=async function(){
   tickerRaf=stopRaf(tickerRaf);
   idleRaf=stopRaf(idleRaf);
   if(unsub){ unsub(); unsub=null; }
   if(roomCode&&myId){
-    if(isHost){ await remove(ref(db,`games/${roomCode}`)).catch(()=>{}); }
-    else{ await remove(ref(db,`games/${roomCode}/players/${myId}`)).catch(()=>{}); }
+    if(isHost) await remove(ref(db,`games/${roomCode}`)).catch(()=>{});
+    else await remove(ref(db,`games/${roomCode}/players/${myId}`)).catch(()=>{});
   }
-  resetState();
-  go('home');
+  resetState(); go('home');
 };
 
 // ── SUMMARY ──
@@ -633,7 +727,8 @@ function renderSummary(game){
   const list=Object.values(game.players||{});
   const totalUsed=list.reduce((a,p)=>a+(p.totalUsed||0),0);
   const maxUsed=Math.max(...list.map(p=>p.totalUsed||0),1);
-  document.getElementById('summary-sub').textContent=`${list.length} players`;
+  const modeLabel=game.mode==='bonus'?'Bonus mode · ':'';
+  document.getElementById('summary-sub').textContent=`${modeLabel}${list.length} players`;
   document.getElementById('summary-total').textContent=fmtTotal(totalUsed);
   document.getElementById('summary-rows').innerHTML=list
     .sort((a,b)=>(b.totalUsed||0)-(a.totalUsed||0))
@@ -649,13 +744,12 @@ function renderSummary(game){
     }).join('');
 }
 
-// ── NEW GAME / RESET ──
-window.newGame = function(){
+// ── NEW GAME ──
+window.newGame=function(){
   tickerRaf=stopRaf(tickerRaf);
   idleRaf=stopRaf(idleRaf);
   if(unsub){ unsub(); unsub=null; }
-  resetState();
-  go('home');
+  resetState(); go('home');
 };
 
 function resetState(){
@@ -663,14 +757,18 @@ function resetState(){
   myId=null; myName=null; myColor='#c8a96e';
   roomCode=null; isHost=false; gameRef=null;
   gameStarted=false; lastTurnId=null; bankAtTurnStart=0; turnStartTs=0;
+  gameMode='classic'; bonusSecs=30;
   document.getElementById('code-input').value='';
   document.getElementById('host-name').value='';
   document.getElementById('join-name').value='';
   document.getElementById('host-end-btn').style.display='none';
   document.getElementById('clock-bg').style.background='#0c0b09';
+  // Reset mode UI
+  document.getElementById('mode-classic').classList.add('selected');
+  document.getElementById('mode-bonus').classList.remove('selected');
+  document.getElementById('bonus-settings').style.display='none';
 }
 
-// ── INIT ──
 restoreSession();
 </script>
 </body>

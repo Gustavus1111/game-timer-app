@@ -572,6 +572,8 @@ window.startGame=async function(){
 // ── CLOCK RENDER ──
 function renderClock(game){
   if(!gameStarted){ gameStarted=true; go('clock'); }
+  // Always go to clock screen when status is playing (handles resume case)
+  if(!document.getElementById('screen-clock').classList.contains('active')) go('clock');
   if(isHost) document.getElementById('host-controls').style.display='flex';
 
   const turnId=game.currentTurn;
@@ -694,23 +696,31 @@ window.pauseGame=async function(){
 
 window.resumeGame=async function(){
   if(!isHost) return;
-  const snap=await get(gameRef);
-  if(!snap.exists()) return;
-  const game=snap.val();
-  const pauseDuration=(Date.now()-game.pausedAt)/1000;
-  // Reset lastTurnId so renderClock re-fires for everyone
-  lastTurnId=null;
-  await update(gameRef,{
-    status:'playing',
-    pausedElapsed:(game.pausedElapsed||0)+pauseDuration,
-    pausedAt:0,
-    resumedAt:Date.now()
-  });
+  try {
+    const snap=await get(gameRef);
+    if(!snap.exists()) return;
+    const game=snap.val();
+    const pauseDuration=(Date.now()-(game.pausedAt||Date.now()))/1000;
+    // Reset lastTurnId so renderClock re-fires when status flips back
+    lastTurnId=null;
+    await update(gameRef,{
+      status:'playing',
+      pausedElapsed:(game.pausedElapsed||0)+pauseDuration,
+      pausedAt:0
+    });
+    // Force navigation back to clock — listener should handle this but belt-and-suspenders
+    go('clock');
+  } catch(e) {
+    console.error('Resume failed:', e);
+    alert('Resume failed: '+e.message);
+  }
 };
 
 function renderPaused(game){
   tickerRaf=stopRaf(tickerRaf);
   idleRaf=stopRaf(idleRaf);
+  // Reset lastTurnId so when we resume, renderClock will re-fire
+  lastTurnId=null;
   if(isHost){
     go('pause');
     document.getElementById('host-controls').style.display='none';
@@ -932,6 +942,7 @@ restoreSession();
     <button class="btn btn-primary" onclick="saveModalBank()">Set Time →</button>
   </div>
 </div>
+
 
 </body>
 </html>

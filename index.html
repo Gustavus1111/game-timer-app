@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0c0b09">
-<title>Tempo</title>
+<title>Second</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&family=Spectral:wght@300;400&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
   --text:#e4dcd0;--text-mid:#7a7068;--text-dim:#3a3730;
   --dur:0.45s;--ease:cubic-bezier(0.4,0,0.2,1);
 }
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;}
 
 .screen{position:fixed;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity var(--dur) var(--ease);overflow:hidden;}
@@ -29,13 +29,13 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .screen-body{flex:1;display:flex;flex-direction:column;padding:0 28px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .screen-footer{padding:16px 28px 48px;flex-shrink:0;}
 
-.btn{width:100%;border:none;border-radius:4px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;transition:opacity 0.2s;padding:18px;}
+.btn{width:100%;border:none;border-radius:4px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;transition:opacity 0.2s;padding:18px;touch-action:manipulation;}
 .btn:active{opacity:0.8;}
 .btn:disabled{opacity:0.3;cursor:default;}
 .btn-primary{background:var(--amber);color:#0c0b09;}
 .btn-secondary{background:transparent;border:1px solid var(--border-light);color:var(--text-mid);padding:16px;margin-top:10px;}
 .btn-secondary:hover{border-color:var(--amber-dim);color:var(--amber);}
-.back-btn{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-mid);background:none;border:none;cursor:pointer;padding:8px 0;font-family:'DM Mono',monospace;transition:color 0.2s;}
+.back-btn{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-mid);background:none;border:none;cursor:pointer;padding:8px 0;font-family:'DM Mono',monospace;transition:color 0.2s;touch-action:manipulation;}
 .back-btn:hover{color:var(--amber);}
 
 .field{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
@@ -44,19 +44,18 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .field-input:focus{border-color:var(--amber-dim);}
 .field-input::placeholder{color:var(--text-dim);}
 .error-msg{font-size:11px;color:#c06040;letter-spacing:0.06em;text-align:center;min-height:18px;margin-bottom:8px;}
-
 .section-heading{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:32px;letter-spacing:0.04em;color:var(--text);margin-bottom:32px;line-height:1.2;}
 
 /* MODE CARDS */
 .mode-cards{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
-.mode-card{padding:18px 20px;background:var(--surface);border:1.5px solid var(--border);border-radius:6px;cursor:pointer;transition:border-color 0.2s,background 0.2s;}
+.mode-card{padding:18px 20px;background:var(--surface);border:1.5px solid var(--border);border-radius:6px;cursor:pointer;transition:border-color 0.2s,background 0.2s;touch-action:manipulation;}
 .mode-card.selected{border-color:var(--amber);background:rgba(200,169,110,0.04);}
 .mode-card-title{font-size:13px;letter-spacing:0.06em;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:10px;}
 .mode-card-desc{font-size:11px;color:var(--text-mid);letter-spacing:0.04em;line-height:1.6;}
 .mode-dot{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--border-light);flex-shrink:0;transition:all 0.2s;}
 .mode-card.selected .mode-dot{background:var(--amber);border-color:var(--amber);}
 
-/* TIME PICKER */
+/* TIME PICKER — touch-action:manipulation prevents zoom on double tap */
 .time-picker{display:flex;align-items:center;justify-content:center;gap:16px;padding:20px 0;margin-bottom:24px;}
 .time-unit{display:flex;flex-direction:column;align-items:center;gap:10px;}
 .time-unit-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);}
@@ -64,7 +63,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .time-display.sm{font-size:36px;min-width:56px;}
 .time-colon{font-family:'Spectral',serif;font-size:36px;font-weight:300;color:var(--text-dim);margin-bottom:20px;}
 .stepper{display:flex;gap:8px;}
-.step-btn{width:36px;height:36px;background:var(--surface);border:1px solid var(--border-light);border-radius:3px;color:var(--text-mid);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;font-family:'DM Mono',monospace;}
+.step-btn{width:44px;height:44px;background:var(--surface);border:1px solid var(--border-light);border-radius:3px;color:var(--text-mid);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;font-family:'DM Mono',monospace;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
 .step-btn:active{border-color:var(--amber);color:var(--amber);}
 
 /* BONUS SECTION */
@@ -73,7 +72,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 /* COLOR SWATCHES */
 .color-picker{display:flex;gap:10px;flex-wrap:wrap;}
-.color-swatch{width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s,transform 0.15s,opacity 0.15s;flex-shrink:0;}
+.color-swatch{width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s,transform 0.15s,opacity 0.15s;flex-shrink:0;touch-action:manipulation;}
 .color-swatch.selected{border-color:var(--text);transform:scale(1.15);}
 .color-swatch.taken{opacity:0.2;cursor:default;pointer-events:none;}
 
@@ -89,31 +88,44 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .settings-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text-mid);padding:8px 0;border-top:1px solid var(--border);}
 .settings-row span:last-child{color:var(--text);}
 
+/* PAUSE SCREEN */
+#screen-pause{background:var(--bg);}
+.pause-player-row{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:6px;}
+.pause-player-name{flex:1;font-size:13px;letter-spacing:0.05em;color:var(--text);}
+.pause-bank{font-family:'Spectral',serif;font-size:18px;font-weight:300;color:var(--text);font-variant-numeric:tabular-nums;margin-right:8px;}
+.pause-adj{display:flex;gap:4px;}
+.pause-adj-btn{width:28px;height:28px;background:var(--surface);border:1px solid var(--border-light);border-radius:3px;color:var(--text-mid);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:manipulation;font-family:'DM Mono',monospace;}
+.pause-adj-btn:active{border-color:var(--amber);color:var(--amber);}
+.pause-indicator{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;pointer-events:none;}
+.pause-icon{font-family:'Spectral',serif;font-weight:300;font-size:48px;color:var(--text-mid);letter-spacing:0.08em;}
+.pause-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);}
+
 /* SUMMARY */
 .summary-row{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:4px;}
 .summary-bar-wrap{width:64px;height:2px;background:var(--border);border-radius:1px;overflow:hidden;}
 .summary-bar-fill{height:100%;border-radius:1px;transition:width 1s ease;}
 
-/* BONUS ANIMATION */
-@keyframes bonusRise{
-  0%{opacity:0;transform:translateY(0) scale(0.8);}
-  20%{opacity:1;transform:translateY(-8px) scale(1);}
-  70%{opacity:1;transform:translateY(-28px) scale(1);}
-  100%{opacity:0;transform:translateY(-44px) scale(0.95);}
+/* INCREMENT ANIMATION — smooth rise and fade, no pause */
+@keyframes incrRise{
+  0%{opacity:0;transform:translateX(-50%) translateY(0) scale(0.85);}
+  15%{opacity:1;transform:translateX(-50%) translateY(-12px) scale(1);}
+  85%{opacity:1;transform:translateX(-50%) translateY(-40px) scale(1);}
+  100%{opacity:0;transform:translateX(-50%) translateY(-56px) scale(0.95);}
 }
-.bonus-toast{
+.incr-toast{
   position:fixed;
-  left:50%;transform:translateX(-50%);
-  bottom:100px;
+  left:50%;
+  bottom:96px;
   font-family:'Spectral',serif;
   font-size:28px;font-weight:300;
   color:#6a9060;
   pointer-events:none;
   z-index:1000;
-  animation:bonusRise 1.4s cubic-bezier(0.22,1,0.36,1) forwards;
+  animation:incrRise 1.2s cubic-bezier(0.16,1,0.3,1) forwards;
   white-space:nowrap;
   letter-spacing:0.04em;
 }
+
 @keyframes breathe{0%,100%{opacity:0.2;transform:scale(1)}50%{opacity:0.5;transform:scale(1.6)}}
 .pulse{animation:breathe 2.5s ease-in-out infinite;}
 </style>
@@ -123,8 +135,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 <!-- HOME -->
 <div class="screen active" id="screen-home">
   <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:32px;">
-    <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:64px;letter-spacing:0.12em;color:var(--text);margin-bottom:8px;">T<span style="color:var(--amber);">·</span>empo</div>
-    <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);margin-bottom:80px;">Your time at the table</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:72px;letter-spacing:0.06em;color:var(--text);margin-bottom:8px;line-height:1;">second</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;font-style:italic;letter-spacing:0.08em;color:var(--amber);margin-bottom:80px;">make it count</div>
     <div style="width:100%;display:flex;flex-direction:column;gap:0;">
       <button class="btn btn-primary" onclick="go('host')">Create Game</button>
       <button class="btn btn-secondary" onclick="go('join')">Join Game</button>
@@ -141,8 +153,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
   <div class="screen-body">
     <div class="section-heading">Set up<br>the game</div>
-
-    <!-- MODE SELECT -->
     <div class="field">
       <div class="field-label">Mode</div>
       <div class="mode-cards">
@@ -150,14 +160,12 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           <div class="mode-card-title"><div class="mode-dot"></div>Classic</div>
           <div class="mode-card-desc">Each player has a fixed time bank. When it runs out, time's up.</div>
         </div>
-        <div class="mode-card" id="mode-bonus" onclick="selectMode('bonus')">
-          <div class="mode-card-title"><div class="mode-dot"></div>Bonus</div>
+        <div class="mode-card" id="mode-increment" onclick="selectMode('increment')">
+          <div class="mode-card-title"><div class="mode-dot"></div>Increment</div>
           <div class="mode-card-desc">Same as classic, but you earn bonus seconds back every time you end your turn.</div>
         </div>
       </div>
     </div>
-
-    <!-- TIME BANK -->
     <div class="field">
       <div class="field-label">Time bank per player</div>
       <div class="time-picker">
@@ -165,8 +173,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           <div class="time-display" id="min-display">20</div>
           <div class="time-unit-label">min</div>
           <div class="stepper">
-            <button class="step-btn" onclick="adjustTime('bank','min',-1)">−</button>
-            <button class="step-btn" onclick="adjustTime('bank','min',1)">+</button>
+            <button class="step-btn" ontouchend="adjTime('bank','min',-1);return false;" onclick="adjTime('bank','min',-1)">−</button>
+            <button class="step-btn" ontouchend="adjTime('bank','min',1);return false;" onclick="adjTime('bank','min',1)">+</button>
           </div>
         </div>
         <div class="time-colon">:</div>
@@ -174,32 +182,28 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           <div class="time-display" id="sec-display">00</div>
           <div class="time-unit-label">sec</div>
           <div class="stepper">
-            <button class="step-btn" onclick="adjustTime('bank','sec',-5)">−</button>
-            <button class="step-btn" onclick="adjustTime('bank','sec',5)">+</button>
+            <button class="step-btn" ontouchend="adjTime('bank','sec',-5);return false;" onclick="adjTime('bank','sec',-5)">−</button>
+            <button class="step-btn" ontouchend="adjTime('bank','sec',5);return false;" onclick="adjTime('bank','sec',5)">+</button>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- BONUS SETTINGS (shown only in bonus mode) -->
-    <div id="bonus-settings" style="display:none;">
+    <div id="incr-settings" style="display:none;">
       <div class="bonus-section">
-        <div class="bonus-section-title">Bonus settings</div>
+        <div class="bonus-section-title">Increment settings</div>
         <div class="field-label" style="margin-bottom:12px;">Seconds awarded per completed turn</div>
         <div class="time-picker" style="padding:8px 0;margin-bottom:0;">
           <div class="time-unit">
-            <div class="time-display sm" id="bonus-display">30</div>
+            <div class="time-display sm" id="incr-display">30</div>
             <div class="time-unit-label">seconds</div>
             <div class="stepper">
-              <button class="step-btn" onclick="adjustTime('bonus','sec',-5)">−</button>
-              <button class="step-btn" onclick="adjustTime('bonus','sec',5)">+</button>
+              <button class="step-btn" ontouchend="adjTime('incr','sec',-5);return false;" onclick="adjTime('incr','sec',-5)">−</button>
+              <button class="step-btn" ontouchend="adjTime('incr','sec',5);return false;" onclick="adjTime('incr','sec',5)">+</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- NAME + COLOR -->
     <div class="field">
       <div class="field-label">Your name</div>
       <input class="field-input" type="text" id="host-name" placeholder="Enter your name" maxlength="16" autocomplete="off">
@@ -251,7 +255,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         <div class="color-swatch" style="background:#6a9060;" data-color="#6a9060" onclick="pickColor(this,'join-colors')"></div>
         <div class="color-swatch" style="background:#5580a0;" data-color="#5580a0" onclick="pickColor(this,'join-colors')"></div>
         <div class="color-swatch" style="background:#806080;" data-color="#806080" onclick="pickColor(this,'join-colors')"></div>
-        <div class="color-swatch" style="background:#a07050;" data-color="#a07050" onclick="pickColor(this,'join-colors')"></div>
+        <div class="color-swatch" style="background:#a07050;" data-color="#a07050" onclick="pickColor(this,'host-colors')"></div>
         <div class="color-swatch" style="background:#507080;" data-color="#507080" onclick="pickColor(this,'join-colors')"></div>
       </div>
     </div>
@@ -284,7 +288,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div class="field-label" style="margin-bottom:4px;">Settings</div>
       <div class="settings-row"><span>Mode</span><span id="lobby-mode">—</span></div>
       <div class="settings-row"><span>Time bank</span><span id="lobby-time-display">—</span></div>
-      <div class="settings-row" id="lobby-bonus-row" style="display:none;"><span>Bonus per turn</span><span id="lobby-bonus-display">—</span></div>
+      <div class="settings-row" id="lobby-incr-row" style="display:none;"><span>Increment</span><span id="lobby-incr-display">—</span></div>
       <div class="settings-row"><span>Players</span><span id="lobby-player-count">—</span></div>
     </div>
   </div>
@@ -301,11 +305,41 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div id="clock-name" style="font-family:'Cormorant Garamond',serif;font-weight:300;letter-spacing:0.08em;text-align:center;will-change:font-size,color,opacity;transition:font-size 0.75s cubic-bezier(0.4,0,0.2,1),color 0.75s cubic-bezier(0.4,0,0.2,1),margin-bottom 0.75s cubic-bezier(0.4,0,0.2,1),opacity 0.75s cubic-bezier(0.4,0,0.2,1),letter-spacing 0.75s cubic-bezier(0.4,0,0.2,1);"></div>
     <div id="clock-time" style="font-family:'Spectral',serif;font-weight:300;font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-0.01em;text-align:center;will-change:font-size,color;transition:font-size 0.75s cubic-bezier(0.4,0,0.2,1),color 0.75s cubic-bezier(0.4,0,0.2,1);"></div>
   </div>
-  <div id="end-zone" style="position:fixed;bottom:0;left:0;right:0;height:80px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-top:1px solid transparent;opacity:0;pointer-events:none;transition:opacity 0.75s,border-color 0.75s;" onclick="endTurn()">
+  <!-- End turn zone -->
+  <div id="end-zone" style="position:fixed;bottom:0;left:0;right:0;height:80px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-top:1px solid transparent;opacity:0;pointer-events:none;transition:opacity 0.75s,border-color 0.75s;touch-action:manipulation;" onclick="endTurn()">
     <span id="end-zone-label" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#8a6d3e;">End Turn →</span>
   </div>
-  <div id="host-end-btn" style="position:fixed;top:52px;right:24px;display:none;">
+  <!-- Host controls -->
+  <div id="host-controls" style="position:fixed;top:52px;right:24px;display:none;flex-direction:column;align-items:flex-end;gap:8px;">
+    <button class="back-btn" style="color:var(--text-dim);font-size:10px;" onclick="pauseGame()">⏸ Pause</button>
     <button class="back-btn" style="color:var(--text-dim);font-size:10px;" onclick="confirmEndGame()">End Game</button>
+  </div>
+</div>
+
+<!-- PAUSE (host view) -->
+<div class="screen" id="screen-pause">
+  <div class="top-nav">
+    <div class="nav-spacer"></div>
+    <div class="nav-title">Paused</div>
+    <div class="nav-spacer"></div>
+  </div>
+  <div class="screen-body">
+    <div style="font-size:11px;letter-spacing:0.12em;color:var(--text-dim);margin-bottom:20px;">Adjust time banks</div>
+    <div id="pause-player-list"></div>
+    <div style="margin-top:8px;font-size:10px;color:var(--text-dim);letter-spacing:0.08em;">Tap − / + to adjust by 30 seconds</div>
+  </div>
+  <div class="screen-footer">
+    <button class="btn btn-primary" onclick="resumeGame()">Resume →</button>
+    <button class="btn btn-secondary" onclick="confirmEndGame()">End Game</button>
+  </div>
+</div>
+
+<!-- PAUSE INDICATOR (non-host view) -->
+<div class="screen" id="screen-paused-player">
+  <div id="clock-bg-paused" style="position:fixed;inset:0;z-index:-1;background:#0c0b09;"></div>
+  <div class="pause-indicator">
+    <div class="pause-icon">⏸</div>
+    <div class="pause-label">Game paused by host</div>
   </div>
 </div>
 
@@ -341,17 +375,14 @@ const app = initializeApp({
 const db = getDatabase(app);
 
 // ── STATE ──
-let myId=null, myName=null, myColor='#c8a96e';
-let roomCode=null, isHost=false, gameRef=null, unsub=null;
-let tickerRaf=null, idleRaf=null;
-let lastTurnId=null, bankAtTurnStart=0, turnStartTs=0;
+let myId=null,myName=null,myColor='#c8a96e';
+let roomCode=null,isHost=false,gameRef=null,unsub=null;
+let tickerRaf=null,idleRaf=null;
+let lastTurnId=null,bankAtTurnStart=0,turnStartTs=0;
+let pauseStartTs=0,pausedElapsed=0;
 let gameStarted=false;
-let gameMode='classic'; // 'classic' | 'bonus'
-let bonusSecs=30;       // seconds awarded per turn in bonus mode
-
-// Setup pickers
-let bankMins=20, bankSecs=0;
-
+let gameMode='classic',incrSecs=30;
+let bankMins=20,bankSecs=0;
 const MAX_PLAYERS=8;
 
 // ── HELPERS ──
@@ -379,10 +410,10 @@ window.go=function(name){
 };
 
 // ── SESSION ──
-function saveSession(){ try{ localStorage.setItem('tempo',JSON.stringify({myId,myName,myColor,roomCode,isHost})); }catch(e){} }
-function clearSession(){ try{ localStorage.removeItem('tempo'); }catch(e){} }
+function saveSession(){ try{ localStorage.setItem('second',JSON.stringify({myId,myName,myColor,roomCode,isHost})); }catch(e){} }
+function clearSession(){ try{ localStorage.removeItem('second'); }catch(e){} }
 async function restoreSession(){
-  let s; try{ s=JSON.parse(localStorage.getItem('tempo')||'null'); }catch(e){ return; }
+  let s; try{ s=JSON.parse(localStorage.getItem('second')||'null'); }catch(e){ return; }
   if(!s?.myId||!s?.roomCode) return;
   const snap=await get(ref(db,`games/${s.roomCode}`)).catch(()=>null);
   if(!snap?.exists()){ clearSession(); return; }
@@ -391,18 +422,10 @@ async function restoreSession(){
   myId=s.myId; myName=s.myName; myColor=s.myColor; roomCode=s.roomCode; isHost=s.isHost;
   gameRef=ref(db,`games/${roomCode}`);
   attachListener();
-  const bm=Math.floor(game.bankSeconds/60),bs=game.bankSeconds%60;
-  document.getElementById('lobby-code').textContent=roomCode;
-  document.getElementById('lobby-time-display').textContent=fmt(game.bankSeconds);
-  document.getElementById('lobby-mode').textContent=game.mode==='bonus'?'Bonus':'Classic';
-  if(game.mode==='bonus'){
-    document.getElementById('lobby-bonus-row').style.display='flex';
-    document.getElementById('lobby-bonus-display').textContent=`+${game.bonusSeconds}s`;
-  }
-  document.getElementById('start-btn').textContent=isHost?'Start Game →':'Waiting for host…';
-  document.getElementById('start-btn').disabled=!isHost;
+  setLobbyUI(game.bankSeconds,game.mode,game.bonusSeconds||0);
   if(game.status==='lobby') go('lobby');
   else if(game.status==='playing'){ gameStarted=true; go('clock'); }
+  else if(game.status==='paused'){ gameStarted=true; isHost?go('pause'):go('paused-player'); }
   else if(game.status==='finished') renderSummary(game);
 }
 
@@ -410,23 +433,26 @@ async function restoreSession(){
 window.selectMode=function(mode){
   gameMode=mode;
   document.getElementById('mode-classic').classList.toggle('selected',mode==='classic');
-  document.getElementById('mode-bonus').classList.toggle('selected',mode==='bonus');
-  document.getElementById('bonus-settings').style.display=mode==='bonus'?'block':'none';
+  document.getElementById('mode-increment').classList.toggle('selected',mode==='increment');
+  document.getElementById('incr-settings').style.display=mode==='increment'?'block':'none';
 };
 
-window.adjustTime=function(target,unit,delta){
+window.adjTime=function(target,unit,delta){
   if(target==='bank'){
     if(unit==='min') bankMins=Math.max(0,Math.min(99,bankMins+delta));
-    else bankSecs=Math.max(0,Math.min(55,((bankSecs+delta)+60)%60-(((bankSecs+delta)+60)%60%5)));
-    // snap to 5-sec boundary
-    bankSecs=Math.round(bankSecs/5)*5; if(bankSecs>=60){bankSecs=0;bankMins=Math.min(99,bankMins+1);}
+    else{
+      bankSecs+=delta;
+      if(bankSecs>=60){bankSecs=0;bankMins=Math.min(99,bankMins+1);}
+      if(bankSecs<0){bankSecs=55;bankMins=Math.max(0,bankMins-1);}
+      bankSecs=Math.round(bankSecs/5)*5;
+    }
     if(bankMins===0&&bankSecs<5) bankSecs=5;
     document.getElementById('min-display').textContent=String(bankMins).padStart(2,'0');
     document.getElementById('sec-display').textContent=String(bankSecs).padStart(2,'0');
   } else {
-    bonusSecs=Math.max(5,Math.min(300,bonusSecs+delta));
-    bonusSecs=Math.round(bonusSecs/5)*5;
-    document.getElementById('bonus-display').textContent=bonusSecs;
+    incrSecs=Math.max(5,Math.min(300,incrSecs+delta));
+    incrSecs=Math.round(incrSecs/5)*5;
+    document.getElementById('incr-display').textContent=incrSecs;
   }
 };
 
@@ -447,16 +473,16 @@ window.createGame=async function(){
   gameRef=ref(db,`games/${roomCode}`);
   try{
     await set(gameRef,{
-      code:roomCode, status:'lobby',
-      mode:gameMode, bankSeconds:bank,
-      bonusSeconds:gameMode==='bonus'?bonusSecs:0,
-      currentTurn:null, turnIndex:0,
-      turnOrder:[myId], turnStartedAt:0,
+      code:roomCode,status:'lobby',
+      mode:gameMode,bankSeconds:bank,
+      bonusSeconds:gameMode==='increment'?incrSecs:0,
+      currentTurn:null,turnIndex:0,
+      turnOrder:[myId],turnStartedAt:0,pausedAt:0,pausedElapsed:0,
       players:{ [myId]:{id:myId,name,color:myColor,bank,totalUsed:0,isHost:true} }
     });
     errEl.textContent='';
     saveSession();
-    setLobbyUI(bank,gameMode,bonusSecs);
+    setLobbyUI(bank,gameMode,incrSecs);
     attachListener();
     go('lobby');
   }catch(e){ errEl.textContent='Connection error'; console.error(e); }
@@ -488,7 +514,7 @@ window.joinGame=async function(){
     });
     errEl.textContent='';
     saveSession();
-    setLobbyUI(game.bankSeconds,game.mode,game.bonusSeconds);
+    setLobbyUI(game.bankSeconds,game.mode,game.bonusSeconds||0);
     attachListener();
     go('lobby');
   }catch(e){ errEl.textContent='Connection error'; console.error(e); }
@@ -497,10 +523,10 @@ window.joinGame=async function(){
 function setLobbyUI(bank,mode,bonus){
   document.getElementById('lobby-code').textContent=roomCode;
   document.getElementById('lobby-time-display').textContent=fmt(bank);
-  document.getElementById('lobby-mode').textContent=mode==='bonus'?'Bonus':'Classic';
-  const bonusRow=document.getElementById('lobby-bonus-row');
-  if(mode==='bonus'){ bonusRow.style.display='flex'; document.getElementById('lobby-bonus-display').textContent=`+${bonus}s`; }
-  else bonusRow.style.display='none';
+  document.getElementById('lobby-mode').textContent=mode==='increment'?'Increment':'Classic';
+  const incrRow=document.getElementById('lobby-incr-row');
+  if(mode==='increment'){ incrRow.style.display='flex'; document.getElementById('lobby-incr-display').textContent=`+${bonus}s`; }
+  else incrRow.style.display='none';
   document.getElementById('start-btn').textContent=isHost?'Start Game →':'Waiting for host…';
   document.getElementById('start-btn').disabled=!isHost;
 }
@@ -513,6 +539,7 @@ function attachListener(){
     const game=snap.val();
     if(game.status==='lobby') renderLobby(game);
     else if(game.status==='playing') renderClock(game);
+    else if(game.status==='paused') renderPaused(game);
     else if(game.status==='finished') renderSummary(game);
   });
 }
@@ -546,11 +573,13 @@ window.startGame=async function(){
 // ── CLOCK RENDER ──
 function renderClock(game){
   if(!gameStarted){ gameStarted=true; go('clock'); }
-  if(isHost) document.getElementById('host-end-btn').style.display='block';
+  if(isHost) document.getElementById('host-controls').style.display='flex';
+
   const turnId=game.currentTurn;
   if(turnId===lastTurnId) return;
   lastTurnId=turnId;
   turnStartTs=game.turnStartedAt||Date.now();
+  pausedElapsed=game.pausedElapsed||0;
   tickerRaf=stopRaf(tickerRaf);
   idleRaf=stopRaf(idleRaf);
   const myTurn=turnId===myId;
@@ -563,7 +592,6 @@ function renderClock(game){
   const endZone=document.getElementById('end-zone');
   const bg=document.getElementById('clock-bg');
 
-  // Step 1 — fade name
   nameEl.style.transition='opacity 0.25s ease';
   nameEl.style.opacity='0';
 
@@ -585,20 +613,20 @@ function renderClock(game){
         endZone.style.opacity='1';
         endZone.style.pointerEvents='auto';
         endZone.style.borderColor='rgba(90,70,40,0.1)';
-        // Show bonus label if applicable
-        const bonusLabel=game.mode==='bonus'?` +${game.bonusSeconds}s`:'';
-        document.getElementById('end-zone-label').textContent=`End Turn${bonusLabel} →`;
-        startActiveTick(game.mode==='bonus'?'#f0ebe2':'#f0ebe2');
+        const incrLabel=game.mode==='increment'?` +${game.bonusSeconds}s`:'';
+        document.getElementById('end-zone-label').textContent=`End Turn${incrLabel} →`;
+        startActiveTick();
       } else {
         nameEl.textContent=p.name;
         nameEl.style.fontSize='clamp(48px,12vw,66px)';
-        nameEl.style.color='#e4dcd0';
+        // Match idle clock color to name color so it's readable
+        nameEl.style.color='#7a7068';
         nameEl.style.letterSpacing='0.07em';
         nameEl.style.marginBottom='22px';
         nameEl.style.fontFamily="'Cormorant Garamond',serif";
         nameEl.style.opacity='1';
         timeEl.style.fontSize='clamp(20px,5vw,26px)';
-        timeEl.style.color='#5a5248';
+        timeEl.style.color='#7a7068';
         timeEl.textContent=fmt(bankAtTurnStart);
         endZone.style.opacity='0';
         endZone.style.pointerEvents='none';
@@ -613,7 +641,7 @@ function renderClock(game){
 function startActiveTick(){
   const timeEl=document.getElementById('clock-time');
   function tick(){
-    const elapsed=(Date.now()-turnStartTs)/1000;
+    const elapsed=(Date.now()-turnStartTs)/1000-pausedElapsed;
     const remaining=Math.max(0,bankAtTurnStart-elapsed);
     timeEl.textContent=fmt(remaining);
     timeEl.style.color=remaining<120?'#b05030':'#18140e';
@@ -627,7 +655,7 @@ function startActiveTick(){
 function startIdleTick(initialBank){
   const timeEl=document.getElementById('clock-time');
   function tick(){
-    const elapsed=(Date.now()-turnStartTs)/1000;
+    const elapsed=(Date.now()-turnStartTs)/1000-pausedElapsed;
     const remaining=Math.max(0,initialBank-elapsed);
     timeEl.textContent=fmt(remaining);
     if(remaining<=0){ idleRaf=stopRaf(idleRaf); return; }
@@ -636,52 +664,108 @@ function startIdleTick(initialBank){
   idleRaf=requestAnimationFrame(tick);
 }
 
-// ── BONUS ANIMATION ──
-function showBonusToast(seconds, newBank){
-  // Show the +Xs floating toast
+// ── INCREMENT ANIMATION ──
+function showIncrToast(seconds,newBank){
   const toast=document.createElement('div');
-  toast.className='bonus-toast';
+  toast.className='incr-toast';
   toast.textContent=`+${seconds}s`;
   document.body.appendChild(toast);
-  setTimeout(()=>toast.remove(),1500);
-
-  // Also briefly flash the clock green then back
+  setTimeout(()=>toast.remove(),1300);
   const timeEl=document.getElementById('clock-time');
-  timeEl.style.transition='color 0.15s ease';
+  timeEl.style.transition='color 0.2s ease';
   timeEl.style.color='#6a9060';
   timeEl.textContent=fmt(newBank);
-  setTimeout(()=>{
-    timeEl.style.color='#18140e';
-    timeEl.style.transition='';
-  },600);
+  setTimeout(()=>{ timeEl.style.color='#18140e'; timeEl.style.transition=''; },700);
 }
+
+// ── PAUSE ──
+window.pauseGame=async function(){
+  if(!isHost) return;
+  tickerRaf=stopRaf(tickerRaf);
+  idleRaf=stopRaf(idleRaf);
+  // Save elapsed time so we can resume accurately
+  const elapsed=(Date.now()-turnStartTs)/1000-(pausedElapsed||0);
+  await update(gameRef,{
+    status:'paused',
+    pausedAt:Date.now(),
+    pausedElapsed:pausedElapsed||0,
+    elapsedAtPause:elapsed
+  });
+};
+
+window.resumeGame=async function(){
+  if(!isHost) return;
+  const snap=await get(gameRef);
+  if(!snap.exists()) return;
+  const game=snap.val();
+  const pauseDuration=(Date.now()-game.pausedAt)/1000;
+  // Adjust turnStartedAt forward by how long we were paused
+  await update(gameRef,{
+    status:'playing',
+    pausedElapsed:(game.pausedElapsed||0)+pauseDuration,
+    pausedAt:0
+  });
+};
+
+function renderPaused(game){
+  tickerRaf=stopRaf(tickerRaf);
+  idleRaf=stopRaf(idleRaf);
+  if(isHost){
+    go('pause');
+    // Build editable player list
+    const list=Object.values(game.players||{}).sort((a,b)=>{
+      const order=game.turnOrder||[];
+      return order.indexOf(a.id)-order.indexOf(b.id);
+    });
+    document.getElementById('pause-player-list').innerHTML=list.map(p=>`
+      <div class="pause-player-row">
+        <div class="lobby-dot" style="background:${p.color};flex-shrink:0;"></div>
+        <div class="pause-player-name">${p.name}${p.id===myId?' (you)':''}</div>
+        <div class="pause-bank" id="pause-bank-${p.id}">${fmt(p.bank)}</div>
+        <div class="pause-adj">
+          <button class="pause-adj-btn" onclick="adjustPlayerBank('${p.id}',-30)">−</button>
+          <button class="pause-adj-btn" onclick="adjustPlayerBank('${p.id}',30)">+</button>
+        </div>
+      </div>`).join('');
+  } else {
+    go('paused-player');
+  }
+}
+
+window.adjustPlayerBank=async function(playerId,delta){
+  const snap=await get(gameRef);
+  if(!snap.exists()) return;
+  const game=snap.val();
+  const current=game.players[playerId]?.bank||0;
+  const newBank=Math.max(5,current+delta);
+  await update(gameRef,{[`players/${playerId}/bank`]:newBank});
+  document.getElementById(`pause-bank-${playerId}`).textContent=fmt(newBank);
+  // If adjusting current turn player, update local bankAtTurnStart
+  if(playerId===game.currentTurn) bankAtTurnStart=newBank;
+};
 
 // ── END TURN ──
 window.endTurn=async function(){
   tickerRaf=stopRaf(tickerRaf);
-  const elapsed=(Date.now()-turnStartTs)/1000;
+  const elapsed=(Date.now()-turnStartTs)/1000-(pausedElapsed||0);
   const remaining=Math.max(0,bankAtTurnStart-elapsed);
   const used=bankAtTurnStart-remaining;
   const snap=await get(gameRef);
   if(!snap.exists()) return;
   const game=snap.val();
-  const isBonus=game.mode==='bonus';
-  const bonus=isBonus?(game.bonusSeconds||0):0;
-  const newBank=Math.min(Math.round(remaining)+bonus, game.bankSeconds*2); // cap at 2x starting bank
+  const isIncr=game.mode==='increment';
+  const bonus=isIncr?(game.bonusSeconds||0):0;
+  const newBank=Math.min(Math.round(remaining)+bonus,game.bankSeconds*2);
   const order=game.turnOrder;
   const nextIndex=(game.turnIndex+1)%order.length;
   const nextId=order[nextIndex];
   const prevTotal=game.players[myId]?.totalUsed||0;
-
-  // Show bonus animation before writing (feels instant)
-  if(isBonus&&bonus>0) showBonusToast(bonus,newBank);
-
+  if(isIncr&&bonus>0) showIncrToast(bonus,newBank);
   await update(gameRef,{
-    [`players/${myId}/bank`]: newBank,
-    [`players/${myId}/totalUsed`]: Math.round(prevTotal+used),
-    currentTurn: nextId,
-    turnIndex: nextIndex,
-    turnStartedAt: Date.now()
+    [`players/${myId}/bank`]:newBank,
+    [`players/${myId}/totalUsed`]:Math.round(prevTotal+used),
+    currentTurn:nextId,turnIndex:nextIndex,
+    turnStartedAt:Date.now(),pausedElapsed:0,pausedAt:0
   });
 };
 
@@ -694,14 +778,14 @@ window.confirmEndGame=async function(){
   const snap=await get(gameRef);
   if(!snap.exists()) return;
   const game=snap.val();
-  const elapsed=(Date.now()-turnStartTs)/1000;
+  const elapsed=(Date.now()-turnStartTs)/1000-(pausedElapsed||0);
   const remaining=Math.max(0,bankAtTurnStart-elapsed);
   const used=bankAtTurnStart-remaining;
   const turnId=game.currentTurn;
   const prevTotal=game.players[turnId]?.totalUsed||0;
   await update(gameRef,{
-    [`players/${turnId}/bank`]: Math.round(remaining),
-    [`players/${turnId}/totalUsed`]: Math.round(prevTotal+used),
+    [`players/${turnId}/bank`]:Math.round(remaining),
+    [`players/${turnId}/totalUsed`]:Math.round(prevTotal+used),
     status:'finished'
   });
 };
@@ -723,11 +807,11 @@ function renderSummary(game){
   tickerRaf=stopRaf(tickerRaf);
   idleRaf=stopRaf(idleRaf);
   go('summary');
-  document.getElementById('host-end-btn').style.display='none';
+  document.getElementById('host-controls').style.display='none';
   const list=Object.values(game.players||{});
   const totalUsed=list.reduce((a,p)=>a+(p.totalUsed||0),0);
   const maxUsed=Math.max(...list.map(p=>p.totalUsed||0),1);
-  const modeLabel=game.mode==='bonus'?'Bonus mode · ':'';
+  const modeLabel=game.mode==='increment'?'Increment · ':'';
   document.getElementById('summary-sub').textContent=`${modeLabel}${list.length} players`;
   document.getElementById('summary-total').textContent=fmtTotal(totalUsed);
   document.getElementById('summary-rows').innerHTML=list
@@ -757,16 +841,16 @@ function resetState(){
   myId=null; myName=null; myColor='#c8a96e';
   roomCode=null; isHost=false; gameRef=null;
   gameStarted=false; lastTurnId=null; bankAtTurnStart=0; turnStartTs=0;
-  gameMode='classic'; bonusSecs=30;
+  pausedElapsed=0; pauseStartTs=0;
+  gameMode='classic'; incrSecs=30;
   document.getElementById('code-input').value='';
   document.getElementById('host-name').value='';
   document.getElementById('join-name').value='';
-  document.getElementById('host-end-btn').style.display='none';
+  document.getElementById('host-controls').style.display='none';
   document.getElementById('clock-bg').style.background='#0c0b09';
-  // Reset mode UI
   document.getElementById('mode-classic').classList.add('selected');
-  document.getElementById('mode-bonus').classList.remove('selected');
-  document.getElementById('bonus-settings').style.display='none';
+  document.getElementById('mode-increment').classList.remove('selected');
+  document.getElementById('incr-settings').style.display='none';
 }
 
 restoreSession();

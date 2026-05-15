@@ -34,7 +34,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .btn:disabled{opacity:0.3;cursor:default;}
 .btn-primary{background:var(--amber);color:#0c0b09;}
 .btn-secondary{background:transparent;border:1px solid var(--border-light);color:var(--text-mid);padding:16px;margin-top:10px;}
-.btn-secondary:hover{border-color:var(--amber-dim);color:var(--amber);}
 .back-btn{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-mid);background:none;border:none;cursor:pointer;padding:8px 0;font-family:'DM Mono',monospace;transition:color 0.2s;touch-action:manipulation;}
 .back-btn:hover{color:var(--amber);}
 
@@ -46,16 +45,14 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .error-msg{font-size:11px;color:#c06040;letter-spacing:0.06em;text-align:center;min-height:18px;margin-bottom:8px;}
 .section-heading{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:32px;letter-spacing:0.04em;color:var(--text);margin-bottom:32px;line-height:1.2;}
 
-/* MODE CARDS */
 .mode-cards{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
-.mode-card{padding:18px 20px;background:var(--surface);border:1.5px solid var(--border);border-radius:6px;cursor:pointer;transition:border-color 0.2s,background 0.2s;touch-action:manipulation;}
+.mode-card{padding:18px 20px;background:var(--surface);border:1.5px solid var(--border);border-radius:6px;cursor:pointer;transition:border-color 0.2s,background 0.2s;}
 .mode-card.selected{border-color:var(--amber);background:rgba(200,169,110,0.04);}
 .mode-card-title{font-size:13px;letter-spacing:0.06em;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:10px;}
 .mode-card-desc{font-size:11px;color:var(--text-mid);letter-spacing:0.04em;line-height:1.6;}
 .mode-dot{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--border-light);flex-shrink:0;transition:all 0.2s;}
 .mode-card.selected .mode-dot{background:var(--amber);border-color:var(--amber);}
 
-/* TIME PICKER — touch-action:manipulation prevents zoom on double tap */
 .time-picker{display:flex;align-items:center;justify-content:center;gap:16px;padding:20px 0;margin-bottom:24px;}
 .time-unit{display:flex;flex-direction:column;align-items:center;gap:10px;}
 .time-unit-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);}
@@ -63,123 +60,90 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .time-display.sm{font-size:36px;min-width:56px;}
 .time-colon{font-family:'Spectral',serif;font-size:36px;font-weight:300;color:var(--text-dim);margin-bottom:20px;}
 .stepper{display:flex;gap:8px;}
-.step-btn{width:44px;height:44px;background:var(--surface);border:1px solid var(--border-light);border-radius:3px;color:var(--text-mid);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;font-family:'DM Mono',monospace;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.step-btn{width:44px;height:44px;background:var(--surface);border:1px solid var(--border-light);border-radius:3px;color:var(--text-mid);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;font-family:'DM Mono',monospace;touch-action:manipulation;}
 .step-btn:active{border-color:var(--amber);color:var(--amber);}
 
-/* BONUS SECTION */
 .bonus-section{background:rgba(200,169,110,0.04);border:1px solid var(--amber-dim);border-radius:6px;padding:18px 20px;margin-bottom:24px;}
 .bonus-section-title{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber);margin-bottom:16px;}
 
-/* COLOR SWATCHES */
 .color-picker{display:flex;gap:10px;flex-wrap:wrap;}
-.color-swatch{width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s,transform 0.15s,opacity 0.15s;flex-shrink:0;touch-action:manipulation;}
+.color-swatch{width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all 0.15s;flex-shrink:0;touch-action:manipulation;}
 .color-swatch.selected{border-color:var(--text);transform:scale(1.15);}
-.color-swatch.taken{opacity:0.2;cursor:default;pointer-events:none;}
 
-/* LOBBY */
+.share-toggle{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;cursor:pointer;margin-bottom:14px;}
+.share-toggle-text{display:flex;flex-direction:column;gap:2px;}
+.share-toggle-title{font-size:13px;letter-spacing:0.05em;color:var(--text);}
+.share-toggle-desc{font-size:11px;color:var(--text-mid);letter-spacing:0.04em;}
+.share-switch{width:38px;height:22px;background:var(--border);border-radius:11px;position:relative;transition:background 0.2s;flex-shrink:0;}
+.share-switch::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--text-mid);transition:transform 0.2s,background 0.2s;}
+.share-toggle.on .share-switch{background:var(--amber-dim);}
+.share-toggle.on .share-switch::after{transform:translateX(16px);background:var(--amber);}
+.share-fields{display:none;margin-bottom:14px;padding:16px;background:rgba(200,169,110,0.03);border:1px solid var(--amber-dim);border-radius:6px;}
+.share-fields.on{display:block;}
+
 .room-code-big{font-family:'Spectral',serif;font-size:56px;font-weight:300;letter-spacing:0.3em;color:var(--amber);line-height:1;text-align:center;}
 .room-code-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-bottom:12px;}
-.lobby-player{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:6px;transition:transform 0.2s ease,opacity 0.2s ease,background 0.2s ease;}
+.lobby-player{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:6px;transition:all 0.2s;}
 .lobby-player.dragging{opacity:0.5;border-color:var(--amber);background:rgba(200,169,110,0.06);}
 .lobby-player.drag-over{border-color:var(--amber-dim);}
-.drag-handle{width:24px;display:flex;flex-direction:column;justify-content:center;gap:3px;cursor:grab;padding:8px 4px;touch-action:none;-webkit-tap-highlight-color:transparent;}
-.drag-handle:active{cursor:grabbing;}
-.drag-handle div{height:1.5px;background:var(--text-dim);border-radius:1px;}
-.drag-handle:hover div{background:var(--text-mid);}
-.lobby-player.dragging .drag-handle div{background:var(--amber);}
 .lobby-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .lobby-name{flex:1;font-size:13px;letter-spacing:0.05em;color:var(--text);}
 .lobby-badge{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:3px 8px;border-radius:2px;background:var(--amber-faint);border:1px solid var(--amber-dim);color:var(--amber);}
+.drag-handle{width:24px;display:flex;flex-direction:column;justify-content:center;gap:3px;cursor:grab;padding:8px 4px;touch-action:none;}
+.drag-handle:active{cursor:grabbing;}
+.drag-handle div{height:1.5px;background:var(--text-dim);border-radius:1px;}
+.lobby-player.dragging .drag-handle div{background:var(--amber);}
 .lobby-waiting{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px dashed var(--border);border-radius:4px;margin-bottom:6px;}
 .lobby-waiting-text{font-size:12px;color:var(--text-dim);letter-spacing:0.04em;}
 .settings-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text-mid);padding:8px 0;border-top:1px solid var(--border);}
 .settings-row span:last-child{color:var(--text);}
 
-/* PAUSE SCREEN */
 #screen-pause{background:var(--bg);}
 .pause-player-row{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:6px;}
 .pause-player-name{flex:1;font-size:13px;letter-spacing:0.05em;color:var(--text);}
 .pause-bank{font-family:'Spectral',serif;font-size:18px;font-weight:300;color:var(--text);font-variant-numeric:tabular-nums;margin-right:8px;}
-.pause-adj{display:flex;gap:4px;}
-.pause-adj-btn{width:28px;height:28px;background:var(--surface);border:1px solid var(--border-light);border-radius:3px;color:var(--text-mid);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:manipulation;font-family:'DM Mono',monospace;}
-.pause-adj-btn:active{border-color:var(--amber);color:var(--amber);}
+.pause-edit-btn{padding:0 12px;height:30px;background:var(--surface);border:1px solid var(--border-light);border-radius:3px;color:var(--text-mid);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'DM Mono',monospace;touch-action:manipulation;}
+.pause-edit-btn:active{border-color:var(--amber);color:var(--amber);}
 .pause-indicator{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;pointer-events:none;}
-.pause-icon{font-family:'Spectral',serif;font-weight:300;font-size:48px;color:var(--text-mid);letter-spacing:0.08em;}
+.pause-bars{display:flex;gap:10px;}
+.pause-bars div{width:6px;height:48px;background:#7a7068;border-radius:3px;}
 .pause-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);}
 
-/* SUMMARY */
 .summary-row{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:4px;}
 .summary-bar-wrap{width:64px;height:2px;background:var(--border);border-radius:1px;overflow:hidden;}
 .summary-bar-fill{height:100%;border-radius:1px;transition:width 1s ease;}
 
-
-
-/* SHARE PHONE TOGGLE */
-.share-toggle{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;cursor:pointer;margin-bottom:14px;touch-action:manipulation;}
-.share-toggle:hover{border-color:var(--border-light);}
-.share-second-name{margin-bottom:24px;display:none;}
-.share-second-name.on{display:flex;}
-
-/* LANDSCAPE SHARE PHONE CLOCK */
-@media (orientation:landscape){
-  body.share-mode .screen-clock-shared{display:flex !important;}
-}
-.screen-clock-shared{display:none;flex-direction:row;}
-.shared-half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer;transition:background 0.6s cubic-bezier(0.4,0,0.2,1);}
-.shared-half.active{background:#f0ebe2;}
-.shared-half.idle{background:#0c0b09;}
-.shared-divider{width:1px;background:var(--border);}
-.shared-name{font-family:'Cormorant Garamond',serif;font-weight:300;text-align:center;transition:all 0.6s cubic-bezier(0.4,0,0.2,1);}
-.shared-half.active .shared-name{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#9a8870;margin-bottom:10px;}
-.shared-half.idle .shared-name{font-size:clamp(28px,7vw,42px);color:#7a7068;letter-spacing:0.06em;margin-bottom:18px;}
-.shared-time{font-family:'Spectral',serif;font-weight:300;font-variant-numeric:tabular-nums;line-height:1;transition:all 0.6s cubic-bezier(0.4,0,0.2,1);}
-.shared-half.active .shared-time{font-size:clamp(56px,16vw,88px);color:#18140e;}
-.shared-half.idle .shared-time{font-size:clamp(18px,4vw,24px);color:#7a7068;}
-.shared-tap{position:absolute;bottom:14px;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;opacity:0;transition:opacity 0.6s;}
-.shared-half.active .shared-tap{opacity:0.7;color:#8a6d3e;}
-
-/* SILENCE TOGGLE */
-.silence-toggle{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;cursor:pointer;margin-bottom:24px;touch-action:manipulation;}
-.silence-toggle:hover{border-color:var(--border-light);}
-.silence-toggle-text{display:flex;flex-direction:column;gap:2px;}
-.silence-toggle-title{font-size:13px;letter-spacing:0.05em;color:var(--text);}
-.silence-toggle-desc{font-size:11px;color:var(--text-mid);letter-spacing:0.04em;}
-.silence-switch{width:38px;height:22px;background:var(--border);border-radius:11px;position:relative;transition:background 0.2s;flex-shrink:0;}
-.silence-switch::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--text-mid);transition:transform 0.2s,background 0.2s;}
-.silence-toggle.on .silence-switch{background:var(--amber-dim);}
-.silence-toggle.on .silence-switch::after{transform:translateX(16px);background:var(--amber);}
-
-/* NOTIFICATION HIDER OVERLAY — covers iOS status bar area when silenced */
-.notif-hider{position:fixed;top:0;left:0;right:0;height:60px;background:var(--bg);z-index:9998;pointer-events:none;opacity:0;transition:opacity 0.3s;}
-.notif-hider.on{opacity:1;}
-.notif-hider.cream{background:#f0ebe2;}
-
-/* INCREMENT ANIMATION — smooth rise and fade, no pause */
 @keyframes incrRise{
   0%{opacity:0;transform:translateX(-50%) translateY(0);}
   20%{opacity:1;}
   100%{opacity:0;transform:translateX(-50%) translateY(-60px);}
 }
-.incr-toast{
-  position:fixed;
-  left:50%;
-  bottom:96px;
-  font-family:'Spectral',serif;
-  font-size:28px;font-weight:300;
-  color:#6a9060;
-  pointer-events:none;
-  z-index:1000;
-  animation:incrRise 1.0s ease-out forwards;
-  white-space:nowrap;
-  letter-spacing:0.04em;
-}
+.incr-toast{position:fixed;left:50%;bottom:96px;font-family:'Spectral',serif;font-size:28px;font-weight:300;color:#6a9060;pointer-events:none;z-index:1000;animation:incrRise 1s ease-out forwards;white-space:nowrap;letter-spacing:0.04em;}
 
 @keyframes breathe{0%,100%{opacity:0.2;transform:scale(1)}50%{opacity:0.5;transform:scale(1.6)}}
 .pulse{animation:breathe 2.5s ease-in-out infinite;}
+
+/* SHARED PHONE CLOCK */
+#screen-clock-shared{display:none;}
+#screen-clock-shared.active{display:flex !important;}
+.shared-row{display:flex;flex-direction:row;width:100%;height:100%;}
+.shared-half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer;transition:background 0.6s var(--ease);}
+.shared-half.active-half{background:#f0ebe2;}
+.shared-half.idle-half{background:#0c0b09;}
+.shared-divider{width:1px;background:var(--border);}
+.shared-name{font-family:'Cormorant Garamond',serif;font-weight:300;text-align:center;transition:all 0.6s var(--ease);padding:0 12px;}
+.shared-half.active-half .shared-name{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#9a8870;margin-bottom:10px;}
+.shared-half.idle-half .shared-name{font-size:clamp(24px,6vw,38px);color:#7a7068;letter-spacing:0.06em;margin-bottom:14px;}
+.shared-time{font-family:'Spectral',serif;font-weight:300;font-variant-numeric:tabular-nums;line-height:1;transition:all 0.6s var(--ease);}
+.shared-half.active-half .shared-time{font-size:clamp(52px,14vw,84px);color:#18140e;}
+.shared-half.idle-half .shared-time{font-size:clamp(18px,4vw,24px);color:#7a7068;}
+
+/* EDIT BANK MODAL */
+#modal-edit-bank{position:fixed;inset:0;background:var(--bg);z-index:500;display:none;flex-direction:column;}
+#modal-edit-bank.open{display:flex;}
 </style>
 </head>
 <body>
-<div class="notif-hider" id="notif-hider"></div>
 
 <!-- HOME -->
 <div class="screen active" id="screen-home">
@@ -211,7 +175,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         </div>
         <div class="mode-card" id="mode-increment" onclick="selectMode('increment')">
           <div class="mode-card-title"><div class="mode-dot"></div>Increment</div>
-          <div class="mode-card-desc">Same as classic, but you earn bonus seconds back every time you end your turn.</div>
+          <div class="mode-card-desc">Same as classic, but you earn bonus seconds back every turn.</div>
         </div>
       </div>
     </div>
@@ -222,8 +186,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           <div class="time-display" id="min-display">20</div>
           <div class="time-unit-label">min</div>
           <div class="stepper">
-            <button class="step-btn" ontouchend="adjTime('bank','min',-1);return false;" onclick="adjTime('bank','min',-1)">−</button>
-            <button class="step-btn" ontouchend="adjTime('bank','min',1);return false;" onclick="adjTime('bank','min',1)">+</button>
+            <button class="step-btn" onclick="adjTime('bank','min',-1)">−</button>
+            <button class="step-btn" onclick="adjTime('bank','min',1)">+</button>
           </div>
         </div>
         <div class="time-colon">:</div>
@@ -231,8 +195,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           <div class="time-display" id="sec-display">00</div>
           <div class="time-unit-label">sec</div>
           <div class="stepper">
-            <button class="step-btn" ontouchend="adjTime('bank','sec',-5);return false;" onclick="adjTime('bank','sec',-5)">−</button>
-            <button class="step-btn" ontouchend="adjTime('bank','sec',5);return false;" onclick="adjTime('bank','sec',5)">+</button>
+            <button class="step-btn" onclick="adjTime('bank','sec',-5)">−</button>
+            <button class="step-btn" onclick="adjTime('bank','sec',5)">+</button>
           </div>
         </div>
       </div>
@@ -246,8 +210,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
             <div class="time-display sm" id="incr-display">30</div>
             <div class="time-unit-label">seconds</div>
             <div class="stepper">
-              <button class="step-btn" ontouchend="adjTime('incr','sec',-5);return false;" onclick="adjTime('incr','sec',-5)">−</button>
-              <button class="step-btn" ontouchend="adjTime('incr','sec',5);return false;" onclick="adjTime('incr','sec',5)">+</button>
+              <button class="step-btn" onclick="adjTime('incr','sec',-5)">−</button>
+              <button class="step-btn" onclick="adjTime('incr','sec',5)">+</button>
             </div>
           </div>
         </div>
@@ -266,25 +230,23 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         <div class="color-swatch" style="background:#5580a0;" data-color="#5580a0" onclick="pickColor(this,'host-colors')"></div>
         <div class="color-swatch" style="background:#806080;" data-color="#806080" onclick="pickColor(this,'host-colors')"></div>
         <div class="color-swatch" style="background:#a07050;" data-color="#a07050" onclick="pickColor(this,'host-colors')"></div>
-    <div class="silence-toggle" id="host-silence" onclick="toggleSilence('host')">
-      <div class="silence-toggle-text">
-        <div class="silence-toggle-title">Silence on my phone</div>
-        <div class="silence-toggle-desc">Hide status bar during play. You can change this later.</div>
+        <div class="color-swatch" style="background:#507080;" data-color="#507080" onclick="pickColor(this,'host-colors')"></div>
       </div>
-      <div class="silence-switch"></div>
     </div>
-    <div class="share-toggle silence-toggle" id="host-share" onclick="toggleShare('host')">
-      <div class="silence-toggle-text">
-        <div class="silence-toggle-title">Share this phone</div>
-        <div class="silence-toggle-desc">Two players on one device, split screen in landscape.</div>
+    <div class="share-toggle" id="host-share" onclick="toggleShare('host')">
+      <div class="share-toggle-text">
+        <div class="share-toggle-title">Share this phone</div>
+        <div class="share-toggle-desc">Two players on one device, split screen in landscape.</div>
       </div>
-      <div class="silence-switch"></div>
+      <div class="share-switch"></div>
     </div>
-    <div class="share-second-name" id="host-share-fields">
-      <div class="field" style="margin-bottom:0;width:100%;">
+    <div class="share-fields" id="host-share-fields">
+      <div class="field" style="margin-bottom:14px;">
         <div class="field-label">Second player name</div>
         <input class="field-input" type="text" id="host-name2" placeholder="Other player" maxlength="16" autocomplete="off">
-        <div class="field-label" style="margin-top:14px;">Their color</div>
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <div class="field-label">Their color</div>
         <div class="color-picker" id="host-colors2">
           <div class="color-swatch" style="background:#c8a96e;" data-color="#c8a96e" onclick="pickColor(this,'host-colors2')"></div>
           <div class="color-swatch selected" style="background:#c06040;" data-color="#c06040" onclick="pickColor(this,'host-colors2')"></div>
@@ -331,26 +293,24 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         <div class="color-swatch" style="background:#6a9060;" data-color="#6a9060" onclick="pickColor(this,'join-colors')"></div>
         <div class="color-swatch" style="background:#5580a0;" data-color="#5580a0" onclick="pickColor(this,'join-colors')"></div>
         <div class="color-swatch" style="background:#806080;" data-color="#806080" onclick="pickColor(this,'join-colors')"></div>
-        <div class="color-swatch" style="background:#a07050;" data-color="#a07050" onclick="pickColor(this,'host-colors')"></div>
-    <div class="silence-toggle" id="join-silence" onclick="toggleSilence('join')">
-      <div class="silence-toggle-text">
-        <div class="silence-toggle-title">Silence on my phone</div>
-        <div class="silence-toggle-desc">Hide status bar during play. You can change this later.</div>
+        <div class="color-swatch" style="background:#a07050;" data-color="#a07050" onclick="pickColor(this,'join-colors')"></div>
+        <div class="color-swatch" style="background:#507080;" data-color="#507080" onclick="pickColor(this,'join-colors')"></div>
       </div>
-      <div class="silence-switch"></div>
     </div>
-    <div class="share-toggle silence-toggle" id="join-share" onclick="toggleShare('join')">
-      <div class="silence-toggle-text">
-        <div class="silence-toggle-title">Share this phone</div>
-        <div class="silence-toggle-desc">Two players on one device, split screen in landscape.</div>
+    <div class="share-toggle" id="join-share" onclick="toggleShare('join')">
+      <div class="share-toggle-text">
+        <div class="share-toggle-title">Share this phone</div>
+        <div class="share-toggle-desc">Two players on one device, split screen in landscape.</div>
       </div>
-      <div class="silence-switch"></div>
+      <div class="share-switch"></div>
     </div>
-    <div class="share-second-name" id="join-share-fields">
-      <div class="field" style="margin-bottom:0;width:100%;">
+    <div class="share-fields" id="join-share-fields">
+      <div class="field" style="margin-bottom:14px;">
         <div class="field-label">Second player name</div>
         <input class="field-input" type="text" id="join-name2" placeholder="Other player" maxlength="16" autocomplete="off">
-        <div class="field-label" style="margin-top:14px;">Their color</div>
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <div class="field-label">Their color</div>
         <div class="color-picker" id="join-colors2">
           <div class="color-swatch" style="background:#c8a96e;" data-color="#c8a96e" onclick="pickColor(this,'join-colors2')"></div>
           <div class="color-swatch selected" style="background:#c06040;" data-color="#c06040" onclick="pickColor(this,'join-colors2')"></div>
@@ -396,30 +356,42 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     </div>
   </div>
   <div class="screen-footer">
-    <div class="error-msg" id="lobby-error"></div>
     <button class="btn btn-primary" id="start-btn" onclick="startGame()" disabled>Waiting for players…</button>
   </div>
 </div>
 
-<!-- CLOCK -->
+<!-- CLOCK (normal single-seat) -->
 <div class="screen" id="screen-clock">
   <div id="clock-bg" style="position:fixed;inset:0;z-index:-1;background:#0c0b09;transition:background 0.75s cubic-bezier(0.4,0,0.2,1);"></div>
   <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding-bottom:80px;">
-    <div id="clock-name" style="font-family:'Cormorant Garamond',serif;font-weight:300;letter-spacing:0.08em;text-align:center;will-change:font-size,color,opacity;transition:font-size 0.75s cubic-bezier(0.4,0,0.2,1),color 0.75s cubic-bezier(0.4,0,0.2,1),margin-bottom 0.75s cubic-bezier(0.4,0,0.2,1),opacity 0.75s cubic-bezier(0.4,0,0.2,1),letter-spacing 0.75s cubic-bezier(0.4,0,0.2,1);"></div>
-    <div id="clock-time" style="font-family:'Spectral',serif;font-weight:300;font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-0.01em;text-align:center;will-change:font-size,color;transition:font-size 0.75s cubic-bezier(0.4,0,0.2,1),color 0.75s cubic-bezier(0.4,0,0.2,1);"></div>
+    <div id="clock-name" style="font-family:'Cormorant Garamond',serif;font-weight:300;letter-spacing:0.08em;text-align:center;transition:font-size 0.75s var(--ease),color 0.75s var(--ease),margin-bottom 0.75s var(--ease),opacity 0.75s var(--ease),letter-spacing 0.75s var(--ease);"></div>
+    <div id="clock-time" style="font-family:'Spectral',serif;font-weight:300;font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-0.01em;text-align:center;transition:font-size 0.75s var(--ease),color 0.75s var(--ease);"></div>
   </div>
-  <!-- End turn zone -->
-  <div id="end-zone" style="position:fixed;bottom:0;left:0;right:0;height:80px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-top:1px solid transparent;opacity:0;pointer-events:none;transition:opacity 0.75s,border-color 0.75s;touch-action:manipulation;" onclick="endTurn()">
+  <div id="end-zone" style="position:fixed;bottom:0;left:0;right:0;height:80px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-top:1px solid transparent;opacity:0;pointer-events:none;transition:opacity 0.75s,border-color 0.75s;" onclick="endTurn()">
     <span id="end-zone-label" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#8a6d3e;">End Turn →</span>
   </div>
-  <!-- Host controls -->
   <div id="host-controls" style="position:fixed;top:52px;right:24px;display:none;flex-direction:column;align-items:flex-end;gap:8px;">
     <button class="back-btn" style="color:var(--text-dim);font-size:10px;" onclick="pauseGame()"><span style="display:inline-flex;gap:3px;vertical-align:middle;margin-right:6px;"><span style="display:inline-block;width:2px;height:10px;background:currentColor;border-radius:1px;"></span><span style="display:inline-block;width:2px;height:10px;background:currentColor;border-radius:1px;"></span></span>Pause</button>
     <button class="back-btn" style="color:var(--text-dim);font-size:10px;" onclick="confirmEndGame()">End Game</button>
   </div>
 </div>
 
-<!-- PAUSE (host view) -->
+<!-- CLOCK SHARED (split landscape) -->
+<div class="screen" id="screen-clock-shared">
+  <div class="shared-row">
+    <div class="shared-half idle-half" id="sh-left" onclick="endSharedTurn('left')">
+      <div class="shared-name" id="sh-left-name"></div>
+      <div class="shared-time" id="sh-left-time">00:00</div>
+    </div>
+    <div class="shared-divider"></div>
+    <div class="shared-half idle-half" id="sh-right" onclick="endSharedTurn('right')">
+      <div class="shared-name" id="sh-right-name"></div>
+      <div class="shared-time" id="sh-right-time">00:00</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAUSE (host) -->
 <div class="screen" id="screen-pause">
   <div class="top-nav">
     <div class="nav-spacer"></div>
@@ -429,7 +401,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   <div class="screen-body">
     <div style="font-size:11px;letter-spacing:0.12em;color:var(--text-dim);margin-bottom:20px;">Adjust time banks</div>
     <div id="pause-player-list"></div>
-    <div style="margin-top:8px;font-size:10px;color:var(--text-dim);letter-spacing:0.08em;">Tap − / + to adjust by 30 seconds</div>
   </div>
   <div class="screen-footer">
     <button class="btn btn-primary" onclick="resumeGame()">Resume →</button>
@@ -437,37 +408,18 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
 </div>
 
-<!-- PAUSE INDICATOR (non-host view) -->
+<!-- PAUSE (non-host) -->
 <div class="screen" id="screen-paused-player">
-  <div id="clock-bg-paused" style="position:fixed;inset:0;z-index:-1;background:#0c0b09;"></div>
   <div class="pause-indicator">
-    <div class="pause-icon" style="display:flex;gap:10px;align-items:center;justify-content:center;"><div style="width:6px;height:48px;background:#7a7068;border-radius:3px;"></div><div style="width:6px;height:48px;background:#7a7068;border-radius:3px;"></div></div>
+    <div class="pause-bars"><div></div><div></div></div>
     <div class="pause-label">Game paused by host</div>
-  </div>
-</div>
-
-
-<!-- CLOCK — SHARED PHONE (landscape) -->
-<div class="screen" id="screen-clock-shared">
-  <div style="display:flex;flex-direction:row;width:100%;height:100%;">
-    <div class="shared-half idle" id="shared-half-left" onclick="endSharedTurn('left')">
-      <div class="shared-name" id="shared-name-left"></div>
-      <div class="shared-time" id="shared-time-left">00:00</div>
-      <div class="shared-tap">Tap to end turn →</div>
-    </div>
-    <div class="shared-divider"></div>
-    <div class="shared-half idle" id="shared-half-right" onclick="endSharedTurn('right')">
-      <div class="shared-name" id="shared-name-right"></div>
-      <div class="shared-time" id="shared-time-right">00:00</div>
-      <div class="shared-tap">Tap to end turn →</div>
-    </div>
   </div>
 </div>
 
 <!-- SUMMARY -->
 <div class="screen" id="screen-summary">
   <div style="text-align:center;padding:60px 28px 24px;flex-shrink:0;">
-    <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;">Results</div>
+    <div style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;">Results</div>
     <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);" id="summary-sub"></div>
   </div>
   <div style="text-align:center;margin-bottom:28px;flex-shrink:0;">
@@ -477,6 +429,41 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   <div id="summary-rows" style="padding:0 28px;flex:1;overflow-y:auto;"></div>
   <div style="padding:16px 28px 48px;flex-shrink:0;">
     <button class="btn btn-primary" onclick="newGame()">New Game</button>
+  </div>
+</div>
+
+<!-- EDIT BANK MODAL -->
+<div id="modal-edit-bank">
+  <div class="top-nav">
+    <button class="back-btn" onclick="closeEditModal()">← Back</button>
+    <div class="nav-title">Adjust Time</div>
+    <div class="nav-spacer"></div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;">
+    <div id="modal-player-name" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:32px;letter-spacing:0.08em;color:var(--text);margin-bottom:8px;text-align:center;"></div>
+    <div id="modal-color-dot" style="width:8px;height:8px;border-radius:50%;margin-bottom:40px;"></div>
+    <div class="time-picker" style="margin-bottom:0;">
+      <div class="time-unit">
+        <div class="time-display" id="modal-min">00</div>
+        <div class="time-unit-label">min</div>
+        <div class="stepper">
+          <button class="step-btn" onclick="adjModal('min',-1)">−</button>
+          <button class="step-btn" onclick="adjModal('min',1)">+</button>
+        </div>
+      </div>
+      <div class="time-colon">:</div>
+      <div class="time-unit">
+        <div class="time-display" id="modal-sec">00</div>
+        <div class="time-unit-label">sec</div>
+        <div class="stepper">
+          <button class="step-btn" onclick="adjModal('sec',-5)">−</button>
+          <button class="step-btn" onclick="adjModal('sec',5)">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:16px 28px 48px;">
+    <button class="btn btn-primary" onclick="saveModalBank()">Set Time →</button>
   </div>
 </div>
 
@@ -496,14 +483,20 @@ const app = initializeApp({
 const db = getDatabase(app);
 
 // ── STATE ──
-let myId=null,myName=null,myColor='#c8a96e';
-let roomCode=null,isHost=false,gameRef=null,unsub=null;
-let tickerRaf=null,idleRaf=null;
-let lastTurnId=null,bankAtTurnStart=0,turnStartTs=0;
-let pauseStartTs=0,pausedElapsed=0;
+let myId=null, myName=null, myColor='#c8a96e';
+let roomCode=null, isHost=false, gameRef=null, unsub=null;
+let mySeats=[];
+let lastTurnId=null;
+let bankAtTurnStart=0;
+let turnStartTs=0;
+let pausedElapsed=0;
 let gameStarted=false;
-let gameMode='classic',incrSecs=30;
-let bankMins=20,bankSecs=0;
+let gameMode='classic', incrSecs=30;
+let bankMins=20, bankSecs=0;
+let sharePhone=false;
+let ticker=null, idleTicker=null, sharedTicker=null;
+let sharedBanks={left:0,right:0};
+let modalPlayerId=null, modalMins=0, modalSecs=0;
 const MAX_PLAYERS=8;
 
 // ── HELPERS ──
@@ -521,17 +514,19 @@ function fmtTotal(s){
   const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sc=s%60;
   return h>0?`${h}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`:`${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
 }
-function selectedColor(id){ return document.querySelector(`#${id} .color-swatch.selected`)?.dataset.color||'#c8a96e'; }
-function stopRaf(h){ if(h) cancelAnimationFrame(h); return null; }
+function selColor(id){ return document.querySelector(`#${id} .color-swatch.selected`)?.dataset.color||'#c8a96e'; }
+function stopTicker(t){ if(t){ clearInterval(t); } return null; }
 
 // ── NAVIGATION ──
 window.go=function(name){
+  const el=document.getElementById('screen-'+name);
+  if(!el){ console.error('No screen:', name); return; }
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-'+name).classList.add('active');
+  el.classList.add('active');
 };
 
 // ── SESSION ──
-function saveSession(){ try{ localStorage.setItem('second',JSON.stringify({myId,myName,myColor,roomCode,isHost,mySeats,silenceOn})); }catch(e){} }
+function saveSession(){ try{ localStorage.setItem('second',JSON.stringify({myId,myName,myColor,roomCode,isHost,mySeats})); }catch(e){} }
 function clearSession(){ try{ localStorage.removeItem('second'); }catch(e){} }
 async function restoreSession(){
   let s; try{ s=JSON.parse(localStorage.getItem('second')||'null'); }catch(e){ return; }
@@ -540,25 +535,19 @@ async function restoreSession(){
   if(!snap?.exists()){ clearSession(); return; }
   const game=snap.val();
   if(!game.players?.[s.myId]){ clearSession(); return; }
-  myId=s.myId; myName=s.myName; myColor=s.myColor; roomCode=s.roomCode; isHost=s.isHost;
-  mySeats=s.mySeats||[myId];
-  silenceOn=s.silenceOn||false;
-  if(silenceOn) applySilence();
+  myId=s.myId; myName=s.myName; myColor=s.myColor;
+  roomCode=s.roomCode; isHost=s.isHost; mySeats=s.mySeats||[myId];
   gameRef=ref(db,`games/${roomCode}`);
   attachListener();
   setLobbyUI(game.bankSeconds,game.mode,game.bonusSeconds||0);
-  if(game.status==='lobby') go('lobby');
-  else if(game.status==='playing'){ gameStarted=true; go('clock'); }
-  else if(game.status==='paused'){ gameStarted=true; isHost?go('pause'):go('paused-player'); }
-  else if(game.status==='finished') renderSummary(game);
 }
 
 // ── UI ──
-window.selectMode=function(mode){
-  gameMode=mode;
-  document.getElementById('mode-classic').classList.toggle('selected',mode==='classic');
-  document.getElementById('mode-increment').classList.toggle('selected',mode==='increment');
-  document.getElementById('incr-settings').style.display=mode==='increment'?'block':'none';
+window.selectMode=function(m){
+  gameMode=m;
+  document.getElementById('mode-classic').classList.toggle('selected',m==='classic');
+  document.getElementById('mode-increment').classList.toggle('selected',m==='increment');
+  document.getElementById('incr-settings').style.display=m==='increment'?'block':'none';
 };
 
 window.adjTime=function(target,unit,delta){
@@ -585,30 +574,38 @@ window.pickColor=function(el,pid){
   el.classList.add('selected');
 };
 
+window.toggleShare=function(which){
+  const el=document.getElementById(which+'-share');
+  const fields=document.getElementById(which+'-share-fields');
+  el.classList.toggle('on');
+  sharePhone=el.classList.contains('on');
+  fields.classList.toggle('on',sharePhone);
+};
+
 // ── CREATE GAME ──
 window.createGame=async function(){
   const name=document.getElementById('host-name').value.trim();
   const errEl=document.getElementById('host-error');
   if(!name){ errEl.textContent='Enter your name'; return; }
   errEl.textContent='Creating…';
-  myId=uid(); myName=name; myColor=selectedColor('host-colors');
-  isHost=true; roomCode=code();
-  const bank=bankMins*60+bankSecs;
-  gameRef=ref(db,`games/${roomCode}`);
   try{
-    const players={[myId]:{id:myId,name,color:myColor,bank,totalUsed:0,isHost:true,deviceId:myId}};
+    myId=uid(); myName=name; myColor=selColor('host-colors');
+    isHost=true; roomCode=code();
+    const bank=bankMins*60+bankSecs;
+    const players={[myId]:{id:myId,name,color:myColor,bank,totalUsed:0,isHost:true}};
     const turnOrder=[myId];
     mySeats=[myId];
     if(sharePhone){
       const name2=document.getElementById('host-name2').value.trim();
-      const color2=document.querySelector('#host-colors2 .color-swatch.selected')?.dataset.color||'#c06040';
-      if(name2&&color2!==myColor){
-        const seatId=uid();
-        players[seatId]={id:seatId,name:name2,color:color2,bank,totalUsed:0,isHost:false,deviceId:myId};
-        turnOrder.push(seatId);
-        mySeats.push(seatId);
-      }
+      const color2=selColor('host-colors2');
+      if(!name2){ errEl.textContent='Enter second player name'; return; }
+      if(color2===myColor){ errEl.textContent='Pick different colors'; return; }
+      const seatId=uid();
+      players[seatId]={id:seatId,name:name2,color:color2,bank,totalUsed:0,isHost:false};
+      turnOrder.push(seatId);
+      mySeats.push(seatId);
     }
+    gameRef=ref(db,`games/${roomCode}`);
     await set(gameRef,{
       code:roomCode,status:'lobby',
       mode:gameMode,bankSeconds:bank,
@@ -622,7 +619,10 @@ window.createGame=async function(){
     setLobbyUI(bank,gameMode,incrSecs);
     attachListener();
     go('lobby');
-  }catch(e){ errEl.textContent='Connection error'; console.error(e); }
+  }catch(e){
+    errEl.textContent='Connection error';
+    console.error('createGame failed:',e);
+  }
 };
 
 // ── JOIN GAME ──
@@ -641,33 +641,39 @@ window.joinGame=async function(){
     const list=Object.values(game.players||{});
     if(list.length>=MAX_PLAYERS){ errEl.textContent='Game is full'; return; }
     const taken=list.map(p=>p.color);
-    const color=selectedColor('join-colors');
+    const color=selColor('join-colors');
     if(taken.includes(color)){ errEl.textContent='Color taken — pick another'; return; }
+
     myId=uid(); myName=name; myColor=color; isHost=false; roomCode=codeVal;
-    gameRef=ref(db,`games/${roomCode}`);
     mySeats=[myId];
     const updates={
-      [`players/${myId}`]:{id:myId,name,color,bank:game.bankSeconds,totalUsed:0,isHost:false,deviceId:myId},
+      [`players/${myId}`]:{id:myId,name,color,bank:game.bankSeconds,totalUsed:0,isHost:false}
     };
     let newOrder=[...(game.turnOrder||[]),myId];
+
     if(sharePhone){
       const name2=document.getElementById('join-name2').value.trim();
-      const color2=document.querySelector('#join-colors2 .color-swatch.selected')?.dataset.color;
-      if(name2&&color2&&color2!==color&&!taken.includes(color2)){
-        const seatId=uid();
-        updates[`players/${seatId}`]={id:seatId,name:name2,color:color2,bank:game.bankSeconds,totalUsed:0,isHost:false,deviceId:myId};
-        newOrder.push(seatId);
-        mySeats.push(seatId);
-      }
+      const color2=selColor('join-colors2');
+      if(!name2){ errEl.textContent='Enter second player name'; return; }
+      if(color2===color){ errEl.textContent='Pick different colors'; return; }
+      if(taken.includes(color2)){ errEl.textContent='Second color taken'; return; }
+      const seatId=uid();
+      updates[`players/${seatId}`]={id:seatId,name:name2,color:color2,bank:game.bankSeconds,totalUsed:0,isHost:false};
+      newOrder.push(seatId);
+      mySeats.push(seatId);
     }
     updates.turnOrder=newOrder;
+    gameRef=ref(db,`games/${roomCode}`);
     await update(gameRef,updates);
     errEl.textContent='';
     saveSession();
     setLobbyUI(game.bankSeconds,game.mode,game.bonusSeconds||0);
     attachListener();
     go('lobby');
-  }catch(e){ errEl.textContent='Connection error'; console.error(e); }
+  }catch(e){
+    errEl.textContent='Connection error';
+    console.error('joinGame failed:',e);
+  }
 };
 
 function setLobbyUI(bank,mode,bonus){
@@ -675,8 +681,10 @@ function setLobbyUI(bank,mode,bonus){
   document.getElementById('lobby-time-display').textContent=fmt(bank);
   document.getElementById('lobby-mode').textContent=mode==='increment'?'Increment':'Classic';
   const incrRow=document.getElementById('lobby-incr-row');
-  if(mode==='increment'){ incrRow.style.display='flex'; document.getElementById('lobby-incr-display').textContent=`+${bonus}s`; }
-  else incrRow.style.display='none';
+  if(mode==='increment'){
+    incrRow.style.display='flex';
+    document.getElementById('lobby-incr-display').textContent=`+${bonus}s`;
+  } else incrRow.style.display='none';
   document.getElementById('start-btn').textContent=isHost?'Start Game →':'Waiting for host…';
   document.getElementById('start-btn').disabled=!isHost;
 }
@@ -696,16 +704,16 @@ function attachListener(){
 
 // ── LOBBY RENDER ──
 function renderLobby(game){
-  // Sort by turnOrder so drag-reorder is reflected
+  if(!document.getElementById('screen-lobby').classList.contains('active')) go('lobby');
   const order=game.turnOrder||[];
   const playerMap=game.players||{};
   const list=order.map(id=>playerMap[id]).filter(Boolean);
   document.getElementById('lobby-players').innerHTML=list.map(p=>`
     <div class="lobby-player" data-pid="${p.id}" ${isHost?'draggable="true"':''}>
       <div class="lobby-dot" style="background:${p.color};"></div>
-      <div class="lobby-name">${p.name}${p.id===myId?' (you)':''}</div>
+      <div class="lobby-name">${p.name}${mySeats.includes(p.id)?' (you)':''}</div>
       ${p.isHost?'<div class="lobby-badge">Host</div>':''}
-      ${isHost?'<div class="drag-handle" data-pid="'+p.id+'"><div></div><div></div><div></div></div>':''}
+      ${isHost?'<div class="drag-handle"><div></div><div></div><div></div></div>':''}
     </div>`).join('');
   if(isHost) attachDragHandlers();
   document.getElementById('lobby-waiting-row').style.display=list.length<MAX_PLAYERS?'flex':'none';
@@ -717,6 +725,84 @@ function renderLobby(game){
   }
 }
 
+// ── DRAG TO REORDER ──
+let dragSrcId=null;
+function attachDragHandlers(){
+  const rows=document.querySelectorAll('.lobby-player');
+  rows.forEach(row=>{
+    row.addEventListener('dragstart',e=>{
+      dragSrcId=row.dataset.pid;
+      row.classList.add('dragging');
+      if(e.dataTransfer) e.dataTransfer.effectAllowed='move';
+    });
+    row.addEventListener('dragover',e=>{
+      e.preventDefault();
+      if(row.dataset.pid!==dragSrcId) row.classList.add('drag-over');
+    });
+    row.addEventListener('dragleave',()=>row.classList.remove('drag-over'));
+    row.addEventListener('drop',async e=>{
+      e.preventDefault();
+      const tgtId=row.dataset.pid;
+      row.classList.remove('drag-over');
+      if(dragSrcId&&dragSrcId!==tgtId) await reorderPlayers(dragSrcId,tgtId);
+    });
+    row.addEventListener('dragend',()=>{
+      rows.forEach(r=>{r.classList.remove('dragging');r.classList.remove('drag-over');});
+    });
+  });
+  document.querySelectorAll('.drag-handle').forEach(h=>{
+    h.addEventListener('touchstart',handleTouchStart,{passive:false});
+  });
+}
+let touchEl=null, touchStartY=0;
+function handleTouchStart(e){
+  const row=e.currentTarget.closest('.lobby-player');
+  if(!row) return;
+  e.preventDefault();
+  dragSrcId=row.dataset.pid;
+  touchEl=row;
+  touchStartY=e.touches[0].clientY;
+  row.classList.add('dragging');
+  row.style.position='relative';
+  row.style.zIndex='100';
+  document.addEventListener('touchmove',handleTouchMove,{passive:false});
+  document.addEventListener('touchend',handleTouchEnd);
+}
+function handleTouchMove(e){
+  if(!touchEl) return;
+  e.preventDefault();
+  const dy=e.touches[0].clientY-touchStartY;
+  touchEl.style.transform=`translateY(${dy}px)`;
+  touchEl.style.pointerEvents='none';
+  const below=document.elementFromPoint(e.touches[0].clientX,e.touches[0].clientY);
+  touchEl.style.pointerEvents='';
+  const rowBelow=below?.closest?.('.lobby-player');
+  document.querySelectorAll('.lobby-player').forEach(el=>el.classList.remove('drag-over'));
+  if(rowBelow&&rowBelow!==touchEl) rowBelow.classList.add('drag-over');
+}
+async function handleTouchEnd(e){
+  document.removeEventListener('touchmove',handleTouchMove);
+  document.removeEventListener('touchend',handleTouchEnd);
+  if(!touchEl) return;
+  touchEl.style.pointerEvents='none';
+  const below=document.elementFromPoint(e.changedTouches[0].clientX,e.changedTouches[0].clientY);
+  touchEl.style.pointerEvents='';
+  const rowBelow=below?.closest?.('.lobby-player');
+  touchEl.classList.remove('dragging');
+  touchEl.style.position='';touchEl.style.zIndex='';touchEl.style.transform='';
+  document.querySelectorAll('.lobby-player').forEach(el=>el.classList.remove('drag-over'));
+  if(rowBelow&&rowBelow.dataset.pid!==dragSrcId) await reorderPlayers(dragSrcId,rowBelow.dataset.pid);
+  touchEl=null; dragSrcId=null;
+}
+async function reorderPlayers(srcId,tgtId){
+  const snap=await get(gameRef); if(!snap.exists()) return;
+  const order=[...(snap.val().turnOrder||[])];
+  const si=order.indexOf(srcId), ti=order.indexOf(tgtId);
+  if(si<0||ti<0) return;
+  order.splice(si,1); order.splice(ti,0,srcId);
+  await update(gameRef,{turnOrder:order});
+}
+
 // ── START GAME ──
 window.startGame=async function(){
   if(!isHost) return;
@@ -725,32 +811,28 @@ window.startGame=async function(){
   await update(gameRef,{status:'playing',currentTurn:game.turnOrder[0],turnIndex:0,turnStartedAt:Date.now()});
 };
 
-// ── CLOCK RENDER ──
+// ── CLOCK RENDER (router) ──
 function renderClock(game){
-  if(!gameStarted){ gameStarted=true; }
-  const isShared=mySeats.length>1;
-
-  // Route to shared landscape clock if this device hosts 2 seats
+  gameStarted=true;
+  const isShared=Array.isArray(mySeats)&&mySeats.length>1;
   if(isShared){
     if(!document.getElementById('screen-clock-shared').classList.contains('active')) go('clock-shared');
     renderSharedClock(game);
     return;
   }
-
   if(!document.getElementById('screen-clock').classList.contains('active')) go('clock');
   if(isHost) document.getElementById('host-controls').style.display='flex';
-
   const turnId=game.currentTurn;
   if(turnId===lastTurnId) return;
   lastTurnId=turnId;
   turnStartTs=game.turnStartedAt||Date.now();
   pausedElapsed=game.pausedElapsed||0;
-  tickerRaf=stopRaf(tickerRaf);
-  idleRaf=stopRaf(idleRaf);
-  const myTurn=turnId===myId;
+  ticker=stopTicker(ticker);
+  idleTicker=stopTicker(idleTicker);
   const p=game.players?.[turnId];
   if(!p) return;
   bankAtTurnStart=p.bank;
+  const myTurn=turnId===myId;
 
   const nameEl=document.getElementById('clock-name');
   const timeEl=document.getElementById('clock-time');
@@ -759,11 +841,10 @@ function renderClock(game){
 
   nameEl.style.transition='opacity 0.25s ease';
   nameEl.style.opacity='0';
-
   setTimeout(()=>{
     bg.style.background=myTurn?'#f0ebe2':'#0c0b09';
     setTimeout(()=>{
-      nameEl.style.transition='font-size 0.75s cubic-bezier(0.4,0,0.2,1),color 0.75s cubic-bezier(0.4,0,0.2,1),margin-bottom 0.75s cubic-bezier(0.4,0,0.2,1),opacity 0.75s cubic-bezier(0.4,0,0.2,1),letter-spacing 0.75s cubic-bezier(0.4,0,0.2,1)';
+      nameEl.style.transition='font-size 0.75s var(--ease),color 0.75s var(--ease),margin-bottom 0.75s var(--ease),opacity 0.75s var(--ease),letter-spacing 0.75s var(--ease)';
       if(myTurn){
         nameEl.style.fontSize='13px';
         nameEl.style.color='#9a8870';
@@ -771,7 +852,7 @@ function renderClock(game){
         nameEl.style.marginBottom='12px';
         nameEl.style.fontFamily="'DM Mono',monospace";
         nameEl.textContent='Your turn';
-        nameEl.style.opacity='0';
+        nameEl.style.opacity='1';
         timeEl.style.fontSize='clamp(88px,22vw,112px)';
         timeEl.style.color='#18140e';
         timeEl.textContent=fmt(bankAtTurnStart);
@@ -784,7 +865,6 @@ function renderClock(game){
       } else {
         nameEl.textContent=p.name;
         nameEl.style.fontSize='clamp(48px,12vw,66px)';
-        // Match idle clock color to name color so it's readable
         nameEl.style.color='#7a7068';
         nameEl.style.letterSpacing='0.07em';
         nameEl.style.marginBottom='22px';
@@ -802,93 +882,165 @@ function renderClock(game){
   },260);
 }
 
-// ── ACTIVE TICK ──
 function startActiveTick(){
   const timeEl=document.getElementById('clock-time');
   function tick(){
-    const elapsed=(Date.now()-turnStartTs)/1000-pausedElapsed;
-    const remaining=Math.max(0,bankAtTurnStart-elapsed);
-    timeEl.textContent=fmt(remaining);
-    timeEl.style.color=remaining<120?'#b05030':'#18140e';
-    if(remaining<=0){ endTurn(); return; }
-    tickerRaf=requestAnimationFrame(tick);
+    const el=(Date.now()-turnStartTs)/1000-(pausedElapsed||0);
+    const r=Math.max(0,bankAtTurnStart-el);
+    timeEl.textContent=fmt(r);
+    timeEl.style.color=r<120?'#b05030':'#18140e';
+    if(r<=0){ endTurn(); }
   }
-  tickerRaf=requestAnimationFrame(tick);
+  ticker=setInterval(tick,200);
 }
-
-// ── IDLE TICK ──
-function startIdleTick(initialBank){
+function startIdleTick(initial){
   const timeEl=document.getElementById('clock-time');
   function tick(){
-    const elapsed=(Date.now()-turnStartTs)/1000-pausedElapsed;
-    const remaining=Math.max(0,initialBank-elapsed);
-    timeEl.textContent=fmt(remaining);
-    if(remaining<=0){ idleRaf=stopRaf(idleRaf); return; }
-    idleRaf=requestAnimationFrame(tick);
+    const el=(Date.now()-turnStartTs)/1000-(pausedElapsed||0);
+    const r=Math.max(0,initial-el);
+    timeEl.textContent=fmt(r);
+    if(r<=0){ idleTicker=stopTicker(idleTicker); }
   }
-  idleRaf=requestAnimationFrame(tick);
+  idleTicker=setInterval(tick,200);
 }
 
-// ── INCREMENT ANIMATION ──
-function showIncrToast(seconds,newBank){
-  const toast=document.createElement('div');
-  toast.className='incr-toast';
-  toast.textContent=`+${seconds}s`;
-  document.body.appendChild(toast);
-  setTimeout(()=>toast.remove(),1300);
-  const timeEl=document.getElementById('clock-time');
-  timeEl.style.transition='color 0.2s ease';
-  timeEl.style.color='#6a9060';
-  timeEl.textContent=fmt(newBank);
-  setTimeout(()=>{ timeEl.style.color='#18140e'; timeEl.style.transition=''; },700);
+// ── SHARED CLOCK ──
+function renderSharedClock(game){
+  const leftId=mySeats[0], rightId=mySeats[1];
+  const leftP=game.players?.[leftId], rightP=game.players?.[rightId];
+  if(!leftP||!rightP) return;
+  const turnId=game.currentTurn;
+  if(turnId===lastTurnId) return;
+  lastTurnId=turnId;
+  turnStartTs=game.turnStartedAt||Date.now();
+  pausedElapsed=game.pausedElapsed||0;
+  sharedTicker=stopTicker(sharedTicker);
+
+  const leftH=document.getElementById('sh-left');
+  const rightH=document.getElementById('sh-right');
+  document.getElementById('sh-left-name').textContent=turnId===leftId?'Your turn':leftP.name;
+  document.getElementById('sh-right-name').textContent=turnId===rightId?'Your turn':rightP.name;
+  document.getElementById('sh-left-time').textContent=fmt(leftP.bank);
+  document.getElementById('sh-right-time').textContent=fmt(rightP.bank);
+  leftH.classList.toggle('active-half',turnId===leftId);
+  leftH.classList.toggle('idle-half',turnId!==leftId);
+  rightH.classList.toggle('active-half',turnId===rightId);
+  rightH.classList.toggle('idle-half',turnId!==rightId);
+  sharedBanks.left=leftP.bank;
+  sharedBanks.right=rightP.bank;
+
+  const isLeft=turnId===leftId;
+  function tick(){
+    const el=(Date.now()-turnStartTs)/1000-(pausedElapsed||0);
+    if(isLeft){
+      const r=Math.max(0,sharedBanks.left-el);
+      const tel=document.getElementById('sh-left-time');
+      tel.textContent=fmt(r);
+      tel.style.color=r<120?'#b05030':'#18140e';
+      if(r<=0) endSharedTurn('left');
+    } else {
+      const r=Math.max(0,sharedBanks.right-el);
+      const tel=document.getElementById('sh-right-time');
+      tel.textContent=fmt(r);
+      tel.style.color=r<120?'#b05030':'#18140e';
+      if(r<=0) endSharedTurn('right');
+    }
+  }
+  sharedTicker=setInterval(tick,200);
 }
 
-// ── PAUSE ──
-window.pauseGame=async function(){
-  if(!isHost) return;
-  tickerRaf=stopRaf(tickerRaf);
-  idleRaf=stopRaf(idleRaf);
-  // Save elapsed time so we can resume accurately
-  const elapsed=(Date.now()-turnStartTs)/1000-(pausedElapsed||0);
+window.endSharedTurn=async function(half){
+  const snap=await get(gameRef); if(!snap.exists()) return;
+  const game=snap.val();
+  const seat=half==='left'?mySeats[0]:mySeats[1];
+  if(game.currentTurn!==seat) return;
+  sharedTicker=stopTicker(sharedTicker);
+  const el=(Date.now()-turnStartTs)/1000-(pausedElapsed||0);
+  const startBank=half==='left'?sharedBanks.left:sharedBanks.right;
+  const remaining=Math.max(0,startBank-el);
+  const used=startBank-remaining;
+  const isIncr=game.mode==='increment';
+  const bonus=isIncr?(game.bonusSeconds||0):0;
+  const newBank=Math.min(Math.round(remaining)+bonus,game.bankSeconds*2);
+  const order=game.turnOrder;
+  const nextIdx=(game.turnIndex+1)%order.length;
+  const nextId=order[nextIdx];
+  const prevTotal=game.players[seat]?.totalUsed||0;
+  if(isIncr&&bonus>0) showIncrToast(bonus);
   await update(gameRef,{
-    status:'paused',
-    pausedAt:Date.now(),
-    pausedElapsed:pausedElapsed||0,
-    elapsedAtPause:elapsed
+    [`players/${seat}/bank`]:newBank,
+    [`players/${seat}/totalUsed`]:Math.round(prevTotal+used),
+    currentTurn:nextId,turnIndex:nextIdx,
+    turnStartedAt:Date.now(),pausedElapsed:0,pausedAt:0
   });
 };
 
+function showIncrToast(seconds){
+  const t=document.createElement('div');
+  t.className='incr-toast';
+  t.textContent=`+${seconds}s`;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),1100);
+}
+
+// ── END TURN (single seat) ──
+window.endTurn=async function(){
+  ticker=stopTicker(ticker);
+  const el=(Date.now()-turnStartTs)/1000-(pausedElapsed||0);
+  const remaining=Math.max(0,bankAtTurnStart-el);
+  const used=bankAtTurnStart-remaining;
+  const snap=await get(gameRef); if(!snap.exists()) return;
+  const game=snap.val();
+  const isIncr=game.mode==='increment';
+  const bonus=isIncr?(game.bonusSeconds||0):0;
+  const newBank=Math.min(Math.round(remaining)+bonus,game.bankSeconds*2);
+  const order=game.turnOrder;
+  const nextIdx=(game.turnIndex+1)%order.length;
+  const nextId=order[nextIdx];
+  const prevTotal=game.players[myId]?.totalUsed||0;
+  if(isIncr&&bonus>0) showIncrToast(bonus);
+  await update(gameRef,{
+    [`players/${myId}/bank`]:newBank,
+    [`players/${myId}/totalUsed`]:Math.round(prevTotal+used),
+    currentTurn:nextId,turnIndex:nextIdx,
+    turnStartedAt:Date.now(),pausedElapsed:0,pausedAt:0
+  });
+};
+
+// ── PAUSE / RESUME ──
+window.pauseGame=async function(){
+  if(!isHost) return;
+  ticker=stopTicker(ticker);
+  idleTicker=stopTicker(idleTicker);
+  sharedTicker=stopTicker(sharedTicker);
+  await update(gameRef,{status:'paused',pausedAt:Date.now(),pausedElapsed:pausedElapsed||0});
+};
 window.resumeGame=async function(){
   if(!isHost) return;
-  try {
-    const snap=await get(gameRef);
-    if(!snap.exists()) return;
+  try{
+    const snap=await get(gameRef); if(!snap.exists()) return;
     const game=snap.val();
-    const pauseDuration=(Date.now()-(game.pausedAt||Date.now()))/1000;
-    // Reset lastTurnId so renderClock re-fires when status flips back
+    const dur=(Date.now()-(game.pausedAt||Date.now()))/1000;
     lastTurnId=null;
     await update(gameRef,{
       status:'playing',
-      pausedElapsed:(game.pausedElapsed||0)+pauseDuration,
+      pausedElapsed:(game.pausedElapsed||0)+dur,
       pausedAt:0
     });
-    // Force navigation back to clock — listener should handle this but belt-and-suspenders
-    go('clock');
-  } catch(e) {
-    console.error('Resume failed:', e);
+  }catch(e){
+    console.error('Resume failed:',e);
     alert('Resume failed: '+e.message);
   }
 };
 
 function renderPaused(game){
-  tickerRaf=stopRaf(tickerRaf);
-  idleRaf=stopRaf(idleRaf);
-  // Reset lastTurnId so when we resume, renderClock will re-fire
+  ticker=stopTicker(ticker);
+  idleTicker=stopTicker(idleTicker);
+  sharedTicker=stopTicker(sharedTicker);
   lastTurnId=null;
   if(isHost){
     go('pause');
     document.getElementById('host-controls').style.display='none';
-    // Build editable player list
     const list=Object.values(game.players||{}).sort((a,b)=>{
       const order=game.turnOrder||[];
       return order.indexOf(a.id)-order.indexOf(b.id);
@@ -896,167 +1048,65 @@ function renderPaused(game){
     document.getElementById('pause-player-list').innerHTML=list.map(p=>`
       <div class="pause-player-row">
         <div class="lobby-dot" style="background:${p.color};flex-shrink:0;"></div>
-        <div class="pause-player-name">${p.name}${p.id===myId?' (you)':''}</div>
+        <div class="pause-player-name">${p.name}${mySeats.includes(p.id)?' (you)':''}</div>
         <div class="pause-bank" id="pause-bank-${p.id}">${fmt(p.bank)}</div>
-        <button class="pause-adj-btn" style="width:auto;padding:0 10px;font-size:10px;letter-spacing:0.1em;" onclick="openEditModal('${p.id}','${p.name}','${p.color}',${p.bank})">Edit</button>
+        <button class="pause-edit-btn" onclick="openEditModal('${p.id}','${p.name}','${p.color}',${p.bank})">Edit</button>
       </div>`).join('');
   } else {
     go('paused-player');
   }
 }
 
-window.adjustPlayerBank=async function(playerId,delta){
-  const snap=await get(gameRef);
-  if(!snap.exists()) return;
-  const game=snap.val();
-  const current=game.players[playerId]?.bank||0;
-  const newBank=Math.max(5,current+delta);
-  await update(gameRef,{[`players/${playerId}/bank`]:newBank});
-  document.getElementById(`pause-bank-${playerId}`).textContent=fmt(newBank);
-  // If adjusting current turn player, update local bankAtTurnStart
-  if(playerId===game.currentTurn) bankAtTurnStart=newBank;
+// ── EDIT BANK MODAL ──
+window.openEditModal=function(pid,name,color,bank){
+  modalPlayerId=pid;
+  modalMins=Math.floor(bank/60);
+  modalSecs=bank%60;
+  document.getElementById('modal-player-name').textContent=name;
+  document.getElementById('modal-color-dot').style.background=color;
+  document.getElementById('modal-min').textContent=String(modalMins).padStart(2,'0');
+  document.getElementById('modal-sec').textContent=String(modalSecs).padStart(2,'0');
+  document.getElementById('modal-edit-bank').classList.add('open');
 };
-
-// ── END TURN ──
-window.endTurn=async function(){
-  tickerRaf=stopRaf(tickerRaf);
-  const elapsed=(Date.now()-turnStartTs)/1000-(pausedElapsed||0);
-  const remaining=Math.max(0,bankAtTurnStart-elapsed);
-  const used=bankAtTurnStart-remaining;
-  const snap=await get(gameRef);
-  if(!snap.exists()) return;
-  const game=snap.val();
-  const isIncr=game.mode==='increment';
-  const bonus=isIncr?(game.bonusSeconds||0):0;
-  const newBank=Math.min(Math.round(remaining)+bonus,game.bankSeconds*2);
-  const order=game.turnOrder;
-  const nextIndex=(game.turnIndex+1)%order.length;
-  const nextId=order[nextIndex];
-  const prevTotal=game.players[myId]?.totalUsed||0;
-  if(isIncr&&bonus>0) showIncrToast(bonus,newBank);
-  await update(gameRef,{
-    [`players/${myId}/bank`]:newBank,
-    [`players/${myId}/totalUsed`]:Math.round(prevTotal+used),
-    currentTurn:nextId,turnIndex:nextIndex,
-    turnStartedAt:Date.now(),pausedElapsed:0,pausedAt:0
-  });
+window.closeEditModal=function(){
+  document.getElementById('modal-edit-bank').classList.remove('open');
 };
-
-
-// ── SHARED CLOCK (one device, 2 players) ──
-let sharedTickerRaf=null;
-let sharedBanks={left:0,right:0};
-let sharedTurnTs=0;
-
-function renderSharedClock(game){
-  // mySeats[0] is left, mySeats[1] is right
-  const leftId=mySeats[0], rightId=mySeats[1];
-  const leftP=game.players?.[leftId], rightP=game.players?.[rightId];
-  if(!leftP||!rightP) return;
-
-  const turnId=game.currentTurn;
-  if(turnId===lastTurnId) return;
-  lastTurnId=turnId;
-  sharedTurnTs=game.turnStartedAt||Date.now();
-  pausedElapsed=game.pausedElapsed||0;
-
-  // Stop any running tick
-  if(sharedTickerRaf) cancelAnimationFrame(sharedTickerRaf);
-
-  const leftH=document.getElementById('shared-half-left');
-  const rightH=document.getElementById('shared-half-right');
-  const leftN=document.getElementById('shared-name-left');
-  const rightN=document.getElementById('shared-name-right');
-  const leftT=document.getElementById('shared-time-left');
-  const rightT=document.getElementById('shared-time-right');
-
-  leftN.textContent=turnId===leftId?'Your turn':leftP.name;
-  rightN.textContent=turnId===rightId?'Your turn':rightP.name;
-  leftT.textContent=fmt(leftP.bank);
-  rightT.textContent=fmt(rightP.bank);
-
-  // Apply active/idle classes
-  leftH.classList.toggle('active',turnId===leftId);
-  leftH.classList.toggle('idle',turnId!==leftId);
-  rightH.classList.toggle('active',turnId===rightId);
-  rightH.classList.toggle('idle',turnId!==rightId);
-
-  // Start tick for the active player
-  sharedBanks.left=leftP.bank;
-  sharedBanks.right=rightP.bank;
-  startSharedTick(game);
-}
-
-function startSharedTick(game){
-  const turnId=game.currentTurn;
-  const isLeft=turnId===mySeats[0];
-  function tick(){
-    const elapsed=(Date.now()-sharedTurnTs)/1000-(pausedElapsed||0);
-    if(isLeft){
-      const r=Math.max(0,sharedBanks.left-elapsed);
-      document.getElementById('shared-time-left').textContent=fmt(r);
-      document.getElementById('shared-time-left').style.color=r<120?'#b05030':'#18140e';
-      if(r<=0){ endSharedTurnAuto(); return; }
-    } else {
-      const r=Math.max(0,sharedBanks.right-elapsed);
-      document.getElementById('shared-time-right').textContent=fmt(r);
-      document.getElementById('shared-time-right').style.color=r<120?'#b05030':'#18140e';
-      if(r<=0){ endSharedTurnAuto(); return; }
-    }
-    sharedTickerRaf=requestAnimationFrame(tick);
+window.adjModal=function(unit,delta){
+  if(unit==='min') modalMins=Math.max(0,Math.min(99,modalMins+delta));
+  else{
+    modalSecs+=delta;
+    if(modalSecs>=60){modalSecs=0;modalMins=Math.min(99,modalMins+1);}
+    if(modalSecs<0){modalSecs=55;modalMins=Math.max(0,modalMins-1);}
+    modalSecs=Math.round(modalSecs/5)*5;
   }
-  sharedTickerRaf=requestAnimationFrame(tick);
-}
-
-window.endSharedTurn=async function(half){
+  if(modalMins===0&&modalSecs<5) modalSecs=5;
+  document.getElementById('modal-min').textContent=String(modalMins).padStart(2,'0');
+  document.getElementById('modal-sec').textContent=String(modalSecs).padStart(2,'0');
+};
+window.saveModalBank=async function(){
+  if(!modalPlayerId) return;
+  const newBank=modalMins*60+modalSecs;
+  await update(gameRef,{[`players/${modalPlayerId}/bank`]:newBank});
+  const bel=document.getElementById(`pause-bank-${modalPlayerId}`);
+  if(bel) bel.textContent=fmt(newBank);
   const snap=await get(gameRef);
-  if(!snap.exists()) return;
-  const game=snap.val();
-  const turnId=game.currentTurn;
-  const myActiveSeat=half==='left'?mySeats[0]:mySeats[1];
-  // Only allow ending if this half is currently active
-  if(turnId!==myActiveSeat) return;
-  // Stop tick
-  if(sharedTickerRaf) cancelAnimationFrame(sharedTickerRaf);
-  const elapsed=(Date.now()-sharedTurnTs)/1000-(pausedElapsed||0);
-  const bankStart=half==='left'?sharedBanks.left:sharedBanks.right;
-  const remaining=Math.max(0,bankStart-elapsed);
-  const used=bankStart-remaining;
-  const isIncr=game.mode==='increment';
-  const bonus=isIncr?(game.bonusSeconds||0):0;
-  const newBank=Math.min(Math.round(remaining)+bonus,game.bankSeconds*2);
-  const order=game.turnOrder;
-  const nextIndex=(game.turnIndex+1)%order.length;
-  const nextId=order[nextIndex];
-  const prevTotal=game.players[myActiveSeat]?.totalUsed||0;
-  await update(gameRef,{
-    [`players/${myActiveSeat}/bank`]:newBank,
-    [`players/${myActiveSeat}/totalUsed`]:Math.round(prevTotal+used),
-    currentTurn:nextId,turnIndex:nextIndex,
-    turnStartedAt:Date.now(),pausedElapsed:0,pausedAt:0
-  });
+  if(snap.exists()&&snap.val().currentTurn===modalPlayerId) bankAtTurnStart=newBank;
+  closeEditModal();
 };
 
-function endSharedTurnAuto(){
-  // Auto end when time hits 0
-  const turnId=lastTurnId;
-  if(turnId===mySeats[0]) endSharedTurn('left');
-  else if(turnId===mySeats[1]) endSharedTurn('right');
-}
-
-// ── HOST END GAME ──
+// ── END GAME ──
 window.confirmEndGame=async function(){
   if(!isHost) return;
   if(!confirm('End the game and show results?')) return;
-  tickerRaf=stopRaf(tickerRaf);
-  idleRaf=stopRaf(idleRaf);
-  const snap=await get(gameRef);
-  if(!snap.exists()) return;
+  ticker=stopTicker(ticker);
+  idleTicker=stopTicker(idleTicker);
+  sharedTicker=stopTicker(sharedTicker);
+  const snap=await get(gameRef); if(!snap.exists()) return;
   const game=snap.val();
-  const elapsed=(Date.now()-turnStartTs)/1000-(pausedElapsed||0);
-  const remaining=Math.max(0,bankAtTurnStart-elapsed);
-  const used=bankAtTurnStart-remaining;
   const turnId=game.currentTurn;
+  const el=(Date.now()-turnStartTs)/1000-(pausedElapsed||0);
+  const remaining=Math.max(0,bankAtTurnStart-el);
+  const used=bankAtTurnStart-remaining;
   const prevTotal=game.players[turnId]?.totalUsed||0;
   await update(gameRef,{
     [`players/${turnId}/bank`]:Math.round(remaining),
@@ -1065,22 +1115,25 @@ window.confirmEndGame=async function(){
   });
 };
 
-// ── LEAVE ──
 window.leaveGame=async function(){
-  tickerRaf=stopRaf(tickerRaf);
-  idleRaf=stopRaf(idleRaf);
+  ticker=stopTicker(ticker);
+  idleTicker=stopTicker(idleTicker);
+  sharedTicker=stopTicker(sharedTicker);
   if(unsub){ unsub(); unsub=null; }
   if(roomCode&&myId){
     if(isHost) await remove(ref(db,`games/${roomCode}`)).catch(()=>{});
-    else await remove(ref(db,`games/${roomCode}/players/${myId}`)).catch(()=>{});
+    else{
+      for(const seat of mySeats){ await remove(ref(db,`games/${roomCode}/players/${seat}`)).catch(()=>{}); }
+    }
   }
-  resetState(); go('home');
+  resetState();
+  go('home');
 };
 
-// ── SUMMARY ──
 function renderSummary(game){
-  tickerRaf=stopRaf(tickerRaf);
-  idleRaf=stopRaf(idleRaf);
+  ticker=stopTicker(ticker);
+  idleTicker=stopTicker(idleTicker);
+  sharedTicker=stopTicker(sharedTicker);
   go('summary');
   document.getElementById('host-controls').style.display='none';
   const list=Object.values(game.players||{});
@@ -1095,7 +1148,7 @@ function renderSummary(game){
       const pct=Math.round((p.totalUsed||0)/maxUsed*100);
       return `<div class="summary-row">
         <div class="lobby-dot" style="background:${p.color};flex-shrink:0;"></div>
-        <div style="flex:1;font-size:13px;letter-spacing:0.05em;">${p.name}${p.id===myId?' (you)':''}</div>
+        <div style="flex:1;font-size:13px;letter-spacing:0.05em;">${p.name}${mySeats.includes(p.id)?' (you)':''}</div>
         <div style="font-size:12px;color:var(--text-mid);margin-right:10px;font-variant-numeric:tabular-nums;">${fmtTotal(p.totalUsed||0)}</div>
         <div class="summary-bar-wrap"><div class="summary-bar-fill" style="width:${pct}%;background:${p.color};"></div></div>
         <div style="font-size:10px;color:var(--text-dim);min-width:30px;text-align:right;">${pct}%</div>
@@ -1103,27 +1156,32 @@ function renderSummary(game){
     }).join('');
 }
 
-// ── NEW GAME ──
 window.newGame=function(){
-  tickerRaf=stopRaf(tickerRaf);
-  idleRaf=stopRaf(idleRaf);
+  ticker=stopTicker(ticker);
+  idleTicker=stopTicker(idleTicker);
+  sharedTicker=stopTicker(sharedTicker);
   if(unsub){ unsub(); unsub=null; }
-  resetState(); go('home');
+  resetState();
+  go('home');
 };
 
 function resetState(){
   clearSession();
   myId=null; myName=null; myColor='#c8a96e';
   roomCode=null; isHost=false; gameRef=null;
-  gameStarted=false; lastTurnId=null; bankAtTurnStart=0; turnStartTs=0;
-  pausedElapsed=0; pauseStartTs=0;
+  gameStarted=false; lastTurnId=null;
+  bankAtTurnStart=0; turnStartTs=0; pausedElapsed=0;
   gameMode='classic'; incrSecs=30;
-  mySeats=[]; silenceOn=false; sharePhone=false;
-  if(sharedTickerRaf){ cancelAnimationFrame(sharedTickerRaf); sharedTickerRaf=null; }
-  document.getElementById('notif-hider')?.classList.remove('on');
+  mySeats=[]; sharePhone=false;
   document.getElementById('code-input').value='';
   document.getElementById('host-name').value='';
   document.getElementById('join-name').value='';
+  document.getElementById('host-name2').value='';
+  document.getElementById('join-name2').value='';
+  document.getElementById('host-share').classList.remove('on');
+  document.getElementById('join-share').classList.remove('on');
+  document.getElementById('host-share-fields').classList.remove('on');
+  document.getElementById('join-share-fields').classList.remove('on');
   document.getElementById('host-controls').style.display='none';
   document.getElementById('clock-bg').style.background='#0c0b09';
   document.getElementById('mode-classic').classList.add('selected');
@@ -1131,225 +1189,7 @@ function resetState(){
   document.getElementById('incr-settings').style.display='none';
 }
 
-
-
-// ── DRAG TO REORDER ──
-let dragSrcId=null;
-
-function attachDragHandlers(){
-  document.querySelectorAll('.lobby-player').forEach(el=>{
-    el.addEventListener('dragstart',handleDragStart);
-    el.addEventListener('dragover',handleDragOver);
-    el.addEventListener('dragleave',handleDragLeave);
-    el.addEventListener('drop',handleDrop);
-    el.addEventListener('dragend',handleDragEnd);
-  });
-  // Touch support for mobile
-  document.querySelectorAll('.drag-handle').forEach(handle=>{
-    handle.addEventListener('touchstart',handleTouchStart,{passive:false});
-  });
-}
-
-function handleDragStart(e){
-  dragSrcId=e.currentTarget.dataset.pid;
-  e.currentTarget.classList.add('dragging');
-  if(e.dataTransfer) e.dataTransfer.effectAllowed='move';
-}
-function handleDragOver(e){
-  e.preventDefault();
-  if(e.dataTransfer) e.dataTransfer.dropEffect='move';
-  const target=e.currentTarget;
-  if(target.dataset.pid!==dragSrcId) target.classList.add('drag-over');
-}
-function handleDragLeave(e){
-  e.currentTarget.classList.remove('drag-over');
-}
-async function handleDrop(e){
-  e.preventDefault();
-  const targetId=e.currentTarget.dataset.pid;
-  e.currentTarget.classList.remove('drag-over');
-  if(!dragSrcId||dragSrcId===targetId) return;
-  await reorderPlayers(dragSrcId,targetId);
-}
-function handleDragEnd(e){
-  e.currentTarget.classList.remove('dragging');
-  document.querySelectorAll('.lobby-player').forEach(el=>el.classList.remove('drag-over'));
-}
-
-// Touch-based drag for mobile (HTML5 drag doesn't work well on iOS)
-let touchDragId=null, touchStartY=0, touchEl=null, touchOffsetY=0;
-function handleTouchStart(e){
-  const handle=e.currentTarget;
-  const row=handle.closest('.lobby-player');
-  if(!row) return;
-  e.preventDefault();
-  touchDragId=row.dataset.pid;
-  touchEl=row;
-  touchStartY=e.touches[0].clientY;
-  const rect=row.getBoundingClientRect();
-  touchOffsetY=touchStartY-rect.top;
-  row.classList.add('dragging');
-  row.style.position='relative';
-  row.style.zIndex='100';
-  document.addEventListener('touchmove',handleTouchMove,{passive:false});
-  document.addEventListener('touchend',handleTouchEnd);
-}
-function handleTouchMove(e){
-  if(!touchEl) return;
-  e.preventDefault();
-  const y=e.touches[0].clientY;
-  const dy=y-touchStartY;
-  touchEl.style.transform=`translateY(${dy}px)`;
-  // Find which row we're hovering over
-  touchEl.style.pointerEvents='none';
-  const elBelow=document.elementFromPoint(e.touches[0].clientX,y);
-  touchEl.style.pointerEvents='';
-  const rowBelow=elBelow?.closest?.('.lobby-player');
-  document.querySelectorAll('.lobby-player').forEach(el=>el.classList.remove('drag-over'));
-  if(rowBelow&&rowBelow!==touchEl) rowBelow.classList.add('drag-over');
-}
-async function handleTouchEnd(e){
-  document.removeEventListener('touchmove',handleTouchMove);
-  document.removeEventListener('touchend',handleTouchEnd);
-  if(!touchEl) return;
-  const finalY=e.changedTouches[0].clientY;
-  touchEl.style.pointerEvents='none';
-  const elBelow=document.elementFromPoint(e.changedTouches[0].clientX,finalY);
-  touchEl.style.pointerEvents='';
-  const rowBelow=elBelow?.closest?.('.lobby-player');
-  touchEl.classList.remove('dragging');
-  touchEl.style.position='';
-  touchEl.style.zIndex='';
-  touchEl.style.transform='';
-  document.querySelectorAll('.lobby-player').forEach(el=>el.classList.remove('drag-over'));
-  if(rowBelow&&rowBelow.dataset.pid!==touchDragId){
-    await reorderPlayers(touchDragId,rowBelow.dataset.pid);
-  }
-  touchDragId=null; touchEl=null;
-}
-
-async function reorderPlayers(srcId,targetId){
-  const snap=await get(gameRef);
-  if(!snap.exists()) return;
-  const order=[...(snap.val().turnOrder||[])];
-  const srcIdx=order.indexOf(srcId);
-  const tgtIdx=order.indexOf(targetId);
-  if(srcIdx<0||tgtIdx<0) return;
-  order.splice(srcIdx,1);
-  order.splice(tgtIdx,0,srcId);
-  await update(gameRef,{turnOrder:order});
-}
-
-
-// ── SILENCE & SHARE STATE ──
-let silenceOn=false;
-let sharePhone=false;
-let mySeats=[]; // Array of player IDs this device controls (1 normally, 2 if sharing)
-
-window.toggleSilence=function(which){
-  const el=document.getElementById(which+'-silence');
-  el.classList.toggle('on');
-  silenceOn=el.classList.contains('on');
-  applySilence();
-};
-
-function applySilence(){
-  const hider=document.getElementById('notif-hider');
-  if(silenceOn) hider.classList.add('on');
-  else hider.classList.remove('on');
-  // Match background to current screen
-  const onCream=document.body.classList.contains('clock-cream');
-  hider.classList.toggle('cream',onCream);
-}
-
-window.toggleShare=function(which){
-  const el=document.getElementById(which+'-share');
-  const fields=document.getElementById(which+'-share-fields');
-  el.classList.toggle('on');
-  sharePhone=el.classList.contains('on');
-  fields.classList.toggle('on',sharePhone);
-};
-
-// ── EDIT BANK MODAL ──
-let modalPlayerId=null, modalMins=0, modalSecs=0;
-
-window.openEditModal=function(playerId,name,color,bank){
-  modalPlayerId=playerId;
-  modalMins=Math.floor(bank/60);
-  modalSecs=bank%60;
-  document.getElementById('modal-player-name').textContent=name;
-  document.getElementById('modal-player-color-dot').style.background=color;
-  document.getElementById('modal-min').textContent=String(modalMins).padStart(2,'0');
-  document.getElementById('modal-sec').textContent=String(modalSecs).padStart(2,'0');
-  document.getElementById('modal-edit-bank').style.display='flex';
-};
-
-window.closeEditModal=function(){
-  document.getElementById('modal-edit-bank').style.display='none';
-};
-
-window.adjModal=function(unit,delta){
-  if(unit==='min') modalMins=Math.max(0,Math.min(99,modalMins+delta));
-  else{
-    modalSecs+=delta;
-    if(modalSecs>=60){modalSecs=0;modalMins=Math.min(99,modalMins+1);}
-    if(modalSecs<0){modalSecs=55;modalMins=Math.max(0,modalMins-1);}
-    modalSecs=Math.round(modalSecs/5)*5;
-  }
-  if(modalMins===0&&modalSecs<5) modalSecs=5;
-  document.getElementById('modal-min').textContent=String(modalMins).padStart(2,'0');
-  document.getElementById('modal-sec').textContent=String(modalSecs).padStart(2,'0');
-};
-
-window.saveModalBank=async function(){
-  if(!modalPlayerId) return;
-  const newBank=modalMins*60+modalSecs;
-  await update(gameRef,{[`players/${modalPlayerId}/bank`]:newBank});
-  const bankEl=document.getElementById(`pause-bank-${modalPlayerId}`);
-  if(bankEl) bankEl.textContent=fmt(newBank);
-  const snap=await get(gameRef);
-  if(snap.exists()&&snap.val().currentTurn===modalPlayerId) bankAtTurnStart=newBank;
-  closeEditModal();
-};
-
 restoreSession();
 </script>
-
-<!-- PAUSE EDIT MODAL (host - edit single player bank) -->
-<div id="modal-edit-bank" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:none;flex-direction:column;">
-  <div class="top-nav">
-    <button class="back-btn" onclick="closeEditModal()">← Back</button>
-    <div class="nav-title">Adjust Time</div>
-    <div class="nav-spacer"></div>
-  </div>
-  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;">
-    <div id="modal-player-name" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:32px;letter-spacing:0.08em;color:var(--text);margin-bottom:8px;text-align:center;"></div>
-    <div id="modal-player-color-dot" style="width:8px;height:8px;border-radius:50%;margin-bottom:40px;"></div>
-    <div class="time-picker" style="margin-bottom:0;">
-      <div class="time-unit">
-        <div class="time-display" id="modal-min">00</div>
-        <div class="time-unit-label">min</div>
-        <div class="stepper">
-          <button class="step-btn" ontouchend="adjModal('min',-1);return false;" onclick="adjModal('min',-1)">−</button>
-          <button class="step-btn" ontouchend="adjModal('min',1);return false;" onclick="adjModal('min',1)">+</button>
-        </div>
-      </div>
-      <div class="time-colon">:</div>
-      <div class="time-unit">
-        <div class="time-display" id="modal-sec">00</div>
-        <div class="time-unit-label">sec</div>
-        <div class="stepper">
-          <button class="step-btn" ontouchend="adjModal('sec',-5);return false;" onclick="adjModal('sec',-5)">−</button>
-          <button class="step-btn" ontouchend="adjModal('sec',5);return false;" onclick="adjModal('sec',5)">+</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div style="padding:16px 28px 48px;">
-    <button class="btn btn-primary" onclick="saveModalBank()">Set Time →</button>
-  </div>
-</div>
-
-
 </body>
 </html>

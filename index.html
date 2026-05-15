@@ -107,10 +107,9 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 /* INCREMENT ANIMATION — smooth rise and fade, no pause */
 @keyframes incrRise{
-  0%{opacity:0;transform:translateX(-50%) translateY(0) scale(0.85);}
-  15%{opacity:1;transform:translateX(-50%) translateY(-12px) scale(1);}
-  85%{opacity:1;transform:translateX(-50%) translateY(-40px) scale(1);}
-  100%{opacity:0;transform:translateX(-50%) translateY(-56px) scale(0.95);}
+  0%{opacity:0;transform:translateX(-50%) translateY(0);}
+  20%{opacity:1;}
+  100%{opacity:0;transform:translateX(-50%) translateY(-60px);}
 }
 .incr-toast{
   position:fixed;
@@ -121,7 +120,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   color:#6a9060;
   pointer-events:none;
   z-index:1000;
-  animation:incrRise 1.2s cubic-bezier(0.16,1,0.3,1) forwards;
+  animation:incrRise 1.0s ease-out forwards;
   white-space:nowrap;
   letter-spacing:0.04em;
 }
@@ -311,7 +310,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
   <!-- Host controls -->
   <div id="host-controls" style="position:fixed;top:52px;right:24px;display:none;flex-direction:column;align-items:flex-end;gap:8px;">
-    <button class="back-btn" style="color:var(--text-dim);font-size:10px;" onclick="pauseGame()">⏸ Pause</button>
+    <button class="back-btn" style="color:var(--text-dim);font-size:10px;" onclick="pauseGame()"><span style="display:inline-flex;gap:3px;vertical-align:middle;margin-right:6px;"><span style="display:inline-block;width:2px;height:10px;background:currentColor;border-radius:1px;"></span><span style="display:inline-block;width:2px;height:10px;background:currentColor;border-radius:1px;"></span></span>Pause</button>
     <button class="back-btn" style="color:var(--text-dim);font-size:10px;" onclick="confirmEndGame()">End Game</button>
   </div>
 </div>
@@ -338,7 +337,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 <div class="screen" id="screen-paused-player">
   <div id="clock-bg-paused" style="position:fixed;inset:0;z-index:-1;background:#0c0b09;"></div>
   <div class="pause-indicator">
-    <div class="pause-icon">⏸</div>
+    <div class="pause-icon" style="display:flex;gap:10px;align-items:center;justify-content:center;"><div style="width:6px;height:48px;background:#7a7068;border-radius:3px;"></div><div style="width:6px;height:48px;background:#7a7068;border-radius:3px;"></div></div>
     <div class="pause-label">Game paused by host</div>
   </div>
 </div>
@@ -346,7 +345,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 <!-- SUMMARY -->
 <div class="screen" id="screen-summary">
   <div style="text-align:center;padding:60px 28px 24px;flex-shrink:0;">
-    <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:40px;color:var(--text);margin-bottom:8px;">Game over</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;">Results</div>
     <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);" id="summary-sub"></div>
   </div>
   <div style="text-align:center;margin-bottom:28px;flex-shrink:0;">
@@ -699,11 +698,13 @@ window.resumeGame=async function(){
   if(!snap.exists()) return;
   const game=snap.val();
   const pauseDuration=(Date.now()-game.pausedAt)/1000;
-  // Adjust turnStartedAt forward by how long we were paused
+  // Reset lastTurnId so renderClock re-fires for everyone
+  lastTurnId=null;
   await update(gameRef,{
     status:'playing',
     pausedElapsed:(game.pausedElapsed||0)+pauseDuration,
-    pausedAt:0
+    pausedAt:0,
+    resumedAt:Date.now()
   });
 };
 
@@ -712,6 +713,7 @@ function renderPaused(game){
   idleRaf=stopRaf(idleRaf);
   if(isHost){
     go('pause');
+    document.getElementById('host-controls').style.display='none';
     // Build editable player list
     const list=Object.values(game.players||{}).sort((a,b)=>{
       const order=game.turnOrder||[];
@@ -722,10 +724,7 @@ function renderPaused(game){
         <div class="lobby-dot" style="background:${p.color};flex-shrink:0;"></div>
         <div class="pause-player-name">${p.name}${p.id===myId?' (you)':''}</div>
         <div class="pause-bank" id="pause-bank-${p.id}">${fmt(p.bank)}</div>
-        <div class="pause-adj">
-          <button class="pause-adj-btn" onclick="adjustPlayerBank('${p.id}',-30)">−</button>
-          <button class="pause-adj-btn" onclick="adjustPlayerBank('${p.id}',30)">+</button>
-        </div>
+        <button class="pause-adj-btn" style="width:auto;padding:0 10px;font-size:10px;letter-spacing:0.1em;" onclick="openEditModal('${p.id}','${p.name}','${p.color}',${p.bank})">Edit</button>
       </div>`).join('');
   } else {
     go('paused-player');
@@ -853,7 +852,86 @@ function resetState(){
   document.getElementById('incr-settings').style.display='none';
 }
 
+
+// ── EDIT BANK MODAL ──
+let modalPlayerId=null, modalMins=0, modalSecs=0;
+
+window.openEditModal=function(playerId,name,color,bank){
+  modalPlayerId=playerId;
+  modalMins=Math.floor(bank/60);
+  modalSecs=bank%60;
+  document.getElementById('modal-player-name').textContent=name;
+  document.getElementById('modal-player-color-dot').style.background=color;
+  document.getElementById('modal-min').textContent=String(modalMins).padStart(2,'0');
+  document.getElementById('modal-sec').textContent=String(modalSecs).padStart(2,'0');
+  document.getElementById('modal-edit-bank').style.display='flex';
+};
+
+window.closeEditModal=function(){
+  document.getElementById('modal-edit-bank').style.display='none';
+};
+
+window.adjModal=function(unit,delta){
+  if(unit==='min') modalMins=Math.max(0,Math.min(99,modalMins+delta));
+  else{
+    modalSecs+=delta;
+    if(modalSecs>=60){modalSecs=0;modalMins=Math.min(99,modalMins+1);}
+    if(modalSecs<0){modalSecs=55;modalMins=Math.max(0,modalMins-1);}
+    modalSecs=Math.round(modalSecs/5)*5;
+  }
+  if(modalMins===0&&modalSecs<5) modalSecs=5;
+  document.getElementById('modal-min').textContent=String(modalMins).padStart(2,'0');
+  document.getElementById('modal-sec').textContent=String(modalSecs).padStart(2,'0');
+};
+
+window.saveModalBank=async function(){
+  if(!modalPlayerId) return;
+  const newBank=modalMins*60+modalSecs;
+  await update(gameRef,{[`players/${modalPlayerId}/bank`]:newBank});
+  const bankEl=document.getElementById(`pause-bank-${modalPlayerId}`);
+  if(bankEl) bankEl.textContent=fmt(newBank);
+  const snap=await get(gameRef);
+  if(snap.exists()&&snap.val().currentTurn===modalPlayerId) bankAtTurnStart=newBank;
+  closeEditModal();
+};
+
 restoreSession();
 </script>
+
+<!-- PAUSE EDIT MODAL (host - edit single player bank) -->
+<div id="modal-edit-bank" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:none;flex-direction:column;">
+  <div class="top-nav">
+    <button class="back-btn" onclick="closeEditModal()">← Back</button>
+    <div class="nav-title">Adjust Time</div>
+    <div class="nav-spacer"></div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;">
+    <div id="modal-player-name" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:32px;letter-spacing:0.08em;color:var(--text);margin-bottom:8px;text-align:center;"></div>
+    <div id="modal-player-color-dot" style="width:8px;height:8px;border-radius:50%;margin-bottom:40px;"></div>
+    <div class="time-picker" style="margin-bottom:0;">
+      <div class="time-unit">
+        <div class="time-display" id="modal-min">00</div>
+        <div class="time-unit-label">min</div>
+        <div class="stepper">
+          <button class="step-btn" ontouchend="adjModal('min',-1);return false;" onclick="adjModal('min',-1)">−</button>
+          <button class="step-btn" ontouchend="adjModal('min',1);return false;" onclick="adjModal('min',1)">+</button>
+        </div>
+      </div>
+      <div class="time-colon">:</div>
+      <div class="time-unit">
+        <div class="time-display" id="modal-sec">00</div>
+        <div class="time-unit-label">sec</div>
+        <div class="stepper">
+          <button class="step-btn" ontouchend="adjModal('sec',-5);return false;" onclick="adjModal('sec',-5)">−</button>
+          <button class="step-btn" ontouchend="adjModal('sec',5);return false;" onclick="adjModal('sec',5)">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:16px 28px 48px;">
+    <button class="btn btn-primary" onclick="saveModalBank()">Set Time →</button>
+  </div>
+</div>
+
 </body>
 </html>

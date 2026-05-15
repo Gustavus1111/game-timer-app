@@ -79,7 +79,14 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 /* LOBBY */
 .room-code-big{font-family:'Spectral',serif;font-size:56px;font-weight:300;letter-spacing:0.3em;color:var(--amber);line-height:1;text-align:center;}
 .room-code-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-bottom:12px;}
-.lobby-player{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:6px;}
+.lobby-player{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:6px;transition:transform 0.2s ease,opacity 0.2s ease,background 0.2s ease;}
+.lobby-player.dragging{opacity:0.5;border-color:var(--amber);background:rgba(200,169,110,0.06);}
+.lobby-player.drag-over{border-color:var(--amber-dim);}
+.drag-handle{width:24px;display:flex;flex-direction:column;justify-content:center;gap:3px;cursor:grab;padding:8px 4px;touch-action:none;-webkit-tap-highlight-color:transparent;}
+.drag-handle:active{cursor:grabbing;}
+.drag-handle div{height:1.5px;background:var(--text-dim);border-radius:1px;}
+.drag-handle:hover div{background:var(--text-mid);}
+.lobby-player.dragging .drag-handle div{background:var(--amber);}
 .lobby-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .lobby-name{flex:1;font-size:13px;letter-spacing:0.05em;color:var(--text);}
 .lobby-badge{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:3px 8px;border-radius:2px;background:var(--amber-faint);border:1px solid var(--amber-dim);color:var(--amber);}
@@ -104,6 +111,48 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .summary-row{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:4px;}
 .summary-bar-wrap{width:64px;height:2px;background:var(--border);border-radius:1px;overflow:hidden;}
 .summary-bar-fill{height:100%;border-radius:1px;transition:width 1s ease;}
+
+
+
+/* SHARE PHONE TOGGLE */
+.share-toggle{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;cursor:pointer;margin-bottom:14px;touch-action:manipulation;}
+.share-toggle:hover{border-color:var(--border-light);}
+.share-second-name{margin-bottom:24px;display:none;}
+.share-second-name.on{display:flex;}
+
+/* LANDSCAPE SHARE PHONE CLOCK */
+@media (orientation:landscape){
+  body.share-mode .screen-clock-shared{display:flex !important;}
+}
+.screen-clock-shared{display:none;flex-direction:row;}
+.shared-half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer;transition:background 0.6s cubic-bezier(0.4,0,0.2,1);}
+.shared-half.active{background:#f0ebe2;}
+.shared-half.idle{background:#0c0b09;}
+.shared-divider{width:1px;background:var(--border);}
+.shared-name{font-family:'Cormorant Garamond',serif;font-weight:300;text-align:center;transition:all 0.6s cubic-bezier(0.4,0,0.2,1);}
+.shared-half.active .shared-name{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#9a8870;margin-bottom:10px;}
+.shared-half.idle .shared-name{font-size:clamp(28px,7vw,42px);color:#7a7068;letter-spacing:0.06em;margin-bottom:18px;}
+.shared-time{font-family:'Spectral',serif;font-weight:300;font-variant-numeric:tabular-nums;line-height:1;transition:all 0.6s cubic-bezier(0.4,0,0.2,1);}
+.shared-half.active .shared-time{font-size:clamp(56px,16vw,88px);color:#18140e;}
+.shared-half.idle .shared-time{font-size:clamp(18px,4vw,24px);color:#7a7068;}
+.shared-tap{position:absolute;bottom:14px;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;opacity:0;transition:opacity 0.6s;}
+.shared-half.active .shared-tap{opacity:0.7;color:#8a6d3e;}
+
+/* SILENCE TOGGLE */
+.silence-toggle{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;cursor:pointer;margin-bottom:24px;touch-action:manipulation;}
+.silence-toggle:hover{border-color:var(--border-light);}
+.silence-toggle-text{display:flex;flex-direction:column;gap:2px;}
+.silence-toggle-title{font-size:13px;letter-spacing:0.05em;color:var(--text);}
+.silence-toggle-desc{font-size:11px;color:var(--text-mid);letter-spacing:0.04em;}
+.silence-switch{width:38px;height:22px;background:var(--border);border-radius:11px;position:relative;transition:background 0.2s;flex-shrink:0;}
+.silence-switch::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--text-mid);transition:transform 0.2s,background 0.2s;}
+.silence-toggle.on .silence-switch{background:var(--amber-dim);}
+.silence-toggle.on .silence-switch::after{transform:translateX(16px);background:var(--amber);}
+
+/* NOTIFICATION HIDER OVERLAY — covers iOS status bar area when silenced */
+.notif-hider{position:fixed;top:0;left:0;right:0;height:60px;background:var(--bg);z-index:9998;pointer-events:none;opacity:0;transition:opacity 0.3s;}
+.notif-hider.on{opacity:1;}
+.notif-hider.cream{background:#f0ebe2;}
 
 /* INCREMENT ANIMATION — smooth rise and fade, no pause */
 @keyframes incrRise{
@@ -130,6 +179,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 </style>
 </head>
 <body>
+<div class="notif-hider" id="notif-hider"></div>
 
 <!-- HOME -->
 <div class="screen active" id="screen-home">
@@ -216,7 +266,34 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         <div class="color-swatch" style="background:#5580a0;" data-color="#5580a0" onclick="pickColor(this,'host-colors')"></div>
         <div class="color-swatch" style="background:#806080;" data-color="#806080" onclick="pickColor(this,'host-colors')"></div>
         <div class="color-swatch" style="background:#a07050;" data-color="#a07050" onclick="pickColor(this,'host-colors')"></div>
-        <div class="color-swatch" style="background:#507080;" data-color="#507080" onclick="pickColor(this,'host-colors')"></div>
+    <div class="silence-toggle" id="host-silence" onclick="toggleSilence('host')">
+      <div class="silence-toggle-text">
+        <div class="silence-toggle-title">Silence on my phone</div>
+        <div class="silence-toggle-desc">Hide status bar during play. You can change this later.</div>
+      </div>
+      <div class="silence-switch"></div>
+    </div>
+    <div class="share-toggle silence-toggle" id="host-share" onclick="toggleShare('host')">
+      <div class="silence-toggle-text">
+        <div class="silence-toggle-title">Share this phone</div>
+        <div class="silence-toggle-desc">Two players on one device, split screen in landscape.</div>
+      </div>
+      <div class="silence-switch"></div>
+    </div>
+    <div class="share-second-name" id="host-share-fields">
+      <div class="field" style="margin-bottom:0;width:100%;">
+        <div class="field-label">Second player name</div>
+        <input class="field-input" type="text" id="host-name2" placeholder="Other player" maxlength="16" autocomplete="off">
+        <div class="field-label" style="margin-top:14px;">Their color</div>
+        <div class="color-picker" id="host-colors2">
+          <div class="color-swatch" style="background:#c8a96e;" data-color="#c8a96e" onclick="pickColor(this,'host-colors2')"></div>
+          <div class="color-swatch selected" style="background:#c06040;" data-color="#c06040" onclick="pickColor(this,'host-colors2')"></div>
+          <div class="color-swatch" style="background:#6a9060;" data-color="#6a9060" onclick="pickColor(this,'host-colors2')"></div>
+          <div class="color-swatch" style="background:#5580a0;" data-color="#5580a0" onclick="pickColor(this,'host-colors2')"></div>
+          <div class="color-swatch" style="background:#806080;" data-color="#806080" onclick="pickColor(this,'host-colors2')"></div>
+          <div class="color-swatch" style="background:#a07050;" data-color="#a07050" onclick="pickColor(this,'host-colors2')"></div>
+          <div class="color-swatch" style="background:#507080;" data-color="#507080" onclick="pickColor(this,'host-colors2')"></div>
+        </div>
       </div>
     </div>
     <div style="height:16px;"></div>
@@ -255,7 +332,34 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         <div class="color-swatch" style="background:#5580a0;" data-color="#5580a0" onclick="pickColor(this,'join-colors')"></div>
         <div class="color-swatch" style="background:#806080;" data-color="#806080" onclick="pickColor(this,'join-colors')"></div>
         <div class="color-swatch" style="background:#a07050;" data-color="#a07050" onclick="pickColor(this,'host-colors')"></div>
-        <div class="color-swatch" style="background:#507080;" data-color="#507080" onclick="pickColor(this,'join-colors')"></div>
+    <div class="silence-toggle" id="join-silence" onclick="toggleSilence('join')">
+      <div class="silence-toggle-text">
+        <div class="silence-toggle-title">Silence on my phone</div>
+        <div class="silence-toggle-desc">Hide status bar during play. You can change this later.</div>
+      </div>
+      <div class="silence-switch"></div>
+    </div>
+    <div class="share-toggle silence-toggle" id="join-share" onclick="toggleShare('join')">
+      <div class="silence-toggle-text">
+        <div class="silence-toggle-title">Share this phone</div>
+        <div class="silence-toggle-desc">Two players on one device, split screen in landscape.</div>
+      </div>
+      <div class="silence-switch"></div>
+    </div>
+    <div class="share-second-name" id="join-share-fields">
+      <div class="field" style="margin-bottom:0;width:100%;">
+        <div class="field-label">Second player name</div>
+        <input class="field-input" type="text" id="join-name2" placeholder="Other player" maxlength="16" autocomplete="off">
+        <div class="field-label" style="margin-top:14px;">Their color</div>
+        <div class="color-picker" id="join-colors2">
+          <div class="color-swatch" style="background:#c8a96e;" data-color="#c8a96e" onclick="pickColor(this,'join-colors2')"></div>
+          <div class="color-swatch selected" style="background:#c06040;" data-color="#c06040" onclick="pickColor(this,'join-colors2')"></div>
+          <div class="color-swatch" style="background:#6a9060;" data-color="#6a9060" onclick="pickColor(this,'join-colors2')"></div>
+          <div class="color-swatch" style="background:#5580a0;" data-color="#5580a0" onclick="pickColor(this,'join-colors2')"></div>
+          <div class="color-swatch" style="background:#806080;" data-color="#806080" onclick="pickColor(this,'join-colors2')"></div>
+          <div class="color-swatch" style="background:#a07050;" data-color="#a07050" onclick="pickColor(this,'join-colors2')"></div>
+          <div class="color-swatch" style="background:#507080;" data-color="#507080" onclick="pickColor(this,'join-colors2')"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -342,6 +446,24 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
 </div>
 
+
+<!-- CLOCK — SHARED PHONE (landscape) -->
+<div class="screen" id="screen-clock-shared">
+  <div style="display:flex;flex-direction:row;width:100%;height:100%;">
+    <div class="shared-half idle" id="shared-half-left" onclick="endSharedTurn('left')">
+      <div class="shared-name" id="shared-name-left"></div>
+      <div class="shared-time" id="shared-time-left">00:00</div>
+      <div class="shared-tap">Tap to end turn →</div>
+    </div>
+    <div class="shared-divider"></div>
+    <div class="shared-half idle" id="shared-half-right" onclick="endSharedTurn('right')">
+      <div class="shared-name" id="shared-name-right"></div>
+      <div class="shared-time" id="shared-time-right">00:00</div>
+      <div class="shared-tap">Tap to end turn →</div>
+    </div>
+  </div>
+</div>
+
 <!-- SUMMARY -->
 <div class="screen" id="screen-summary">
   <div style="text-align:center;padding:60px 28px 24px;flex-shrink:0;">
@@ -409,7 +531,7 @@ window.go=function(name){
 };
 
 // ── SESSION ──
-function saveSession(){ try{ localStorage.setItem('second',JSON.stringify({myId,myName,myColor,roomCode,isHost})); }catch(e){} }
+function saveSession(){ try{ localStorage.setItem('second',JSON.stringify({myId,myName,myColor,roomCode,isHost,mySeats,silenceOn})); }catch(e){} }
 function clearSession(){ try{ localStorage.removeItem('second'); }catch(e){} }
 async function restoreSession(){
   let s; try{ s=JSON.parse(localStorage.getItem('second')||'null'); }catch(e){ return; }
@@ -419,6 +541,9 @@ async function restoreSession(){
   const game=snap.val();
   if(!game.players?.[s.myId]){ clearSession(); return; }
   myId=s.myId; myName=s.myName; myColor=s.myColor; roomCode=s.roomCode; isHost=s.isHost;
+  mySeats=s.mySeats||[myId];
+  silenceOn=s.silenceOn||false;
+  if(silenceOn) applySilence();
   gameRef=ref(db,`games/${roomCode}`);
   attachListener();
   setLobbyUI(game.bankSeconds,game.mode,game.bonusSeconds||0);
@@ -471,13 +596,26 @@ window.createGame=async function(){
   const bank=bankMins*60+bankSecs;
   gameRef=ref(db,`games/${roomCode}`);
   try{
+    const players={[myId]:{id:myId,name,color:myColor,bank,totalUsed:0,isHost:true,deviceId:myId}};
+    const turnOrder=[myId];
+    mySeats=[myId];
+    if(sharePhone){
+      const name2=document.getElementById('host-name2').value.trim();
+      const color2=document.querySelector('#host-colors2 .color-swatch.selected')?.dataset.color||'#c06040';
+      if(name2&&color2!==myColor){
+        const seatId=uid();
+        players[seatId]={id:seatId,name:name2,color:color2,bank,totalUsed:0,isHost:false,deviceId:myId};
+        turnOrder.push(seatId);
+        mySeats.push(seatId);
+      }
+    }
     await set(gameRef,{
       code:roomCode,status:'lobby',
       mode:gameMode,bankSeconds:bank,
       bonusSeconds:gameMode==='increment'?incrSecs:0,
       currentTurn:null,turnIndex:0,
-      turnOrder:[myId],turnStartedAt:0,pausedAt:0,pausedElapsed:0,
-      players:{ [myId]:{id:myId,name,color:myColor,bank,totalUsed:0,isHost:true} }
+      turnOrder,turnStartedAt:0,pausedAt:0,pausedElapsed:0,
+      players
     });
     errEl.textContent='';
     saveSession();
@@ -507,10 +645,23 @@ window.joinGame=async function(){
     if(taken.includes(color)){ errEl.textContent='Color taken — pick another'; return; }
     myId=uid(); myName=name; myColor=color; isHost=false; roomCode=codeVal;
     gameRef=ref(db,`games/${roomCode}`);
-    await update(gameRef,{
-      [`players/${myId}`]:{id:myId,name,color,bank:game.bankSeconds,totalUsed:0,isHost:false},
-      turnOrder:[...(game.turnOrder||[]),myId]
-    });
+    mySeats=[myId];
+    const updates={
+      [`players/${myId}`]:{id:myId,name,color,bank:game.bankSeconds,totalUsed:0,isHost:false,deviceId:myId},
+    };
+    let newOrder=[...(game.turnOrder||[]),myId];
+    if(sharePhone){
+      const name2=document.getElementById('join-name2').value.trim();
+      const color2=document.querySelector('#join-colors2 .color-swatch.selected')?.dataset.color;
+      if(name2&&color2&&color2!==color&&!taken.includes(color2)){
+        const seatId=uid();
+        updates[`players/${seatId}`]={id:seatId,name:name2,color:color2,bank:game.bankSeconds,totalUsed:0,isHost:false,deviceId:myId};
+        newOrder.push(seatId);
+        mySeats.push(seatId);
+      }
+    }
+    updates.turnOrder=newOrder;
+    await update(gameRef,updates);
     errEl.textContent='';
     saveSession();
     setLobbyUI(game.bankSeconds,game.mode,game.bonusSeconds||0);
@@ -545,13 +696,18 @@ function attachListener(){
 
 // ── LOBBY RENDER ──
 function renderLobby(game){
-  const list=Object.values(game.players||{});
+  // Sort by turnOrder so drag-reorder is reflected
+  const order=game.turnOrder||[];
+  const playerMap=game.players||{};
+  const list=order.map(id=>playerMap[id]).filter(Boolean);
   document.getElementById('lobby-players').innerHTML=list.map(p=>`
-    <div class="lobby-player">
+    <div class="lobby-player" data-pid="${p.id}" ${isHost?'draggable="true"':''}>
       <div class="lobby-dot" style="background:${p.color};"></div>
       <div class="lobby-name">${p.name}${p.id===myId?' (you)':''}</div>
       ${p.isHost?'<div class="lobby-badge">Host</div>':''}
+      ${isHost?'<div class="drag-handle" data-pid="'+p.id+'"><div></div><div></div><div></div></div>':''}
     </div>`).join('');
+  if(isHost) attachDragHandlers();
   document.getElementById('lobby-waiting-row').style.display=list.length<MAX_PLAYERS?'flex':'none';
   document.getElementById('lobby-player-count').textContent=`${list.length} joined`;
   if(isHost){
@@ -571,8 +727,16 @@ window.startGame=async function(){
 
 // ── CLOCK RENDER ──
 function renderClock(game){
-  if(!gameStarted){ gameStarted=true; go('clock'); }
-  // Always go to clock screen when status is playing (handles resume case)
+  if(!gameStarted){ gameStarted=true; }
+  const isShared=mySeats.length>1;
+
+  // Route to shared landscape clock if this device hosts 2 seats
+  if(isShared){
+    if(!document.getElementById('screen-clock-shared').classList.contains('active')) go('clock-shared');
+    renderSharedClock(game);
+    return;
+  }
+
   if(!document.getElementById('screen-clock').classList.contains('active')) go('clock');
   if(isHost) document.getElementById('host-controls').style.display='flex';
 
@@ -778,6 +942,108 @@ window.endTurn=async function(){
   });
 };
 
+
+// ── SHARED CLOCK (one device, 2 players) ──
+let sharedTickerRaf=null;
+let sharedBanks={left:0,right:0};
+let sharedTurnTs=0;
+
+function renderSharedClock(game){
+  // mySeats[0] is left, mySeats[1] is right
+  const leftId=mySeats[0], rightId=mySeats[1];
+  const leftP=game.players?.[leftId], rightP=game.players?.[rightId];
+  if(!leftP||!rightP) return;
+
+  const turnId=game.currentTurn;
+  if(turnId===lastTurnId) return;
+  lastTurnId=turnId;
+  sharedTurnTs=game.turnStartedAt||Date.now();
+  pausedElapsed=game.pausedElapsed||0;
+
+  // Stop any running tick
+  if(sharedTickerRaf) cancelAnimationFrame(sharedTickerRaf);
+
+  const leftH=document.getElementById('shared-half-left');
+  const rightH=document.getElementById('shared-half-right');
+  const leftN=document.getElementById('shared-name-left');
+  const rightN=document.getElementById('shared-name-right');
+  const leftT=document.getElementById('shared-time-left');
+  const rightT=document.getElementById('shared-time-right');
+
+  leftN.textContent=turnId===leftId?'Your turn':leftP.name;
+  rightN.textContent=turnId===rightId?'Your turn':rightP.name;
+  leftT.textContent=fmt(leftP.bank);
+  rightT.textContent=fmt(rightP.bank);
+
+  // Apply active/idle classes
+  leftH.classList.toggle('active',turnId===leftId);
+  leftH.classList.toggle('idle',turnId!==leftId);
+  rightH.classList.toggle('active',turnId===rightId);
+  rightH.classList.toggle('idle',turnId!==rightId);
+
+  // Start tick for the active player
+  sharedBanks.left=leftP.bank;
+  sharedBanks.right=rightP.bank;
+  startSharedTick(game);
+}
+
+function startSharedTick(game){
+  const turnId=game.currentTurn;
+  const isLeft=turnId===mySeats[0];
+  function tick(){
+    const elapsed=(Date.now()-sharedTurnTs)/1000-(pausedElapsed||0);
+    if(isLeft){
+      const r=Math.max(0,sharedBanks.left-elapsed);
+      document.getElementById('shared-time-left').textContent=fmt(r);
+      document.getElementById('shared-time-left').style.color=r<120?'#b05030':'#18140e';
+      if(r<=0){ endSharedTurnAuto(); return; }
+    } else {
+      const r=Math.max(0,sharedBanks.right-elapsed);
+      document.getElementById('shared-time-right').textContent=fmt(r);
+      document.getElementById('shared-time-right').style.color=r<120?'#b05030':'#18140e';
+      if(r<=0){ endSharedTurnAuto(); return; }
+    }
+    sharedTickerRaf=requestAnimationFrame(tick);
+  }
+  sharedTickerRaf=requestAnimationFrame(tick);
+}
+
+window.endSharedTurn=async function(half){
+  const snap=await get(gameRef);
+  if(!snap.exists()) return;
+  const game=snap.val();
+  const turnId=game.currentTurn;
+  const myActiveSeat=half==='left'?mySeats[0]:mySeats[1];
+  // Only allow ending if this half is currently active
+  if(turnId!==myActiveSeat) return;
+  // Stop tick
+  if(sharedTickerRaf) cancelAnimationFrame(sharedTickerRaf);
+  const elapsed=(Date.now()-sharedTurnTs)/1000-(pausedElapsed||0);
+  const bankStart=half==='left'?sharedBanks.left:sharedBanks.right;
+  const remaining=Math.max(0,bankStart-elapsed);
+  const used=bankStart-remaining;
+  const isIncr=game.mode==='increment';
+  const bonus=isIncr?(game.bonusSeconds||0):0;
+  const newBank=Math.min(Math.round(remaining)+bonus,game.bankSeconds*2);
+  const order=game.turnOrder;
+  const nextIndex=(game.turnIndex+1)%order.length;
+  const nextId=order[nextIndex];
+  const prevTotal=game.players[myActiveSeat]?.totalUsed||0;
+  await update(gameRef,{
+    [`players/${myActiveSeat}/bank`]:newBank,
+    [`players/${myActiveSeat}/totalUsed`]:Math.round(prevTotal+used),
+    currentTurn:nextId,turnIndex:nextIndex,
+    turnStartedAt:Date.now(),pausedElapsed:0,pausedAt:0
+  });
+};
+
+function endSharedTurnAuto(){
+  // Auto end when time hits 0
+  const turnId=lastTurnId;
+  if(turnId===mySeats[0]) endSharedTurn('left');
+  else if(turnId===mySeats[1]) endSharedTurn('right');
+}
+
 // ── HOST END GAME ──
 window.confirmEndGame=async function(){
   if(!isHost) return;
@@ -852,6 +1118,9 @@ function resetState(){
   gameStarted=false; lastTurnId=null; bankAtTurnStart=0; turnStartTs=0;
   pausedElapsed=0; pauseStartTs=0;
   gameMode='classic'; incrSecs=30;
+  mySeats=[]; silenceOn=false; sharePhone=false;
+  if(sharedTickerRaf){ cancelAnimationFrame(sharedTickerRaf); sharedTickerRaf=null; }
+  document.getElementById('notif-hider')?.classList.remove('on');
   document.getElementById('code-input').value='';
   document.getElementById('host-name').value='';
   document.getElementById('join-name').value='';
@@ -862,6 +1131,144 @@ function resetState(){
   document.getElementById('incr-settings').style.display='none';
 }
 
+
+
+// ── DRAG TO REORDER ──
+let dragSrcId=null;
+
+function attachDragHandlers(){
+  document.querySelectorAll('.lobby-player').forEach(el=>{
+    el.addEventListener('dragstart',handleDragStart);
+    el.addEventListener('dragover',handleDragOver);
+    el.addEventListener('dragleave',handleDragLeave);
+    el.addEventListener('drop',handleDrop);
+    el.addEventListener('dragend',handleDragEnd);
+  });
+  // Touch support for mobile
+  document.querySelectorAll('.drag-handle').forEach(handle=>{
+    handle.addEventListener('touchstart',handleTouchStart,{passive:false});
+  });
+}
+
+function handleDragStart(e){
+  dragSrcId=e.currentTarget.dataset.pid;
+  e.currentTarget.classList.add('dragging');
+  if(e.dataTransfer) e.dataTransfer.effectAllowed='move';
+}
+function handleDragOver(e){
+  e.preventDefault();
+  if(e.dataTransfer) e.dataTransfer.dropEffect='move';
+  const target=e.currentTarget;
+  if(target.dataset.pid!==dragSrcId) target.classList.add('drag-over');
+}
+function handleDragLeave(e){
+  e.currentTarget.classList.remove('drag-over');
+}
+async function handleDrop(e){
+  e.preventDefault();
+  const targetId=e.currentTarget.dataset.pid;
+  e.currentTarget.classList.remove('drag-over');
+  if(!dragSrcId||dragSrcId===targetId) return;
+  await reorderPlayers(dragSrcId,targetId);
+}
+function handleDragEnd(e){
+  e.currentTarget.classList.remove('dragging');
+  document.querySelectorAll('.lobby-player').forEach(el=>el.classList.remove('drag-over'));
+}
+
+// Touch-based drag for mobile (HTML5 drag doesn't work well on iOS)
+let touchDragId=null, touchStartY=0, touchEl=null, touchOffsetY=0;
+function handleTouchStart(e){
+  const handle=e.currentTarget;
+  const row=handle.closest('.lobby-player');
+  if(!row) return;
+  e.preventDefault();
+  touchDragId=row.dataset.pid;
+  touchEl=row;
+  touchStartY=e.touches[0].clientY;
+  const rect=row.getBoundingClientRect();
+  touchOffsetY=touchStartY-rect.top;
+  row.classList.add('dragging');
+  row.style.position='relative';
+  row.style.zIndex='100';
+  document.addEventListener('touchmove',handleTouchMove,{passive:false});
+  document.addEventListener('touchend',handleTouchEnd);
+}
+function handleTouchMove(e){
+  if(!touchEl) return;
+  e.preventDefault();
+  const y=e.touches[0].clientY;
+  const dy=y-touchStartY;
+  touchEl.style.transform=`translateY(${dy}px)`;
+  // Find which row we're hovering over
+  touchEl.style.pointerEvents='none';
+  const elBelow=document.elementFromPoint(e.touches[0].clientX,y);
+  touchEl.style.pointerEvents='';
+  const rowBelow=elBelow?.closest?.('.lobby-player');
+  document.querySelectorAll('.lobby-player').forEach(el=>el.classList.remove('drag-over'));
+  if(rowBelow&&rowBelow!==touchEl) rowBelow.classList.add('drag-over');
+}
+async function handleTouchEnd(e){
+  document.removeEventListener('touchmove',handleTouchMove);
+  document.removeEventListener('touchend',handleTouchEnd);
+  if(!touchEl) return;
+  const finalY=e.changedTouches[0].clientY;
+  touchEl.style.pointerEvents='none';
+  const elBelow=document.elementFromPoint(e.changedTouches[0].clientX,finalY);
+  touchEl.style.pointerEvents='';
+  const rowBelow=elBelow?.closest?.('.lobby-player');
+  touchEl.classList.remove('dragging');
+  touchEl.style.position='';
+  touchEl.style.zIndex='';
+  touchEl.style.transform='';
+  document.querySelectorAll('.lobby-player').forEach(el=>el.classList.remove('drag-over'));
+  if(rowBelow&&rowBelow.dataset.pid!==touchDragId){
+    await reorderPlayers(touchDragId,rowBelow.dataset.pid);
+  }
+  touchDragId=null; touchEl=null;
+}
+
+async function reorderPlayers(srcId,targetId){
+  const snap=await get(gameRef);
+  if(!snap.exists()) return;
+  const order=[...(snap.val().turnOrder||[])];
+  const srcIdx=order.indexOf(srcId);
+  const tgtIdx=order.indexOf(targetId);
+  if(srcIdx<0||tgtIdx<0) return;
+  order.splice(srcIdx,1);
+  order.splice(tgtIdx,0,srcId);
+  await update(gameRef,{turnOrder:order});
+}
+
+
+// ── SILENCE & SHARE STATE ──
+let silenceOn=false;
+let sharePhone=false;
+let mySeats=[]; // Array of player IDs this device controls (1 normally, 2 if sharing)
+
+window.toggleSilence=function(which){
+  const el=document.getElementById(which+'-silence');
+  el.classList.toggle('on');
+  silenceOn=el.classList.contains('on');
+  applySilence();
+};
+
+function applySilence(){
+  const hider=document.getElementById('notif-hider');
+  if(silenceOn) hider.classList.add('on');
+  else hider.classList.remove('on');
+  // Match background to current screen
+  const onCream=document.body.classList.contains('clock-cream');
+  hider.classList.toggle('cream',onCream);
+}
+
+window.toggleShare=function(which){
+  const el=document.getElementById(which+'-share');
+  const fields=document.getElementById(which+'-share-fields');
+  el.classList.toggle('on');
+  sharePhone=el.classList.contains('on');
+  fields.classList.toggle('on',sharePhone);
+};
 
 // ── EDIT BANK MODAL ──
 let modalPlayerId=null, modalMins=0, modalSecs=0;

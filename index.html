@@ -9,7 +9,7 @@
 <title>Second</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&family=Spectral:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@200;300;400&family=Spectral:wght@300;400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -18,62 +18,62 @@
   --text:#e4dcd0;--text-mid:#7a7068;--text-dim:#3a3730;
   --dur:0.45s;--ease:cubic-bezier(0.4,0,0.2,1);
 }
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
-body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.055;mix-blend-mode:screen;}
 
 .screen{position:fixed;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity var(--dur) var(--ease);overflow:hidden;}
 .screen.active{opacity:1;pointer-events:auto;}
 .top-nav{display:flex;align-items:center;justify-content:space-between;padding:52px 28px 20px;flex-shrink:0;}
 .nav-spacer{width:48px;}
-.nav-title{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);}
+.nav-title{font-family:'Jost',sans-serif;font-size:10px;font-weight:300;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);}
 .screen-body{flex:1;display:flex;flex-direction:column;padding:0 28px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .screen-footer{padding:16px 28px 48px;flex-shrink:0;}
 
-.btn{width:100%;border:none;border-radius:4px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;transition:opacity 0.2s;padding:18px;touch-action:manipulation;}
+.btn{width:100%;border:none;border-radius:3px;font-family:'Jost',sans-serif;font-size:11px;font-weight:300;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;transition:opacity 0.2s;padding:18px;touch-action:manipulation;}
 .btn:active{opacity:0.8;}
 .btn:disabled{opacity:0.3;cursor:default;}
 .btn-primary{background:var(--amber);color:#0c0b09;}
 .btn-secondary{background:transparent;border:1px solid var(--border-light);color:var(--text-mid);padding:16px;margin-top:10px;}
-.back-btn{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-mid);background:none;border:none;cursor:pointer;padding:8px 0;font-family:'DM Mono',monospace;transition:color 0.2s;touch-action:manipulation;}
+.back-btn{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-mid);background:none;border:none;cursor:pointer;padding:8px 0;font-family:'Jost',sans-serif;font-weight:300;transition:color 0.2s;touch-action:manipulation;}
 .back-btn:hover{color:var(--amber);}
 
 .field{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
-.field-label{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);}
-.field-input{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px 16px;font-family:'DM Mono',monospace;font-size:14px;color:var(--text);outline:none;transition:border-color 0.2s;letter-spacing:0.05em;-webkit-appearance:none;width:100%;}
+.field-label{font-family:'Jost',sans-serif;font-size:10px;font-weight:300;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);}
+.field-input{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:14px 16px;font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:var(--text);outline:none;transition:border-color 0.2s;letter-spacing:0.04em;-webkit-appearance:none;width:100%;}
 .field-input:focus{border-color:var(--amber-dim);}
 .field-input::placeholder{color:var(--text-dim);}
-.error-msg{font-size:11px;color:#c06040;letter-spacing:0.06em;text-align:center;min-height:18px;margin-bottom:8px;}
+.error-msg{font-family:'Jost',sans-serif;font-size:11px;font-weight:300;color:#c06040;letter-spacing:0.06em;text-align:center;min-height:18px;margin-bottom:8px;}
 .section-heading{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:32px;letter-spacing:0.04em;color:var(--text);margin-bottom:32px;line-height:1.2;}
 
 .mode-cards{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
-.mode-card{padding:18px 20px;background:var(--surface);border:1.5px solid var(--border);border-radius:6px;cursor:pointer;transition:border-color 0.2s,background 0.2s;}
+.mode-card{padding:18px 20px;background:var(--surface);border:1.5px solid var(--border);border-radius:4px;cursor:pointer;transition:border-color 0.2s,background 0.2s;}
 .mode-card.selected{border-color:var(--amber);background:rgba(200,169,110,0.04);}
-.mode-card-title{font-size:13px;letter-spacing:0.06em;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:10px;}
-.mode-card-desc{font-size:11px;color:var(--text-mid);letter-spacing:0.04em;line-height:1.6;}
+.mode-card-title{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;letter-spacing:0.06em;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:10px;}
+.mode-card-desc{font-family:'Jost',sans-serif;font-size:11px;font-weight:300;color:var(--text-mid);letter-spacing:0.03em;line-height:1.6;}
 .mode-dot{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--border-light);flex-shrink:0;transition:all 0.2s;}
 .mode-card.selected .mode-dot{background:var(--amber);border-color:var(--amber);}
 
 .time-picker{display:flex;align-items:center;justify-content:center;gap:16px;padding:20px 0;margin-bottom:24px;}
 .time-unit{display:flex;flex-direction:column;align-items:center;gap:10px;}
-.time-unit-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);}
+.time-unit-label{font-family:'Jost',sans-serif;font-size:9px;font-weight:300;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);}
 .time-display{font-family:'Spectral',serif;font-size:48px;font-weight:300;color:var(--text);line-height:1;font-variant-numeric:tabular-nums;min-width:76px;text-align:center;}
 .time-display.sm{font-size:36px;min-width:56px;}
 .time-colon{font-family:'Spectral',serif;font-size:36px;font-weight:300;color:var(--text-dim);margin-bottom:20px;}
 .stepper{display:flex;gap:8px;}
-.step-btn{width:44px;height:44px;background:var(--surface);border:1px solid var(--border-light);border-radius:3px;color:var(--text-mid);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;font-family:'DM Mono',monospace;touch-action:manipulation;}
+.step-btn{width:44px;height:44px;background:var(--surface);border:1px solid var(--border-light);border-radius:3px;color:var(--text-mid);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;font-family:'Jost',sans-serif;touch-action:manipulation;}
 .step-btn:active{border-color:var(--amber);color:var(--amber);}
 
-.bonus-section{background:rgba(200,169,110,0.04);border:1px solid var(--amber-dim);border-radius:6px;padding:18px 20px;margin-bottom:24px;}
-.bonus-section-title{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber);margin-bottom:16px;}
+.bonus-section{background:rgba(200,169,110,0.04);border:1px solid var(--amber-dim);border-radius:4px;padding:18px 20px;margin-bottom:24px;}
+.bonus-section-title{font-family:'Jost',sans-serif;font-size:10px;font-weight:300;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber);margin-bottom:16px;}
 
 .color-picker{display:flex;gap:10px;flex-wrap:wrap;}
 .color-swatch{width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all 0.15s;flex-shrink:0;touch-action:manipulation;}
 .color-swatch.selected{border-color:var(--text);transform:scale(1.15);}
 
-.share-toggle{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;cursor:pointer;margin-bottom:14px;}
+.share-toggle{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:3px;cursor:pointer;margin-bottom:14px;}
 .share-toggle-text{display:flex;flex-direction:column;gap:2px;}
-.share-toggle-title{font-size:13px;letter-spacing:0.05em;color:var(--text);}
-.share-toggle-desc{font-size:11px;color:var(--text-mid);letter-spacing:0.04em;}
+.share-toggle-title{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;letter-spacing:0.04em;color:var(--text);}
+.share-toggle-desc{font-family:'Jost',sans-serif;font-size:11px;font-weight:300;color:var(--text-mid);letter-spacing:0.03em;}
 .share-switch{width:38px;height:22px;background:var(--border);border-radius:11px;position:relative;transition:background 0.2s;flex-shrink:0;}
 .share-switch::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--text-mid);transition:transform 0.2s,background 0.2s;}
 .share-toggle.on .share-switch{background:var(--amber-dim);}
@@ -82,32 +82,32 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .share-fields.on{display:block;}
 
 .room-code-big{font-family:'Spectral',serif;font-size:56px;font-weight:300;letter-spacing:0.3em;color:var(--amber);line-height:1;text-align:center;}
-.room-code-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-bottom:12px;}
-.lobby-player{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:6px;transition:all 0.2s;}
+.room-code-label{font-family:'Jost',sans-serif;font-size:10px;font-weight:300;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-bottom:12px;}
+.lobby-player{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:3px;margin-bottom:6px;transition:all 0.2s;}
 .lobby-player.dragging{opacity:0.5;border-color:var(--amber);background:rgba(200,169,110,0.06);}
 .lobby-player.drag-over{border-color:var(--amber-dim);}
 .lobby-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.lobby-name{flex:1;font-size:13px;letter-spacing:0.05em;color:var(--text);}
-.lobby-badge{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:3px 8px;border-radius:2px;background:var(--amber-faint);border:1px solid var(--amber-dim);color:var(--amber);}
+.lobby-name{flex:1;font-family:'Jost',sans-serif;font-size:13px;font-weight:300;letter-spacing:0.04em;color:var(--text);}
+.lobby-badge{font-family:'Jost',sans-serif;font-size:9px;font-weight:300;letter-spacing:0.14em;text-transform:uppercase;padding:3px 8px;border-radius:2px;background:var(--amber-faint);border:1px solid var(--amber-dim);color:var(--amber);}
 .drag-handle{width:24px;display:flex;flex-direction:column;justify-content:center;gap:3px;cursor:grab;padding:8px 4px;touch-action:none;}
 .drag-handle:active{cursor:grabbing;}
 .drag-handle div{height:1.5px;background:var(--text-dim);border-radius:1px;}
 .lobby-player.dragging .drag-handle div{background:var(--amber);}
-.lobby-waiting{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px dashed var(--border);border-radius:4px;margin-bottom:6px;}
-.lobby-waiting-text{font-size:12px;color:var(--text-dim);letter-spacing:0.04em;}
-.settings-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text-mid);padding:8px 0;border-top:1px solid var(--border);}
+.lobby-waiting{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px dashed var(--border);border-radius:3px;margin-bottom:6px;}
+.lobby-waiting-text{font-family:'Jost',sans-serif;font-size:12px;font-weight:300;color:var(--text-dim);letter-spacing:0.04em;}
+.settings-row{display:flex;justify-content:space-between;font-family:'Jost',sans-serif;font-size:12px;font-weight:300;color:var(--text-mid);padding:8px 0;border-top:1px solid var(--border);}
 .settings-row span:last-child{color:var(--text);}
 
 #screen-pause{background:var(--bg);}
-.pause-player-row{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:6px;}
-.pause-player-name{flex:1;font-size:13px;letter-spacing:0.05em;color:var(--text);}
+.pause-player-row{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:3px;margin-bottom:6px;}
+.pause-player-name{flex:1;font-family:'Jost',sans-serif;font-size:13px;font-weight:300;letter-spacing:0.04em;color:var(--text);}
 .pause-bank{font-family:'Spectral',serif;font-size:18px;font-weight:300;color:var(--text);font-variant-numeric:tabular-nums;margin-right:8px;}
-.pause-edit-btn{padding:0 12px;height:30px;background:var(--surface);border:1px solid var(--border-light);border-radius:3px;color:var(--text-mid);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'DM Mono',monospace;touch-action:manipulation;}
+.pause-edit-btn{padding:0 12px;height:30px;background:var(--surface);border:1px solid var(--border-light);border-radius:3px;color:var(--text-mid);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;font-weight:300;touch-action:manipulation;}
 .pause-edit-btn:active{border-color:var(--amber);color:var(--amber);}
 .pause-indicator{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;pointer-events:none;}
 .pause-bars{display:flex;gap:10px;}
 .pause-bars div{width:6px;height:48px;background:#7a7068;border-radius:3px;}
-.pause-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);}
+.pause-label{font-family:'Jost',sans-serif;font-size:10px;font-weight:300;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);}
 
 .summary-row{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:4px;}
 .summary-bar-wrap{width:64px;height:2px;background:var(--border);border-radius:1px;overflow:hidden;}
@@ -132,11 +132,11 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .shared-half.idle-half{background:#0c0b09;}
 .shared-divider{width:1px;background:var(--border);}
 .shared-name{font-family:'Cormorant Garamond',serif;font-weight:300;text-align:center;transition:all 0.6s var(--ease);padding:0 12px;}
-.shared-half.active-half .shared-name{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#9a8870;margin-bottom:10px;}
-.shared-half.idle-half .shared-name{font-size:clamp(24px,6vw,38px);color:#7a7068;letter-spacing:0.06em;margin-bottom:14px;}
+.shared-half.active-half .shared-name{display:none;}
+.shared-half.idle-half .shared-name{font-size:clamp(28px,7vw,44px);color:#9a8e80;letter-spacing:0.06em;margin-bottom:16px;font-family:'Cormorant Garamond',serif;font-weight:300;}
 .shared-time{font-family:'Spectral',serif;font-weight:300;font-variant-numeric:tabular-nums;line-height:1;transition:all 0.6s var(--ease);}
-.shared-half.active-half .shared-time{font-size:clamp(52px,14vw,84px);color:#18140e;}
-.shared-half.idle-half .shared-time{font-size:clamp(18px,4vw,24px);color:#7a7068;}
+.shared-half.active-half .shared-time{font-size:clamp(64px,17vw,100px);color:#18140e;}
+.shared-half.idle-half .shared-time{font-size:clamp(20px,4.5vw,28px);color:#9a8e80;}
 
 /* EDIT BANK MODAL */
 #modal-edit-bank{position:fixed;inset:0;background:var(--bg);z-index:500;display:none;flex-direction:column;}
@@ -368,11 +368,15 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div id="clock-time" style="font-family:'Spectral',serif;font-weight:300;font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-0.01em;text-align:center;transition:font-size 0.75s var(--ease),color 0.75s var(--ease);"></div>
   </div>
   <div id="end-zone" style="position:fixed;bottom:0;left:0;right:0;height:80px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-top:1px solid transparent;opacity:0;pointer-events:none;transition:opacity 0.75s,border-color 0.75s;" onclick="endTurn()">
-    <span id="end-zone-label" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#8a6d3e;">End Turn →</span>
+    <span id="end-zone-label" style="font-family:'Jost',sans-serif;font-size:11px;font-weight:300;letter-spacing:0.2em;text-transform:uppercase;color:#8a6d3e;">End Turn →</span>
   </div>
   <div id="host-controls" style="position:fixed;top:52px;right:24px;display:none;flex-direction:column;align-items:flex-end;gap:8px;">
     <button class="back-btn" style="color:var(--text-dim);font-size:10px;" onclick="pauseGame()"><span style="display:inline-flex;gap:3px;vertical-align:middle;margin-right:6px;"><span style="display:inline-block;width:2px;height:10px;background:currentColor;border-radius:1px;"></span><span style="display:inline-block;width:2px;height:10px;background:currentColor;border-radius:1px;"></span></span>Pause</button>
     <button class="back-btn" style="color:var(--text-dim);font-size:10px;" onclick="confirmEndGame()">End Game</button>
+  </div>
+  <!-- Non-host leave -->
+  <div id="player-leave-btn" style="position:fixed;top:52px;left:24px;display:none;">
+    <button class="back-btn" style="color:var(--text-dim);font-size:10px;" onclick="confirmLeave()">Leave</button>
   </div>
 </div>
 
@@ -389,6 +393,15 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div class="shared-time" id="sh-right-time">00:00</div>
     </div>
   </div>
+  <!-- Host controls overlay on shared screen -->
+  <div id="shared-host-controls" style="position:fixed;top:16px;right:16px;display:none;flex-direction:column;align-items:flex-end;gap:8px;z-index:100;">
+    <button class="back-btn" style="color:rgba(120,110,100,0.7);font-size:10px;background:rgba(0,0,0,0.3);padding:6px 10px;border-radius:4px;" onclick="pauseGame()"><span style="display:inline-flex;gap:3px;vertical-align:middle;margin-right:4px;"><span style="display:inline-block;width:2px;height:9px;background:currentColor;border-radius:1px;"></span><span style="display:inline-block;width:2px;height:9px;background:currentColor;border-radius:1px;"></span></span>Pause</button>
+    <button class="back-btn" style="color:rgba(120,110,100,0.7);font-size:10px;background:rgba(0,0,0,0.3);padding:6px 10px;border-radius:4px;" onclick="confirmEndGame()">End Game</button>
+  </div>
+  <!-- Non-host leave button -->
+  <div id="shared-leave-btn" style="position:fixed;top:16px;left:16px;display:none;z-index:100;">
+    <button class="back-btn" style="color:rgba(120,110,100,0.7);font-size:10px;background:rgba(0,0,0,0.3);padding:6px 10px;border-radius:4px;" onclick="leaveGame()">Leave</button>
+  </div>
 </div>
 
 <!-- PAUSE (host) -->
@@ -399,7 +412,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="nav-spacer"></div>
   </div>
   <div class="screen-body">
-    <div style="font-size:11px;letter-spacing:0.12em;color:var(--text-dim);margin-bottom:20px;">Adjust time banks</div>
+    <div style="font-family:'Jost',sans-serif;font-size:11px;font-weight:300;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:20px;">Adjust time banks</div>
     <div id="pause-player-list"></div>
   </div>
   <div class="screen-footer">
@@ -414,17 +427,20 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="pause-bars"><div></div><div></div></div>
     <div class="pause-label">Game paused by host</div>
   </div>
+  <div style="position:fixed;bottom:48px;left:0;right:0;display:flex;justify-content:center;">
+    <button class="back-btn" style="color:var(--text-dim);font-size:10px;" onclick="confirmLeave()">Leave Game</button>
+  </div>
 </div>
 
 <!-- SUMMARY -->
 <div class="screen" id="screen-summary">
   <div style="text-align:center;padding:60px 28px 24px;flex-shrink:0;">
-    <div style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;">Results</div>
-    <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);" id="summary-sub"></div>
+    <div style="font-family:'Jost',sans-serif;font-size:10px;font-weight:300;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;">Results</div>
+    <div style="font-family:'Jost',sans-serif;font-size:10px;font-weight:300;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);" id="summary-sub"></div>
   </div>
   <div style="text-align:center;margin-bottom:28px;flex-shrink:0;">
     <div style="font-family:'Spectral',serif;font-size:44px;font-weight:300;color:var(--amber);font-variant-numeric:tabular-nums;line-height:1;" id="summary-total"></div>
-    <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);margin-top:6px;">Total game time</div>
+    <div style="font-family:'Jost',sans-serif;font-size:10px;font-weight:300;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-top:6px;">Total game time</div>
   </div>
   <div id="summary-rows" style="padding:0 28px;flex:1;overflow-y:auto;"></div>
   <div style="padding:16px 28px 48px;flex-shrink:0;">
@@ -800,6 +816,17 @@ async function reorderPlayers(srcId,tgtId){
   const si=order.indexOf(srcId), ti=order.indexOf(tgtId);
   if(si<0||ti<0) return;
   order.splice(si,1); order.splice(ti,0,srcId);
+  // Optimistically re-render before Firebase round-trip so list doesn't snap back
+  const playerMap=snap.val().players||{};
+  const list=order.map(id=>playerMap[id]).filter(Boolean);
+  document.getElementById('lobby-players').innerHTML=list.map(p=>`
+    <div class="lobby-player" data-pid="${p.id}" draggable="true">
+      <div class="lobby-dot" style="background:${p.color};"></div>
+      <div class="lobby-name">${p.name}${mySeats.includes(p.id)?' (you)':''}</div>
+      ${p.isHost?'<div class="lobby-badge">Host</div>':''}
+      <div class="drag-handle"><div></div><div></div><div></div></div>
+    </div>`).join('');
+  attachDragHandlers();
   await update(gameRef,{turnOrder:order});
 }
 
@@ -817,11 +844,16 @@ function renderClock(game){
   const isShared=Array.isArray(mySeats)&&mySeats.length>1;
   if(isShared){
     if(!document.getElementById('screen-clock-shared').classList.contains('active')) go('clock-shared');
+    // Show correct controls on shared screen
+    document.getElementById('shared-host-controls').style.display=isHost?'flex':'none';
+    document.getElementById('shared-leave-btn').style.display=isHost?'none':'block';
     renderSharedClock(game);
     return;
   }
   if(!document.getElementById('screen-clock').classList.contains('active')) go('clock');
-  if(isHost) document.getElementById('host-controls').style.display='flex';
+  // Show host controls or player leave button
+  document.getElementById('host-controls').style.display=isHost?'flex':'none';
+  document.getElementById('player-leave-btn').style.display=isHost?'none':'block';
   const turnId=game.currentTurn;
   if(turnId===lastTurnId) return;
   lastTurnId=turnId;
@@ -846,14 +878,9 @@ function renderClock(game){
     setTimeout(()=>{
       nameEl.style.transition='font-size 0.75s var(--ease),color 0.75s var(--ease),margin-bottom 0.75s var(--ease),opacity 0.75s var(--ease),letter-spacing 0.75s var(--ease)';
       if(myTurn){
-        nameEl.style.fontSize='13px';
-        nameEl.style.color='#9a8870';
-        nameEl.style.letterSpacing='0.22em';
-        nameEl.style.marginBottom='12px';
-        nameEl.style.fontFamily="'DM Mono',monospace";
-        nameEl.textContent='Your turn';
-        nameEl.style.opacity='1';
-        timeEl.style.fontSize='clamp(88px,22vw,112px)';
+        nameEl.style.opacity='0';
+        nameEl.textContent='';
+        timeEl.style.fontSize='clamp(96px,24vw,124px)';
         timeEl.style.color='#18140e';
         timeEl.textContent=fmt(bankAtTurnStart);
         endZone.style.opacity='1';
@@ -865,13 +892,13 @@ function renderClock(game){
       } else {
         nameEl.textContent=p.name;
         nameEl.style.fontSize='clamp(48px,12vw,66px)';
-        nameEl.style.color='#7a7068';
+        nameEl.style.color='#9a8e80';
         nameEl.style.letterSpacing='0.07em';
         nameEl.style.marginBottom='22px';
         nameEl.style.fontFamily="'Cormorant Garamond',serif";
         nameEl.style.opacity='1';
-        timeEl.style.fontSize='clamp(20px,5vw,26px)';
-        timeEl.style.color='#7a7068';
+        timeEl.style.fontSize='clamp(22px,5.5vw,28px)';
+        timeEl.style.color='#9a8e80';
         timeEl.textContent=fmt(bankAtTurnStart);
         endZone.style.opacity='0';
         endZone.style.pointerEvents='none';
@@ -918,8 +945,9 @@ function renderSharedClock(game){
 
   const leftH=document.getElementById('sh-left');
   const rightH=document.getElementById('sh-right');
-  document.getElementById('sh-left-name').textContent=turnId===leftId?'Your turn':leftP.name;
-  document.getElementById('sh-right-name').textContent=turnId===rightId?'Your turn':rightP.name;
+  // Active half shows no name (clock only), idle shows the player's name
+  document.getElementById('sh-left-name').textContent=turnId===leftId?'':leftP.name;
+  document.getElementById('sh-right-name').textContent=turnId===rightId?'':rightP.name;
   document.getElementById('sh-left-time').textContent=fmt(leftP.bank);
   document.getElementById('sh-right-time').textContent=fmt(rightP.bank);
   leftH.classList.toggle('active-half',turnId===leftId);
@@ -1115,6 +1143,11 @@ window.confirmEndGame=async function(){
   });
 };
 
+// ── CONFIRM LEAVE (non-host) ──
+window.confirmLeave=function(){
+  if(confirm('Leave this game?')) leaveGame();
+};
+
 window.leaveGame=async function(){
   ticker=stopTicker(ticker);
   idleTicker=stopTicker(idleTicker);
@@ -1136,6 +1169,9 @@ function renderSummary(game){
   sharedTicker=stopTicker(sharedTicker);
   go('summary');
   document.getElementById('host-controls').style.display='none';
+  document.getElementById('player-leave-btn').style.display='none';
+  document.getElementById('shared-host-controls').style.display='none';
+  document.getElementById('shared-leave-btn').style.display='none';
   const list=Object.values(game.players||{});
   const totalUsed=list.reduce((a,p)=>a+(p.totalUsed||0),0);
   const maxUsed=Math.max(...list.map(p=>p.totalUsed||0),1);
@@ -1148,10 +1184,10 @@ function renderSummary(game){
       const pct=Math.round((p.totalUsed||0)/maxUsed*100);
       return `<div class="summary-row">
         <div class="lobby-dot" style="background:${p.color};flex-shrink:0;"></div>
-        <div style="flex:1;font-size:13px;letter-spacing:0.05em;">${p.name}${mySeats.includes(p.id)?' (you)':''}</div>
-        <div style="font-size:12px;color:var(--text-mid);margin-right:10px;font-variant-numeric:tabular-nums;">${fmtTotal(p.totalUsed||0)}</div>
+        <div style="flex:1;font-family:'Jost',sans-serif;font-size:13px;font-weight:300;letter-spacing:0.04em;">${p.name}${mySeats.includes(p.id)?' (you)':''}</div>
+        <div style="font-family:'Spectral',serif;font-size:14px;font-weight:300;color:var(--text-mid);margin-right:10px;font-variant-numeric:tabular-nums;">${fmtTotal(p.totalUsed||0)}</div>
         <div class="summary-bar-wrap"><div class="summary-bar-fill" style="width:${pct}%;background:${p.color};"></div></div>
-        <div style="font-size:10px;color:var(--text-dim);min-width:30px;text-align:right;">${pct}%</div>
+        <div style="font-family:'Jost',sans-serif;font-size:10px;font-weight:300;color:var(--text-dim);min-width:30px;text-align:right;">${pct}%</div>
       </div>`;
     }).join('');
 }
@@ -1183,6 +1219,9 @@ function resetState(){
   document.getElementById('host-share-fields').classList.remove('on');
   document.getElementById('join-share-fields').classList.remove('on');
   document.getElementById('host-controls').style.display='none';
+  document.getElementById('player-leave-btn').style.display='none';
+  document.getElementById('shared-host-controls').style.display='none';
+  document.getElementById('shared-leave-btn').style.display='none';
   document.getElementById('clock-bg').style.background='#0c0b09';
   document.getElementById('mode-classic').classList.add('selected');
   document.getElementById('mode-increment').classList.remove('selected');
